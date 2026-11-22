@@ -314,7 +314,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.01</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.02</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -725,14 +725,13 @@ async function addToGroup(ci){
 function recipeUses(key){return S.recipes.filter(r=>(r.ingredients||[]).some(g=>g.item&&invKey(g.item,g.staple?"":String(g.unit||"").trim(),!!g.staple)===key)).map(r=>r.name);}
 function openItemEdit(key){
   const a=S.rows[key]; if(!a) return; const cur=S.inv[key]||{}; const uses=recipeUses(key);
-  const locked=uses.length>0;
   openModal("Edit item",`<div class="form">
-    ${locked?`<p style="margin:0 0 10px;color:var(--muted);font-size:13px">Used in: ${esc(uses.join(", "))}. Name and unit come from the recipe — change them in the recipe.</p>`:""}
-    <label>Name</label><input id="ieN" value="${esc(a.item)}" ${locked?"disabled":""}>
-    ${a.staple?"":`<label>Unit</label><input id="ieU" value="${esc(a.unit||"")}" ${locked?"disabled":""}>`}
-    <label>Category</label><select id="ieC" ${locked?"disabled":""}>${SHOP_CATS.map(c=>`<option ${c===a.cat?"selected":""}>${c}</option>`).join("")}</select>
+    ${uses.length?`<p style="margin:0 0 10px;color:var(--muted);font-size:13px">Used in: ${esc(uses.join(", "))}. Changes to name, unit or category are also saved in these recipes.</p>`:""}
+    <label>Name</label><input id="ieN" value="${esc(a.item)}">
+    ${a.staple?"":`<label>Unit</label><input id="ieU" value="${esc(a.unit||"")}">`}
+    <label>Category</label><select id="ieC">${SHOP_CATS.map(c=>`<option ${c===a.cat?"selected":""}>${c}</option>`).join("")}</select>
     ${a.staple?"":`<label>Keep at least (optional)</label><input id="ieP" type="number" min="0" step="any" inputmode="decimal" value="${cur.par??""}">`}
-  </div>`,`<span>${locked?"":'<button class="btn danger" id="ieDel">Delete item</button>'}</span><button class="btn primary" id="ieSave">Save</button>`);
+  </div>`,`<span>${uses.length?"":'<button class="btn danger" id="ieDel">Delete item</button>'}</span><button class="btn primary" id="ieSave">Save</button>`);
   const del=document.getElementById("ieDel");
   if(del) del.onclick=async()=>{
     if(del.dataset.sure!=="1"){del.dataset.sure="1";del.textContent="Tap again to delete";return;}
@@ -742,15 +741,28 @@ function openItemEdit(key){
   document.getElementById("ieSave").onclick=async()=>{
     const pEl=document.getElementById("ieP"), pr=pEl?pEl.value.trim():""; const par=pr===""?null:parseFloat(pr);
     if(par!==null&&(isNaN(par)||par<0)) return toast("Keep must be a number");
-    const item=locked?a.item:document.getElementById("ieN").value.trim(); if(!item) return toast("Name is empty");
-    const unit=a.staple?"":(locked?(a.unit||""):document.getElementById("ieU").value.trim());
-    const cat=locked?a.cat:document.getElementById("ieC").value, nk=invKey(item,unit,!!a.staple);
-    if(nk!==key&&S.inv[nk]) return toast("An item with that name already exists");
+    const item=document.getElementById("ieN").value.trim(); if(!item) return toast("Name is empty");
+    const unit=a.staple?"":document.getElementById("ieU").value.trim();
+    const cat=document.getElementById("ieC").value, nk=invKey(item,unit,!!a.staple);
+    if(nk!==key&&(S.inv[nk]||allStockItems().some(x=>x.key===nk))) return toast("An item with that name and unit already exists");
     const row={...cur,item_key:nk,item,unit:unit||null,category:cat,is_staple:!!a.staple,qty:cur.qty??null,status:cur.status??null,counted_at:cur.counted_at??nowIso(),par,updated_at:nowIso()};
     delete row.id;
-    const error=await tryDo(()=>C("inventory").doc(kid(nk)).set(row)); if(error) return toast("Not saved: "+eMsg(error));
-    if(nk!==key){const d=await tryDo(()=>C("inventory").doc(kid(key)).delete()); if(d) toast(eMsg(d)); delete S.inv[key];}
-    S.inv[nk]=row; closeModal(); toast("Saved"); render();
+    const recUpd=[];
+    if(item!==a.item||unit!==(a.unit||"")||cat!==a.cat) for(const r of S.recipes){
+      let hit=false;
+      const ings=(r.ingredients||[]).map(g=>{ if(!g.item||invKey(g.item,g.staple?"":String(g.unit||"").trim(),!!g.staple)!==key) return g;
+        hit=true; return {...g,item,cat,...(a.staple?{}:{unit})}; });
+      if(hit) recUpd.push([r.id,ings]);
+    }
+    const error=await tryDo(()=>{const b=fs.batch();
+      b.set(C("inventory").doc(kid(nk)),row);
+      if(nk!==key) b.delete(C("inventory").doc(kid(key)));
+      for(const [id,ings] of recUpd) b.update(C("recipes").doc(id),{ingredients:ings,updated_at:nowIso()});
+      return b.commit();});
+    if(error) return toast("Not saved: "+eMsg(error));
+    if(nk!==key) delete S.inv[key]; S.inv[nk]=row;
+    for(const [id,ings] of recUpd){ S.rmap[id].ingredients=ings; }
+    closeModal(); toast(recUpd.length?`Saved (also in ${recUpd.length} recipe${recUpd.length>1?"s":""})`:"Saved"); render();
   };
 }
 function allStockItems(){
@@ -1020,7 +1032,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.01</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.02</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
