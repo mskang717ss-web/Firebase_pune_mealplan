@@ -89,8 +89,36 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .pill{border:1px solid var(--line);background:#fff;border-radius:14px;padding:4px 12px;cursor:pointer;font-size:12.5px}
 .pill.on{background:var(--box);border-color:var(--box-line);color:var(--navy);font-weight:700}
 .rgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.rcard{border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:4px;padding:10px 12px;cursor:pointer;background:#fff;display:flex;flex-direction:column;gap:4px}
-.rcard:hover{border-color:var(--blue);border-left-color:var(--blue)}
+.rcard{border:1px solid var(--line);border-top:3px solid var(--navy);border-radius:5px;cursor:pointer;background:#fff;display:flex;flex-direction:column;overflow:hidden}
+.rcard:hover{border-color:var(--blue)}
+.rcard .rb{padding:9px 12px 11px;display:flex;flex-direction:column;gap:4px}
+.rph{width:100%;height:150px;object-fit:cover;display:block;background:var(--box)}
+.rph.none{display:flex;align-items:center;justify-content:center;color:#9AA4B2;font-size:12px}
+.mphoto{width:100%;max-height:340px;object-fit:cover;border-radius:6px;margin-bottom:12px;display:block}
+.pprev{width:160px;height:110px;object-fit:cover;border-radius:5px;border:1px solid var(--line)}
+.shopcols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.brow{display:grid;grid-template-columns:26px minmax(0,1fr) 84px 124px 84px;gap:8px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--line2)}
+.brow:last-child{border-bottom:0}
+.brow.bh{font-size:11.5px;color:var(--muted);font-weight:600;padding:5px 12px;background:#FAFBFC}
+.brow .n{display:block}.brow .f,.srow .f{display:block;font-size:11.5px;color:var(--muted)}
+.c-need,.c-buy{font-size:12.5px;text-align:right;font-family:"IBM Plex Mono",monospace}
+.c-buy{color:var(--blue);font-weight:600}
+.bought{width:18px;height:18px;accent-color:var(--navy);cursor:pointer}
+.stkw{display:flex;align-items:center;gap:4px;justify-content:flex-end}
+.stk{width:66px;border:1px solid var(--line);border-radius:5px;padding:3px 6px;text-align:right;font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+.stkw .u{font-size:11.5px;color:var(--muted);min-width:34px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;flex:none}
+.seg button{border:0;border-right:1px solid var(--line);background:#fff;padding:4px 10px;font-size:12px;cursor:pointer;color:var(--muted)}
+.seg button:last-child{border-right:0}
+.seg .on.ok{background:var(--ok-bg);color:var(--ok);font-weight:700}.seg .on.low{background:var(--warn-bg);color:var(--warn);font-weight:700}.seg .on.out{background:var(--bad-bg);color:var(--bad);font-weight:700}
+.srow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 12px;border-bottom:1px solid var(--line2)}
+.srow:last-child{border-bottom:0}.srow .n{display:block}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.two .secbar{margin-top:0}
+.two .shopgrp{margin-bottom:12px}
+.brow.r5{grid-template-columns:26px minmax(0,1fr) 74px 84px 74px}
+.wk{display:inline-block;background:var(--box);color:var(--blue);border:1px solid var(--box-line);font-size:10.5px;font-weight:600;padding:0 5px;border-radius:3px;margin-left:4px;vertical-align:1px}
+.c-have{font-size:12.5px;text-align:right;font-family:"IBM Plex Mono",monospace;color:var(--muted)}
 .rcard .n{font-weight:700;color:var(--navy)}
 .rcard .m{font-size:12px;color:var(--muted)}
 /* modal */
@@ -134,7 +162,11 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .dcard .sl{display:grid;grid-template-columns:78px 1fr;border-top:1px solid var(--line2)}
   .dcard .sl > div{padding:7px 10px}
   .dcard .sl .lb{font-weight:600;color:var(--muted);font-size:12.5px}
-  .shopcols{grid-template-columns:1fr}
+  .shopcols,.shopcols2,.two{grid-template-columns:1fr}
+  .two .right{order:-1}
+  .brow.r5{grid-template-columns:22px minmax(0,1fr) 58px 64px 58px}
+  .brow{grid-template-columns:22px minmax(0,1fr) 62px 104px 62px;padding:7px 8px;gap:6px}
+  .stk{width:52px}
   .rgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .weeknav .range{min-width:0}
   .toolbar{flex-direction:column;align-items:stretch}
@@ -151,7 +183,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 </head>
 <body>
 <div class="wrap">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.03</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.04</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -164,7 +196,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   <div class="toolbar">
     <div class="tabs">
       <button class="tab" data-tab="plan">Meal Plan</button>
-      <button class="tab" data-tab="shopping">Shopping List</button>
+      <button class="tab" data-tab="shopping">Stock &amp; Shopping</button>
       <button class="tab" data-tab="recipes">Recipes</button>
     </div>
     <div class="weeknav" id="weekNav">
@@ -197,7 +229,7 @@ const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","
 
 const S = {
   tab: "plan", week: mondayOf(new Date()), recipes: [], rmap: {}, entries: [], note: null,
-  checks: {}, extras: [], session: null, isAdmin: false, hasAdmin: true,
+  checks: {}, extras: [], inv: {}, rows: {}, buyRows: {}, sSearch: "", session: null, isAdmin: false, hasAdmin: true,
   rCat: "All", rSearch: "", loadedAt: null, err: null
 };
 
@@ -214,6 +246,15 @@ function rangeText(){const e=addDays(S.week,6);return fmtShort(S.week)+" – "+f
 function fmtQty(n){if(n===null||n===undefined||n==="")return "";const v=Math.round(Number(n)*100)/100;const fr={0.25:"¼",0.5:"½",0.75:"¾"};const w=Math.floor(v),f=Math.round((v-w)*100)/100;if(fr[f])return (w?w:"")+fr[f];return String(v);}
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("on"),2600);}
 function totalMin(r){return (r.prep_min||0)+(r.cook_min||0);}
+function safeImg(u){return /^https:\/\/[^"'<>\s]+$/.test(u||"")?u:"";}
+async function shrinkImage(file,max=1280){
+  let src,w,h;
+  try{src=await createImageBitmap(file);w=src.width;h=src.height;}
+  catch(_){src=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error("Cannot read image"));i.src=URL.createObjectURL(file);});w=src.naturalWidth;h=src.naturalHeight;}
+  const k=Math.min(1,max/Math.max(w,h)),c=document.createElement("canvas");c.width=Math.round(w*k);c.height=Math.round(h*k);
+  c.getContext("2d").drawImage(src,0,0,c.width,c.height);
+  return await new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new Error("Image conversion failed")),"image/jpeg",0.82));
+}
 
 /* ---------- data ---------- */
 async function loadRecipes(){
@@ -223,13 +264,15 @@ async function loadRecipes(){
 }
 async function loadWeek(){
   const ws=ymd(S.week), we=ymd(addDays(S.week,6));
-  const [e,n,c,x]=await Promise.all([
+  const [e,n,c,x,iv]=await Promise.all([
     sb.from("meal_entries").select("*").gte("meal_date",ws).lte("meal_date",we).order("sort").order("created_at"),
     sb.from("meal_week_notes").select("*").eq("week_start",ws).maybeSingle(),
     sb.from("meal_shopping_checks").select("item_key,checked").eq("week_start",ws),
-    sb.from("meal_shopping_extras").select("*").eq("week_start",ws).order("created_at")
+    sb.from("meal_shopping_extras").select("*").eq("week_start",ws).order("created_at"),
+    sb.from("meal_inventory").select("*")
   ]);
-  for(const r of [e,n,c,x]) if(r.error) throw r.error;
+  for(const r of [e,n,c,x,iv]) if(r.error) throw r.error;
+  S.inv=Object.fromEntries(iv.data.map(v=>[v.item_key,v]));
   S.entries=e.data; S.note=n.data; S.extras=x.data;
   S.checks=Object.fromEntries(c.data.map(k=>[k.item_key,k.checked]));
   S.loadedAt=new Date();
@@ -266,13 +309,19 @@ function renderOwner(){
 function openSignIn(){
   openModal("Owner sign in",`
     <div class="form">
-      <p style="margin:0 0 6px;color:var(--muted)">Only the owner can change meals and recipes. Everyone with the link can view and tick the shopping list.</p>
+      <p style="margin:0 0 10px;color:var(--muted)">Only the owner can change meals and recipes. Everyone with the link can view, update stock and tick the shopping list.</p>
+      <button class="btn primary" id="siGoogle" style="width:100%;padding:10px;font-weight:600">Sign in with Google</button>
+      <div style="text-align:center;color:var(--muted);font-size:12px;margin:12px 0 2px">or with email</div>
       <label>Email</label><input id="siEmail" type="email" autocomplete="username">
       <label>Password</label><input id="siPw" type="password" autocomplete="current-password">
       <div class="msg" id="siMsg"></div>
     </div>`,
     `<span>${S.hasAdmin?"":'<button class="btn" id="siUp">Create owner account</button>'}</span><button class="btn primary" id="siGo">Sign in</button>`);
   const msg=t=>document.getElementById("siMsg").innerHTML=t;
+  document.getElementById("siGoogle").onclick=async()=>{
+    const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+location.pathname}});
+    if(error) msg('<span class="tag bad">'+esc(error.message)+'</span>');
+  };
   document.getElementById("siGo").onclick=async()=>{
     const email=document.getElementById("siEmail").value.trim(), password=document.getElementById("siPw").value;
     if(!email||!password) return msg('<span class="tag bad">Enter email and password</span>');
@@ -342,47 +391,124 @@ function renderPlan(m){
   m.innerHTML=noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish to see the recipe</span></div><div class="grid">${g}</div><div class="daycards">${cards}</div>`;
 }
 
-/* shopping */
-function buildShop(){
+/* shopping & stock */
+const STATUS=[["ok","Enough"],["low","Low"],["out","Out"]];
+function invKey(item,unit,staple){const i=String(item||"").trim().toLowerCase();return staple?"s|"+i:i+"|"+String(unit||"").trim().toLowerCase();}
+function rnd(n){return Math.round(n*100)/100;}
+function attachInv(a){const v=S.inv[a.key];a.stock=v&&v.qty!=null?Number(v.qty):null;a.status=v?v.status:null;a.upd=v?v.updated_at:null;return a;}
+function buildNeeds(){
   const agg={};
   for(const e of S.entries){
     const r=e.recipe_id&&S.rmap[e.recipe_id]; if(!r) continue;
     const f=e.servings?e.servings/r.servings:1;
     for(const ing of (r.ingredients||[])){
       if(!ing.item) continue;
-      const unit=(ing.unit||"").trim(), key=ing.item.trim().toLowerCase()+"|"+unit.toLowerCase();
-      const a=agg[key]||(agg[key]={key,item:ing.item.trim(),unit,cat:SHOP_CATS.includes(ing.cat)?ing.cat:"Others",staple:!!ing.staple,sum:0,num:false,dishes:new Set()});
-      const q=parseFloat(ing.qty);
-      if(!isNaN(q)){a.sum+=q*f;a.num=true;}
+      const staple=!!ing.staple, unit=staple?"":String(ing.unit||"").trim(), key=invKey(ing.item,unit,staple);
+      const a=agg[key]||(agg[key]={key,item:ing.item.trim(),unit,cat:SHOP_CATS.includes(ing.cat)?ing.cat:"Others",staple,need:0,num:false,dishes:new Set()});
+      const q=parseFloat(ing.qty); if(!isNaN(q)){a.need+=q*f;a.num=true;}
       a.dishes.add(r.name.replace(/\s*\(.*\)$/,""));
     }
   }
-  const items=Object.values(agg);
-  for(const x of S.extras) items.push({key:"x:"+x.id,item:x.item,unit:"",qtyText:x.qty||"",cat:SHOP_CATS.includes(x.category)?x.category:"Others",staple:false,extra:x.id,dishes:new Set()});
-  return items;
+  return Object.values(agg).map(a=>{attachInv(a);
+    if(a.staple) a.buy=(a.status==="low"||a.status==="out");
+    else if(a.num){a.buyQty=rnd(Math.max(0,a.need-(a.stock||0)));a.buy=a.buyQty>0;}
+    else a.buy=!(a.stock>0);
+    return a;});
 }
-function qtyText(a){ if(a.extra) return a.qtyText; return a.num?(fmtQty(a.sum)+" "+a.unit).trim():a.unit; }
-function sitemHtml(a){
-  const on=!!S.checks[a.key];
-  return `<label class="sitem ${on?"done":""}"><input type="checkbox" ${on?"checked":""} data-key="${esc(a.key)}" onchange="toggleCheck(this,this.dataset.key)"><span class="t"><span class="n">${esc(a.item)}</span>${a.extra?' <span class="tag warn" style="font-size:10.5px;padding:0 5px">extra</span>':""}<span class="f">${a.dishes.size?esc([...a.dishes].join(", ")):""}</span></span><span class="q">${esc(qtyText(a))}</span>${S.isAdmin&&a.extra?`<button class="xdel" title="Delete" onclick="event.preventDefault();event.stopPropagation();delExtra('${a.extra}')">×</button>`:""}</label>`;
+function stockInput(a){return `<span class="stkw"><input type="number" class="stk" min="0" step="any" inputmode="decimal" data-k="${esc(a.key)}" value="${a.stock==null?"":a.stock}" placeholder="0"><span class="u">${esc(a.unit)}</span></span>`;}
+function statusBtns(a){return `<span class="seg">${STATUS.map(([v,l])=>`<button class="st ${a.status===v?"on "+v:""}" data-k="${esc(a.key)}" data-s="${v}">${l}</button>`).join("")}</span>`;}
+function statusTag(st){return st==="out"?'<span class="tag bad">Out</span>':st==="low"?'<span class="tag warn">Low</span>':st==="ok"?'<span class="tag ok">Enough</span>':'<span class="tag" style="background:var(--line2);color:var(--muted)">Not set</span>';}
+function needRow(a){
+  S.rows[a.key]=a;
+  const chk=a.buy?`<input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought">`:'<span style="color:var(--ok);font-weight:700">✓</span>';
+  const mid=a.staple
+    ?`<span class="c-need">—</span><span style="text-align:right">${statusTag(a.status)}</span><span class="c-buy">${a.buy?"Buy":"—"}</span>`
+    :`<span class="c-need">${a.num?esc((fmtQty(rnd(a.need))+" "+a.unit).trim()):"as needed"}</span>${stockInput(a)}<span class="c-buy">${a.buy?(a.num?esc((fmtQty(a.buyQty)+" "+a.unit).trim()):"1"):"—"}</span>`;
+  return `<div class="brow">${chk}<span><span class="n">${esc(a.item)}</span><span class="f">${esc([...a.dishes].join(", "))}</span></span>${mid}</div>`;
+}
+function grpHtml(list,fn,hdr){return SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c).sort((x,y)=>x.item.localeCompare(y.item));if(!l.length)return "";
+  return `<div class="shopgrp"><div class="gt">${c}<span>${l.length}</span></div>${hdr||""}${l.map(fn).join("")}</div>`;}).join("");}
+function extraRow(x){const k="x:"+x.id,on=!!S.checks[k];
+  return `<label class="sitem ${on?"done":""}"><input type="checkbox" ${on?"checked":""} data-key="${esc(k)}" onchange="toggleCheck(this,this.dataset.key)"><span class="t"><span class="n">${esc(x.item)}</span><span class="f">${esc(x.category)}</span></span><span class="q">${esc(x.qty||"")}</span>${S.isAdmin?`<button class="xdel" title="Delete" onclick="event.preventDefault();event.stopPropagation();delExtra('${x.id}')">×</button>`:""}</label>`;}
+function buyRow(a){
+  S.buyRows[a.key]=a;
+  const have=a.staple?statusTag(a.status):`<span class="c-have">${a.stock==null?"0":esc(fmtQty(a.stock))}</span>`;
+  const need=a.staple?'<span class="c-need">—</span>':`<span class="c-need">${a.num?esc((fmtQty(rnd(a.need))+" "+a.unit).trim()):"as needed"}</span>`;
+  const buyq=a.staple?'<span class="c-buy">Buy</span>':`<span class="c-buy">${a.num?esc((fmtQty(a.buyQty)+" "+a.unit).trim()):"1"}</span>`;
+  return `<div class="brow r5"><input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought"><span><span class="n">${esc(a.item)}</span><span class="f">${esc([...a.dishes].join(", "))}</span></span>${need}<span style="text-align:right">${have}</span>${buyq}</div>`;
 }
 function renderShop(m){
-  const items=buildShop();
-  const buy=items.filter(a=>!a.staple), pantry=items.filter(a=>a.staple);
-  const done=buy.filter(a=>S.checks[a.key]).length;
-  const grp=list=>SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c).sort((a,b)=>a.item.localeCompare(b.item));if(!l.length)return "";
-    return `<div class="shopgrp"><div class="gt">${c}<span>${l.filter(a=>S.checks[a.key]).length}/${l.length}</span></div>${l.map(sitemHtml).join("")}</div>`;}).join("");
-  const pct=buy.length?Math.round(done/buy.length*100):0;
-  let h=`<div class="secbar"><span>2. To Buy</span><span class="r">${done} / ${buy.length} bought</span></div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div class="progress"><i style="width:${pct}%"></i></div><span class="mono" style="font-size:12px;color:var(--muted)">${pct}%</span><button class="btn sm noprint" onclick="refreshWeek()">Refresh</button></div>`;
-  h+=buy.length?`<div class="shopcols">${grp(buy)}</div>`:'<p class="empty">No dishes with recipes planned this week.</p>';
-  if(S.isAdmin) h+=`<div class="extraform"><input id="exItem" placeholder="Extra item (e.g. Milk)"><input id="exQty" placeholder="Qty (e.g. 1 L)" style="width:120px"><select id="exCat">${SHOP_CATS.map(c=>`<option ${c==="Others"?"selected":""}>${c}</option>`).join("")}</select><button class="btn sm primary" onclick="addExtra()">Add item</button></div>`;
-  h+=`<div class="secbar"><span>3. Pantry — check stock before shopping</span><span class="r">sauces &amp; basics used this week</span></div>`;
-  h+=pantry.length?`<div class="shopcols">${grp(pantry)}</div>`:'<p class="empty">None.</p>';
-  m.innerHTML=h;
+  S.rows={}; S.buyRows={};
+  const needs=buildNeeds(), needMap=Object.fromEntries(needs.map(a=>[a.key,a]));
+  const buy=needs.filter(a=>a.buy);
+  const q=S.sSearch.toLowerCase();
+  const stock=allStockItems().filter(a=>!q||a.item.toLowerCase().includes(q));
+  const leftRow=a=>{S.rows[a.key]=a;return `<div class="srow"><span><span class="n">${esc(a.item)}${needMap[a.key]?'<span class="wk">this week</span>':""}</span><span class="f">${a.upd?"Updated "+fmtShort(new Date(a.upd)):"Not counted yet"}</span></span>${a.staple?statusBtns(a):stockInput(a)}</div>`;};
+  const stack=(list,fn,hdr)=>SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c).sort((x,y)=>x.item.localeCompare(y.item));if(!l.length)return "";
+    return `<div class="shopgrp"><div class="gt">${c}<span>${l.length}</span></div>${hdr||""}${l.map(fn).join("")}</div>`;}).join("");
+  const hdr='<div class="brow r5 bh"><span></span><span>Item</span><span style="text-align:right">Need</span><span style="text-align:right">Have</span><span style="text-align:right">Buy</span></div>';
+  const openX=S.extras.filter(x=>!S.checks["x:"+x.id]).length;
+  const left=`<div class="left">
+    <div class="secbar"><span>1. What I have (Stock)</span><span class="r">type the amount at home</span></div>
+    <div class="rfilter noprint"><input id="sSearch" placeholder="Search item…" value="${esc(S.sSearch)}" style="width:100%"></div>
+    ${stack(stock.filter(a=>!a.staple),leftRow)||'<p class="empty">No items.</p>'}
+    <div class="subh">Pantry — sauces &amp; basics</div>
+    ${stack(stock.filter(a=>a.staple),leftRow)||'<p class="empty">No items.</p>'}
+    <div class="subh noprint">Add an item</div>
+    <div class="extraform noprint"><input id="stItem" placeholder="Item (e.g. Apples)" style="flex:1;min-width:140px"><input id="stUnit" placeholder="Unit (pcs, g)" style="width:100px"><select id="stCat">${SHOP_CATS.map(c=>`<option>${c}</option>`).join("")}</select><select id="stType"><option value="count">Count</option><option value="status">Enough/Low/Out</option></select><button class="btn sm primary" onclick="addStockItem()">Add</button></div>
+  </div>`;
+  let right=`<div class="right">
+    <div class="secbar"><span>2. Need to buy</span><span class="r">${buy.length+openX} item(s) · ${esc(rangeText())}</span></div>
+    <div class="noprint" style="margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn sm" onclick="refreshWeek()">Refresh</button><span style="font-size:12px;color:var(--muted)">Need = this week's meals · Buy = Need − Have · tick when bought → added to stock</span></div>
+    ${buy.length?stack(buy,buyRow,hdr):'<p class="empty">Nothing to buy — stock covers this week\'s meals.</p>'}`;
+  if(S.extras.length||S.isAdmin){
+    right+='<div class="subh">Extra items</div>';
+    right+=S.extras.length?`<div class="shopgrp">${S.extras.map(extraRow).join("")}</div>`:'<p class="empty">No extra items.</p>';
+    if(S.isAdmin) right+=`<div class="extraform"><input id="exItem" placeholder="Extra item (e.g. Milk)"><input id="exQty" placeholder="Qty (e.g. 1 L)" style="width:110px"><select id="exCat">${SHOP_CATS.map(c=>`<option ${c==="Others"?"selected":""}>${c}</option>`).join("")}</select><button class="btn sm primary" onclick="addExtra()">Add item</button></div>`;
+  }
+  right+='</div>';
+  m.innerHTML=`<div class="two">${left}${right}</div>`;
+  const si=document.getElementById("sSearch");
+  si.oninput=()=>{S.sSearch=si.value;const p=si.selectionStart;renderShop(m);const n=document.getElementById("sSearch");n.focus();n.setSelectionRange(p,p);};
 }
+function allStockItems(){
+  const map={};
+  for(const r of S.recipes) for(const ing of (r.ingredients||[])){
+    if(!ing.item) continue;
+    const staple=!!ing.staple, unit=staple?"":String(ing.unit||"").trim(), key=invKey(ing.item,unit,staple);
+    if(!map[key]) map[key]={key,item:ing.item.trim(),unit,cat:SHOP_CATS.includes(ing.cat)?ing.cat:"Others",staple};
+  }
+  for(const k in S.inv) if(!map[k]){const v=S.inv[k];map[k]={key:k,item:v.item,unit:v.unit||"",cat:SHOP_CATS.includes(v.category)?v.category:"Others",staple:v.is_staple};}
+  return Object.values(map).map(attachInv);
+}
+async function saveInv(a,patch){
+  const cur=S.inv[a.key]||{};
+  const qty=("qty" in patch)?patch.qty:(cur.qty??null), status=("status" in patch)?patch.status:(cur.status??null);
+  const {error}=await sb.rpc("set_meal_inventory",{p_key:a.key,p_item:a.item,p_unit:a.unit||"",p_category:a.cat,p_staple:!!a.staple,p_qty:qty,p_status:status});
+  if(error){toast("Not saved: "+error.message);render();return false;}
+  S.inv[a.key]={item_key:a.key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:!!a.staple,qty,status,updated_at:new Date().toISOString()};
+  render();return true;
+}
+async function addStockItem(){
+  const item=document.getElementById("stItem").value.trim(); if(!item) return toast("Type an item name");
+  const staple=document.getElementById("stType").value==="status", unit=staple?"":document.getElementById("stUnit").value.trim();
+  const a={key:invKey(item,unit,staple),item,unit,cat:document.getElementById("stCat").value,staple};
+  if(S.inv[a.key]) return toast("Already in the list");
+  if(await saveInv(a,{qty:null,status:null})) toast(item+" added");
+}
+document.getElementById("main").addEventListener("change",async e=>{
+  const t=e.target;
+  if(t.classList.contains("stk")){const a=S.rows[t.dataset.k];if(!a)return;const raw=t.value.trim();const v=raw===""?null:parseFloat(raw);if(v!==null&&(isNaN(v)||v<0))return toast("Enter a number");await saveInv(a,{qty:v===null?null:rnd(v)});}
+  else if(t.classList.contains("bought")){const a=S.buyRows[t.dataset.k];if(!a)return;
+    const ok=a.staple?await saveInv(a,{status:"ok"}):await saveInv(a,{qty:rnd((a.stock||0)+(a.num?a.buyQty:1))});
+    if(ok) toast(a.item+" — added to stock");}
+});
+document.getElementById("main").addEventListener("click",async e=>{
+  const b=e.target.closest("button.st");if(!b)return;const a=S.rows[b.dataset.k];if(!a)return;
+  await saveInv(a,{status:a.status===b.dataset.s?null:b.dataset.s});
+});
 async function toggleCheck(el,key){
-  const val=el.checked; S.checks[key]=val; el.closest(".sitem").classList.toggle("done",val);
+  const val=el.checked; S.checks[key]=val;
   const {error}=await sb.rpc("set_meal_shopping_check",{p_week:ymd(S.week),p_key:key,p_checked:val});
   if(error){ toast("Not saved: "+error.message); S.checks[key]=!val; }
   render();
@@ -404,10 +530,10 @@ function renderRecipes(m){
   const q=S.rSearch.toLowerCase();
   const list=S.recipes.filter(r=>(S.rCat==="All"||r.category===S.rCat)&&(!q||r.name.toLowerCase().includes(q)||(r.ingredients||[]).some(i=>(i.item||"").toLowerCase().includes(q))));
   const used=["All",...CATS.filter(c=>S.recipes.some(r=>r.category===c))];
-  m.innerHTML=`<div class="secbar"><span>4. Recipes</span><span class="r">${S.recipes.length} recipes</span></div>
+  m.innerHTML=`<div class="secbar"><span>1. Recipes</span><span class="r">${S.recipes.length} recipes</span></div>
     <div class="rfilter"><input id="rSearch" placeholder="Search dish or ingredient…" value="${esc(S.rSearch)}">${used.map(c=>`<button class="pill ${c===S.rCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}
     ${S.isAdmin?'<span style="flex:1"></span><button class="btn primary sm" onclick="openRecipeEdit()">+ New recipe</button>':""}</div>
-    <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
+    <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${safeImg(r.photo_url)?`<img class="rph" src="${esc(r.photo_url)}" loading="lazy" alt="">`:'<div class="rph none">No photo yet</div>'}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
   const s=document.getElementById("rSearch");
   s.oninput=()=>{S.rSearch=s.value;const p=s.selectionStart;renderRecipes(m);const n=document.getElementById("rSearch");n.focus();n.setSelectionRange(p,p);};
   m.querySelectorAll(".pill").forEach(b=>b.onclick=()=>{S.rCat=b.dataset.c;renderRecipes(m);});
@@ -415,7 +541,7 @@ function renderRecipes(m){
 function openRecipe(id){
   const r=S.rmap[id]; if(!r) return;
   const ings=(r.ingredients||[]);
-  const body=`<div class="meta"><span class="tag ok">${esc(r.category)}</span><span class="tag warn">Serves ${r.servings}</span>${r.prep_min?`<span class="tag warn">Prep ${r.prep_min} min</span>`:""}${r.cook_min?`<span class="tag warn">Cook ${r.cook_min} min</span>`:""}</div>
+  const body=`${safeImg(r.photo_url)?`<img class="mphoto" src="${esc(r.photo_url)}" alt="">`:""}<div class="meta"><span class="tag ok">${esc(r.category)}</span><span class="tag warn">Serves ${r.servings}</span>${r.prep_min?`<span class="tag warn">Prep ${r.prep_min} min</span>`:""}${r.cook_min?`<span class="tag warn">Cook ${r.cook_min} min</span>`:""}</div>
     <div class="subh">Ingredients</div>
     <table class="t"><tr><th>Ingredient</th><th style="width:130px">Amount</th></tr>${ings.map(i=>`<tr><td>${esc(i.item)}${i.staple?' <span style="color:var(--muted);font-size:11.5px">(pantry)</span>':""}</td><td class="q">${esc((fmtQty(i.qty)+" "+(i.unit||"")).trim())}</td></tr>`).join("")}</table>
     <div class="subh">Steps</div><ol class="steps">${(r.steps||[]).map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
@@ -440,8 +566,10 @@ function openRecipeEdit(id){
     <button class="btn sm" onclick="document.getElementById('ingList').insertAdjacentHTML('beforeend',ingRow())">+ Add ingredient</button>
     <label>Steps (one step per line)</label><textarea id="reSteps">${esc((r.steps||[]).join("\n"))}</textarea>
     <label>Tip / notes</label><input id="reNotes" value="${esc(r.notes||"")}">
+    <label>Photo</label><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><img class="pprev" id="rePrev" ${safeImg(r.photo_url)?`src="${esc(r.photo_url)}"`:'style="display:none"'} alt=""><div style="flex:1;min-width:200px"><input type="file" id="rePhoto" accept="image/*">${safeImg(r.photo_url)?'<label style="display:flex;gap:6px;align-items:center;margin-top:6px;color:var(--ink)"><input type="checkbox" id="reNoPhoto" style="width:auto"> Remove photo</label>':""}</div></div>
     <div class="msg" id="reMsg"></div></div>`;
   openModal(id?"Edit recipe":"New recipe",body,`<button class="btn" onclick="${id?`openRecipe('${id}')`:"closeModal()"}">Cancel</button><button class="btn primary" onclick="saveRecipe(${id?`'${id}'`:"null"})">Save recipe</button>`);
+  document.getElementById("rePhoto").onchange=e=>{const f=e.target.files[0];if(f){const p=document.getElementById("rePrev");p.src=URL.createObjectURL(f);p.style.display="block";}};
 }
 async function saveRecipe(id){
   const v=x=>document.getElementById(x).value;
@@ -453,8 +581,17 @@ async function saveRecipe(id){
   const rec={name,category:v("reCat"),servings:Math.max(1,parseInt(v("reSv"))||1),prep_min:v("rePrep")===""?null:parseInt(v("rePrep")),cook_min:v("reCook")===""?null:parseInt(v("reCook")),
     ingredients,steps:v("reSteps").split("\n").map(s=>s.trim()).filter(Boolean),notes:v("reNotes").trim()||null,updated_at:new Date().toISOString()};
   const q=id?sb.from("meal_recipes").update(rec).eq("id",id).select().single():sb.from("meal_recipes").insert(rec).select().single();
+  const pf=document.getElementById("rePhoto")?.files?.[0], rmPhoto=!!document.getElementById("reNoPhoto")?.checked;
+  document.getElementById("reMsg").innerHTML='<span class="tag warn">Saving…</span>';
   const {data,error}=await q;
   if(error){document.getElementById("reMsg").innerHTML='<span class="tag bad">'+esc(error.message)+'</span>';return;}
+  if(pf){
+    try{const blob=await shrinkImage(pf);const path=data.id+"/"+Date.now()+".jpg";
+      const up=await sb.storage.from("recipe-photos").upload(path,blob,{contentType:"image/jpeg",upsert:true});if(up.error)throw up.error;
+      const url=sb.storage.from("recipe-photos").getPublicUrl(path).data.publicUrl;
+      const {error:e3}=await sb.from("meal_recipes").update({photo_url:url}).eq("id",data.id);if(e3)throw e3;
+    }catch(err){toast("Photo not saved: "+(err.message||err));}
+  } else if(rmPhoto){await sb.from("meal_recipes").update({photo_url:null}).eq("id",data.id);}
   await loadRecipes(); render(); openRecipe(data.id); toast("Recipe saved");
 }
 function delRecipe(id){
@@ -523,7 +660,10 @@ document.getElementById("nextW").onclick=()=>{S.week=addDays(S.week,7);refreshWe
 document.getElementById("thisW").onclick=()=>{S.week=mondayOf(new Date());refreshWeek();};
 document.getElementById("printBtn").onclick=()=>window.print();
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S.loadedAt&&(Date.now()-S.loadedAt)>60000)refreshWeek();});
-sb.auth.onAuthStateChange((ev)=>{if(ev==="SIGNED_OUT"){S.isAdmin=false;renderOwner();}});
+sb.auth.onAuthStateChange((ev,session)=>{
+  if(ev==="SIGNED_OUT"){S.isAdmin=false;S.session=null;renderOwner();}
+  else if(ev==="SIGNED_IN"&&session&&!S.session){setTimeout(async()=>{await refreshAuth();render();},0);}
+});
 const h=location.hash.replace("#",""); if(["plan","shopping","recipes"].includes(h)) S.tab=h;
 (async()=>{ renderOwner(); await refreshAuth(); await loadAll(); })();
 </script>
