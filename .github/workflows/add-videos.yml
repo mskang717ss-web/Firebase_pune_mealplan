@@ -1,0 +1,28 @@
+name: Add recipe videos
+
+# Run by hand: gives every recipe without a video/photo a YouTube video (thumbnail = card photo).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PROJECT: meal-plan-e954d
+
+jobs:
+  videos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install firebase-admin
+        run: cd seed && npm init -y >/dev/null && npm install --no-audit --no-fund firebase-admin@14.5.0
+      - name: Find videos
+        env:
+          FIREBASE_SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          printf '%s' "$FIREBASE_SA" > "$RUNNER_TEMP/sa.json"
+          GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json" node seed/add-videos.js
+      - name: Clean up
+        if: always()
+        run: rm -f "$RUNNER_TEMP/sa.json"
