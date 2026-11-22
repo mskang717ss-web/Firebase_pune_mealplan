@@ -218,6 +218,7 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .nm2 .dsh{color:#8A93A0}
 .ko{color:var(--muted);font-weight:400;font-size:.92em}
 .okmark{color:var(--ok);font-weight:700}
+.undo{border:1px solid #BFDCCB;background:var(--ok-bg);color:var(--ok);border-radius:5px;font-size:11.5px;font-weight:700;padding:2px 6px;cursor:pointer;white-space:nowrap}.undo:hover{border-color:var(--ok)}
 .urow .ml{display:none}
 .keep{display:block;font-size:11px;color:var(--muted);font-family:"Noto Sans",sans-serif;margin-top:2px}
 .keep .par{width:44px;border:1px solid var(--line);border-radius:4px;padding:1px 4px;font-size:11.5px;text-align:right}
@@ -305,7 +306,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .secbar{padding:6px 10px;font-size:13.5px}
   .secbar .r{display:none}
   .shopcols,.shopcols2,.two{grid-template-columns:1fr}
-  .urow{grid-template-columns:repeat(3,minmax(0,1fr)) 36px;grid-template-areas:"item item item chk" "have need buy buy";gap:6px 8px;padding:9px 10px}
+  .urow{grid-template-columns:repeat(3,minmax(0,1fr)) minmax(36px,auto);grid-template-areas:"item item item chk" "have need buy buy";gap:6px 8px;padding:9px 10px}
   .urow.uhd{display:none}
   .urow{background-image:none}
   .urow .sl{grid-area:item}.urow .uc{grid-area:chk;align-self:center}
@@ -322,6 +323,8 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .urow .nm2 .n{font-weight:600;font-size:15px}
   .urow .nm2 .dsh{display:none}
   .bought{width:24px;height:24px}
+  .urow .undo{font-size:11px;padding:3px 6px}
+  .urow .uc{justify-self:end}
   .hint{display:none}
   .urow .thumb{width:32px;height:32px;font-size:17px}
   .seg button{padding:4px 5px;font-size:10.5px}
@@ -346,7 +349,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.11</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.12</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -746,7 +749,8 @@ function renderShop(m){
     const sub=(a.counted&&(a.staple?a.status:a.raw!=null))?(a.staple?"Checked "+fmtShort(new Date(a.counted)):"Counted "+fmtShort(new Date(a.counted))+(a.used>0?" · "+fmtQty(a.used)+" "+a.unit+" used since":"")):"Not counted yet";
     const need=a.staple?(a.dishes.size?"used":"—"):((a.need==null||(!a.dishes.size&&a.par))?(a.par?"—":"—"):(a.num?(fmtQty(rnd(a.need))+" "+a.unit).trim():"as needed"));
     const buy=a.buy?(a.staple?"Buy":(a.num?(fmtQty(a.buyQty)+" "+a.unit).trim():"1")):"—";
-    const chk=a.buy?`<input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought">`:(a.dishes.size?'<span class="okmark" title="Enough for this week">✓</span>':"");
+    const lb=(S.inv[a.key]||{}).last_buy, recent=lb&&lb.at&&(Date.now()-new Date(lb.at))<3*864e5;
+    const chk=a.buy?`<input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought">`:recent?`<button class="undo noprint" data-k="${esc(a.key)}" title="Cancel the last “Bought”">✓ Undo</button>`:(a.dishes.size?'<span class="okmark" title="Enough for this week">✓</span>':"");
     return `<div class="urow ${a.buy?"tobuy":""} ${a.staple?"st":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}${koName(a)?` <span class="ko">/ ${esc(koName(a))}</span>`:""}${S.isAdmin?` <button class="iedit noprint" data-ek="${esc(a.key)}" title="Edit item">Edit</button>`:""}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh"><span class="ml">Have</span>${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need"><span class="ml">Need</span><span class="mv">${esc(need)}</span>${a.staple?"":`<span class="keep">keep <input type="number" class="par" min="0" step="any" inputmode="decimal" data-k="${esc(a.key)}" value="${a.par||""}" placeholder="0"></span>`}</span><span class="c-buy"><span class="ml">Buy</span><span class="mv">${esc(buy)}</span></span><span class="uc">${chk}</span></div>`;};
   const hdr='<div class="urow uhd"><span>Item</span><span class="h-have">What I have</span><span class="c-need h-need">Need</span><span class="c-buy h-need">To buy</span><span class="uc h-need">Bought</span></div>';
   const groups=SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c);if(!l.length&&!(S.isAdmin&&!q&&S.shopFilter==="all"))return "";return grp(c,l);}).join("");
@@ -835,10 +839,10 @@ function allStockItems(){
   for(const k in S.inv) if(!map[k]){const v=S.inv[k];map[k]={key:k,item:v.item,unit:v.unit||"",cat:SHOP_CATS.includes(v.category)?v.category:"Others",staple:v.is_staple};}
   return Object.values(map).map(attachInv);
 }
-async function saveInv(a,patch,recount){
+async function saveInv(a,patch,recount,extra){
   const cur=S.inv[a.key]||{};
   const qty=("qty" in patch)?patch.qty:(cur.qty??null), status=("status" in patch)?patch.status:(cur.status??null);
-  const now=nowIso(), row={item_key:a.key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:!!a.staple,qty,status,updated_at:now,counted_at:(recount||!cur.counted_at)?now:cur.counted_at};
+  const now=nowIso(), row={item_key:a.key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:!!a.staple,qty,status,updated_at:now,counted_at:("counted_at" in patch)?patch.counted_at:((recount||!cur.counted_at)?now:cur.counted_at),...(extra||{})};
   const error=await tryDo(()=>C("inventory").doc(kid(a.key)).set(row,{merge:true}));
   if(error){toast("Not saved: "+eMsg(error));render();return false;}
   S.inv[a.key]={...cur,...row};
@@ -851,6 +855,11 @@ async function addStockItem(){
   if(S.inv[a.key]) return toast("Already in the list");
   if(await saveInv(a,{qty:null,status:null},true)) toast(item+" added");
 }
+document.getElementById("main").addEventListener("click",async e=>{const u=e.target.closest("button.undo");if(!u)return;e.stopPropagation();
+  const a=S.rows[u.dataset.k], lb=a&&(S.inv[a.key]||{}).last_buy; if(!lb) return;
+  u.disabled=true;
+  if(await saveInv(a,{qty:lb.qty,status:lb.status,counted_at:lb.counted_at},false,{last_buy:null})) toast(a.item+" — Bought cancelled");
+});
 document.getElementById("main").addEventListener("click",e=>{const b=e.target.closest(".iedit");if(b){e.stopPropagation();openItemEdit(b.dataset.ek);}});
 document.getElementById("main").addEventListener("change",async e=>{
   const t=e.target;
@@ -862,8 +871,9 @@ document.getElementById("main").addEventListener("change",async e=>{
     S.inv[a.key]=row;render();return;}
   if(t.classList.contains("stk")){const a=S.rows[t.dataset.k];if(!a)return;const raw=t.value.trim();const v=raw===""?null:parseFloat(raw);if(v!==null&&(isNaN(v)||v<0))return toast("Enter a number");await saveInv(a,{qty:v===null?null:rnd(v)},true);}
   else if(t.classList.contains("bought")){const a=S.buyRows[t.dataset.k];if(!a)return;
-    const ok=a.staple?await saveInv(a,{status:"ok"},true):(a.raw==null?await saveInv(a,{qty:rnd((a.num?a.buyQty:1)+(a.have||0))},true):await saveInv(a,{qty:rnd(a.raw+(a.num?a.buyQty:1))},false));
-    if(ok) toast(a.item+" — added to stock");}
+    const cur=S.inv[a.key]||{}, lb={qty:cur.qty??null,status:cur.status??null,counted_at:cur.counted_at??null,at:nowIso()};
+    const ok=a.staple?await saveInv(a,{status:"ok"},true,{last_buy:lb}):(a.raw==null?await saveInv(a,{qty:rnd((a.num?a.buyQty:1)+(a.have||0))},true,{last_buy:lb}):await saveInv(a,{qty:rnd(a.raw+(a.num?a.buyQty:1))},false,{last_buy:lb}));
+    if(ok) toast(a.item+" — added to stock (tap Undo to cancel)");}
 });
 document.getElementById("main").addEventListener("click",e=>{
   const ed=e.target.closest(".thumb[data-pk]");
@@ -1179,7 +1189,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.11</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.12</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
