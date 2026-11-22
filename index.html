@@ -41,6 +41,15 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .ytbtn{display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;padding:8px 14px;background:#CC0000;color:#fff!important;border-radius:6px;font-weight:600;font-size:14px;text-decoration:none}
 .ytbtn:hover{background:#A80000}
 .aibtn{border-color:#C9B8F0;color:#5B3FC4;background:#F6F2FF}.aibtn:hover{border-color:#5B3FC4;color:#5B3FC4}
+.finder{border:1px solid var(--box-line);background:var(--box);border-radius:6px;padding:10px 12px;margin-bottom:6px}
+.finder .ytrow input{font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:6px}
+.fres{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:10px}
+.fcard{background:#fff;border:1px solid var(--line);border-radius:7px;overflow:hidden;display:flex;flex-direction:column}
+.fcard img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--box)}
+.fcard .t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:12.5px;font-weight:600;padding:6px 8px 0;line-height:1.3;min-height:2.6em}
+.fcard .c{font-size:11px;color:var(--muted);padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fcard .a{display:flex;gap:6px;padding:7px 8px 8px;margin-top:auto}.fcard .a .btn{flex:1;text-align:center;text-decoration:none;font-size:12.5px;padding:5px 6px}
+.fnote{font-size:12.5px;color:var(--muted);margin-top:8px}.fnote a{color:var(--blue)}
 .aihint{margin:0 0 8px;padding:7px 10px;border-radius:6px;background:#F6F2FF;border:1px solid #DCD0FA;color:#4A3699;font-size:13px}
 .ytrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.ytrow input{flex:1;min-width:220px}
 .ytres{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
@@ -97,7 +106,10 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .chip .nm.link:hover{color:var(--blue);text-decoration:underline}
 .chip .n1{display:block;font-weight:600;color:var(--ink)}.chip .n2{display:block;font-size:11.5px;color:var(--muted);font-weight:400}
 .chip .nt{display:block;font-size:11.5px;color:var(--muted);font-style:italic}
-.grid .chip .nm{min-height:50px}
+.grid .chip{height:62px;align-items:center;gap:6px;padding:4px 14px 4px 5px;position:relative}
+.grid .chip .cth{width:38px;height:38px;font-size:20px;border-radius:6px}
+.grid .chip .nm{overflow-wrap:normal;hyphens:manual}
+.grid .chip .x{position:absolute;top:1px;right:1px}
 .grid .chip .n1{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .grid .chip .n2,.grid .chip .nt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chip .x{border:0;background:none;color:var(--muted);cursor:pointer;padding:0 2px;font-size:14px;line-height:1}
@@ -203,6 +215,7 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 }
 .nm2{min-width:0;display:block}.nm2 .n{display:block}.nm2 .f{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nm2 .dsh{color:#8A93A0}
+.ko{color:var(--muted);font-weight:400;font-size:.92em}
 .okmark{color:var(--ok);font-weight:700}
 .urow .ml{display:none}
 .keep{display:block;font-size:11px;color:var(--muted);font-family:"Noto Sans",sans-serif;margin-top:2px}
@@ -251,6 +264,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .grid .chip .nm{flex-basis:100%}
   .grid .chip .x{position:absolute;top:2px;right:2px;background:rgba(255,255,255,.85);border-radius:3px}
   .grid .chip .n2{font-size:11px}
+  .grid .chip{height:auto;align-items:stretch}
   .grid .chip .nm{min-height:46px}
 }
 @media (max-width:760px){
@@ -331,7 +345,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.05</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.06</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -665,6 +679,16 @@ function ytThumb(r){const id=ytId(r.video_url);return id?`https://i.ytimg.com/vi
 function photoOf(r){return safeImg(r.photo_url)||ytThumb(r);}
 function videoLink(r){return ytId(r.video_url)?r.video_url:"https://www.youtube.com/results?search_query="+encodeURIComponent("how to make "+r.name.replace(/\(.*?\)/g,"")+" recipe english");}
 function dishPic(r){const p=photoOf(r);return p?`<img ${imgSrc(p)} alt="" loading="lazy">`:`<span>${dishEmoji(r)}</span>`;}
+const KO=[["salt & black pepper","소금·후추"],["sweet potato","고구마"],["spring onion","대파"],["green onion","대파"],["cooked rice","밥"],["rice cake","떡"],["glass noodle","당면"],["sesame oil","참기름"],["sesame seed","참깨"],["soy sauce","간장"],["fish sauce","액젓"],["oyster sauce","굴소스"],["black pepper","후추"],["chilli flakes","고춧가루"],["gochugaru","고춧가루"],["gochujang","고추장"],["doenjang","된장"],["chicken breast","닭가슴살"],["chicken thigh","닭다리살"],["pork belly","삼겹살"],["seaweed sheet","김"],["gim","김"],["dried seaweed","미역"],["miyeok","미역"],["bean sprout","콩나물"],["perilla","깻잎"],["rice wine","맛술"],["mirin","맛술"],["corn syrup","물엿"],["cooking oil","식용유"],["green chilli","풋고추"],["cheese","치즈"],["mayonnaise","마요네즈"],["kimchi","김치"],["tofu","두부"],["zucchini","애호박"],["potato","감자"],["onion","양파"],["garlic","마늘"],["ginger","생강"],["cabbage","양배추"],["carrot","당근"],["spinach","시금치"],["cucumber","오이"],["lettuce","상추"],["tomato","토마토"],["mushroom","버섯"],["radish","무"],["egg","계란"],["bacon","베이컨"],["ham","햄"],["pork","돼지고기"],["beef","소고기"],["chicken","닭고기"],["anchovy","멸치"],["fish","생선"],["bread","식빵"],["milk","우유"],["butter","버터"],["flour","밀가루"],["noodle","면"],["rice","쌀"],["sugar","설탕"],["salt","소금"],["vinegar","식초"],["honey","꿀"],["watermelon","수박"],["apple","사과"],["banana","바나나"],["orange","오렌지"],["papaya","파파야"],["pomegranate","석류"],["mango","망고"],["grape","포도"],["lemon","레몬"],["kiwi","키위"],["pear","배"],["strawberr","딸기"]];
+function koName(a){ const v=S.inv[a.key]; if(v&&v.ko) return v.ko; if(a.ko) return a.ko; return koLookup(a.item); }
+function koLookup(name){ // the match that ends last wins (English head noun is last: "sweet potato glass noodles" → 당면)
+  const full=String(name||"").toLowerCase(), base=full.replace(/\(.*?\)/g," ");
+  for(const n of [base,full]){ let best=null;
+    for(const [k,ko] of KO){ const i=n.lastIndexOf(k); if(i<0) continue; const end=i+k.length;
+      if(!best||end>best.end||(end===best.end&&k.length>best.len)) best={end,len:k.length,ko}; }
+    if(best) return best.ko; }
+  return "";
+}
 function itemEmoji(a){const n=a.item.toLowerCase();for(const [k,e] of EMOJI) if(n.includes(k)) return e;return CAT_EMOJI[a.cat]||"🛒";}
 function thumb(a){
   const v=S.inv[a.key], u=v&&safeImg(v.photo_url);
@@ -713,7 +737,7 @@ function renderShop(m){
     const need=a.staple?(a.dishes.size?"used":"—"):((a.need==null||(!a.dishes.size&&a.par))?(a.par?"—":"—"):(a.num?(fmtQty(rnd(a.need))+" "+a.unit).trim():"as needed"));
     const buy=a.buy?(a.staple?"Buy":(a.num?(fmtQty(a.buyQty)+" "+a.unit).trim():"1")):"—";
     const chk=a.buy?`<input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought">`:(a.dishes.size?'<span class="okmark" title="Enough for this week">✓</span>':"");
-    return `<div class="urow ${a.buy?"tobuy":""} ${a.staple?"st":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}${S.isAdmin?` <button class="iedit noprint" data-ek="${esc(a.key)}" title="Edit item">Edit</button>`:""}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh"><span class="ml">Have</span>${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need"><span class="ml">Need</span><span class="mv">${esc(need)}</span>${a.staple?"":`<span class="keep">keep <input type="number" class="par" min="0" step="any" inputmode="decimal" data-k="${esc(a.key)}" value="${a.par||""}" placeholder="0"></span>`}</span><span class="c-buy"><span class="ml">Buy</span><span class="mv">${esc(buy)}</span></span><span class="uc">${chk}</span></div>`;};
+    return `<div class="urow ${a.buy?"tobuy":""} ${a.staple?"st":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}${koName(a)?` <span class="ko">/ ${esc(koName(a))}</span>`:""}${S.isAdmin?` <button class="iedit noprint" data-ek="${esc(a.key)}" title="Edit item">Edit</button>`:""}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh"><span class="ml">Have</span>${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need"><span class="ml">Need</span><span class="mv">${esc(need)}</span>${a.staple?"":`<span class="keep">keep <input type="number" class="par" min="0" step="any" inputmode="decimal" data-k="${esc(a.key)}" value="${a.par||""}" placeholder="0"></span>`}</span><span class="c-buy"><span class="ml">Buy</span><span class="mv">${esc(buy)}</span></span><span class="uc">${chk}</span></div>`;};
   const hdr='<div class="urow uhd"><span>Item</span><span class="h-have">What I have</span><span class="c-need h-need">Need</span><span class="c-buy h-need">To buy</span><span class="uc h-need">Bought</span></div>';
   const groups=SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c);if(!l.length&&!(S.isAdmin&&!q&&S.shopFilter==="all"))return "";return grp(c,l);}).join("");
   function grp(c,l0){const l=l0.sort((x,y)=>x.item.localeCompare(y.item));
@@ -753,6 +777,7 @@ function openItemEdit(key){
     ${uses.length?`<p style="margin:0 0 10px;color:var(--muted);font-size:13px">Used in: ${esc(uses.join(", "))}. Changes to name, unit or category are also saved in these recipes.</p>`:""}
     <label>Name</label><input id="ieN" value="${esc(a.item)}">
     ${a.staple?"":`<label>Unit</label><input id="ieU" value="${esc(a.unit||"")}">`}
+    <label>Korean name (optional, shown after the English name)</label><input id="ieK" value="${esc(cur.ko||koName(a)||"")}" placeholder="e.g. 간장">
     <label>Category</label><select id="ieC">${SHOP_CATS.map(c=>`<option ${c===a.cat?"selected":""}>${c}</option>`).join("")}</select>
     ${a.staple?"":`<label>Keep at least (optional)</label><input id="ieP" type="number" min="0" step="any" inputmode="decimal" value="${cur.par??""}">`}
   </div>`,`<span>${uses.length?"":'<button class="btn danger" id="ieDel">Delete item</button>'}</span><button class="btn primary" id="ieSave">Save</button>`);
@@ -769,7 +794,8 @@ function openItemEdit(key){
     const unit=a.staple?"":document.getElementById("ieU").value.trim();
     const cat=document.getElementById("ieC").value, nk=invKey(item,unit,!!a.staple);
     if(nk!==key&&(S.inv[nk]||allStockItems().some(x=>x.key===nk))) return toast("An item with that name and unit already exists");
-    const row={...cur,item_key:nk,item,unit:unit||null,category:cat,is_staple:!!a.staple,qty:cur.qty??null,status:cur.status??null,counted_at:cur.counted_at??nowIso(),par,updated_at:nowIso()};
+    const ko=document.getElementById("ieK").value.trim().slice(0,30);
+    const row={...cur,item_key:nk,item,unit:unit||null,category:cat,is_staple:!!a.staple,qty:cur.qty??null,status:cur.status??null,counted_at:cur.counted_at??nowIso(),par,ko:ko||null,updated_at:nowIso()};
     delete row.id;
     const recUpd=[];
     if(item!==a.item||unit!==(a.unit||"")||cat!==a.cat) for(const r of S.recipes){
@@ -794,7 +820,7 @@ function allStockItems(){
   for(const r of S.recipes) for(const ing of (r.ingredients||[])){
     if(!ing.item) continue;
     const staple=!!ing.staple, unit=staple?"":String(ing.unit||"").trim(), key=invKey(ing.item,unit,staple);
-    if(!map[key]) map[key]={key,item:ing.item.trim(),unit,cat:SHOP_CATS.includes(ing.cat)?ing.cat:"Others",staple};
+    if(!map[key]) map[key]={key,item:ing.item.trim(),unit,cat:SHOP_CATS.includes(ing.cat)?ing.cat:"Others",staple,ko:ing.ko||""};
   }
   for(const k in S.inv) if(!map[k]){const v=S.inv[k];map[k]={key:k,item:v.item,unit:v.unit||"",cat:SHOP_CATS.includes(v.category)?v.category:"Others",staple:v.is_staple};}
   return Object.values(map).map(attachInv);
@@ -901,14 +927,15 @@ function renderRecipes(m){
   const q=S.rSearch.toLowerCase();
   const list=S.recipes.filter(r=>(S.rCat==="All"||r.category===S.rCat)&&(!q||r.name.toLowerCase().includes(q)||(r.ingredients||[]).some(i=>(i.item||"").toLowerCase().includes(q))));
   const used=["All",...CATS.filter(c=>S.recipes.some(r=>r.category===c))];
-  m.innerHTML=`<div class="secbar"><span>1. Recipes</span><span class="r">${S.recipes.length} recipes</span></div>
+  m.innerHTML=(S.isAdmin?finderHtml():"")+`<div class="secbar"><span>${S.isAdmin?"2. ":"1. "}Recipes</span><span class="r">${S.recipes.length} recipes</span></div>
     <div class="rfilter"><input id="rSearch" placeholder="Search dish or ingredient…" value="${esc(S.rSearch)}">${used.map(c=>`<button class="pill ${c===S.rCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}
-    ${S.isAdmin?'<span style="flex:1"></span><button class="btn sm aibtn" onclick="openGemini()">✨ Gemini recipe</button><button class="btn primary sm" onclick="openRecipeEdit()">+ New recipe</button>':""}</div>
+    ${S.isAdmin?'<span style="flex:1"></span><button class="btn sm" onclick="openRecipeEdit()">+ Write a recipe myself</button>':""}</div>
     ${S.isOwner&&!S.recipes.length?`<div class="notebox"><div class="h">Import data from the old app</div>Choose the data file (.json) to copy recipes, meal plans and stock into this app. <input type="file" accept=".json,application/json" onchange="this.files[0]&&importData(this.files[0])" style="margin-top:6px;display:block"></div>`:""}
     <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${photoOf(r)?`<img class="rph" ${imgSrc(photoOf(r))} loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
   const s=document.getElementById("rSearch");
   s.oninput=()=>{S.rSearch=s.value;const p=s.selectionStart;renderRecipes(m);const n=document.getElementById("rSearch");n.focus();n.setSelectionRange(p,p);};
-  m.querySelectorAll(".pill").forEach(b=>b.onclick=()=>{S.rCat=b.dataset.c;renderRecipes(m);});
+  m.querySelectorAll(".rfilter .pill").forEach(b=>b.onclick=()=>{S.rCat=b.dataset.c;renderRecipes(m);});
+  if(S.isAdmin) wireFinder();
 }
 function openRecipe(id){
   const r=S.rmap[id]; if(!r) return;
@@ -921,12 +948,12 @@ function openRecipe(id){
   openModal(r.name,body,S.isAdmin?`<button class="btn danger" onclick="delRecipe('${r.id}')">Delete</button><button class="btn primary" onclick="openRecipeEdit('${r.id}')">Edit</button>`:"");
 }
 function ingRow(i={}){
-  return `<div class="ingrow"><input class="ii" placeholder="Ingredient" value="${esc(i.item||"")}"><input class="iq" placeholder="Qty" value="${esc(i.qty??"")}"><input class="iu" placeholder="Unit" value="${esc(i.unit||"")}"><select class="ic">${SHOP_CATS.map(c=>`<option ${c===(i.cat||"Others")?"selected":""}>${c}</option>`).join("")}</select><label class="pc"><input type="checkbox" class="is" ${i.staple?"checked":""}>Pantry</label><button class="btn sm" onclick="this.parentNode.remove()" title="Remove">×</button></div>`;
+  return `<div class="ingrow" data-ko="${esc(i.ko||"")}"><input class="ii" placeholder="Ingredient" value="${esc(i.item||"")}"><input class="iq" placeholder="Qty" value="${esc(i.qty??"")}"><input class="iu" placeholder="Unit" value="${esc(i.unit||"")}"><select class="ic">${SHOP_CATS.map(c=>`<option ${c===(i.cat||"Others")?"selected":""}>${c}</option>`).join("")}</select><label class="pc"><input type="checkbox" class="is" ${i.staple?"checked":""}>Pantry</label><button class="btn sm" onclick="this.parentNode.remove()" title="Remove">×</button></div>`;
 }
 function openRecipeEdit(id,draft){
   const r=id?S.rmap[id]:(draft||{name:"",category:"Main",servings:1,prep_min:"",cook_min:"",ingredients:[],steps:[],notes:""});
   const body=`<div class="form">
-    ${draft?'<p class="aihint">✨ Made by Gemini — check the amounts and steps, then press <b>Save recipe</b>.</p>':""}
+    ${draft?`<p class="aihint">✨ Made by Gemini${draft.video_url?" from the video":""} — check the amounts and steps, then press <b>Save recipe</b>.</p>`:""}
     <label>Dish name</label><div class="ytrow"><input id="reName" value="${esc(r.name)}"><button type="button" class="btn sm aibtn" id="reAI" title="Fill ingredients and steps with Gemini">✨ Fill with Gemini</button></div>
     <div class="row" style="grid-template-columns:2fr 1fr 1fr 1fr">
       <div><label>Category</label><select id="reCat">${CATS.map(c=>`<option ${c===r.category?"selected":""}>${c}</option>`).join("")}</select></div>
@@ -951,10 +978,16 @@ function openRecipeEdit(id,draft){
 }
 async function saveRecipe(id){
   const v=x=>document.getElementById(x).value;
+  const emptyRecipe=![...document.querySelectorAll("#ingList .ii")].some(i=>i.value.trim())&&!v("reSteps").trim();
+  if(emptyRecipe&&ytId(v("reVideo"))){ // only a video link → let Gemini watch it and fill everything, then save
+    document.getElementById("reMsg").innerHTML='<span class="tag warn">✨ Gemini is watching the video and filling the recipe… (10–30 s)</span>';
+    try{ fillForm(await aiRecipe(v("reName").trim(),v("reVideo")),true); }
+    catch(e){ document.getElementById("reMsg").innerHTML='<span class="tag bad">'+esc(e.message||String(e))+'</span>'; return; }
+  }
   const name=v("reName").trim(); if(!name){document.getElementById("reMsg").innerHTML='<span class="tag bad">Dish name needed</span>';return;}
   const ingredients=[...document.querySelectorAll("#ingList .ingrow")].map(row=>{
     const qRaw=row.querySelector(".iq").value.trim(), qn=Number(qRaw);
-    return {item:row.querySelector(".ii").value.trim(),qty:qRaw===""?"":(isNaN(qn)?qRaw:qn),unit:row.querySelector(".iu").value.trim(),cat:row.querySelector(".ic").value,...(row.querySelector(".is").checked?{staple:true}:{})};
+    return {item:row.querySelector(".ii").value.trim(),...(row.dataset.ko?{ko:row.dataset.ko}:{}),qty:qRaw===""?"":(isNaN(qn)?qRaw:qn),unit:row.querySelector(".iu").value.trim(),cat:row.querySelector(".ic").value,...(row.querySelector(".is").checked?{staple:true}:{})};
   }).filter(i=>i.item);
   const rec={name,category:v("reCat"),servings:Math.max(1,parseInt(v("reSv"))||1),prep_min:v("rePrep")===""?null:parseInt(v("rePrep")),cook_min:v("reCook")===""?null:parseInt(v("reCook")),
     ingredients,steps:v("reSteps").split("\n").map(s=>s.trim()).filter(Boolean),notes:v("reNotes").trim()||null,video_url:/^https:\/\//.test(v("reVideo").trim())?v("reVideo").trim():null,updated_at:nowIso()};
@@ -1019,19 +1052,19 @@ const RECIPE_SCHEMA={type:"OBJECT",properties:{
   category:{type:"STRING",enum:CATS},
   servings:{type:"INTEGER"},prep_min:{type:"INTEGER"},cook_min:{type:"INTEGER"},
   ingredients:{type:"ARRAY",items:{type:"OBJECT",properties:{
-    item:{type:"STRING"},qty:{type:"NUMBER",nullable:true},unit:{type:"STRING"},cat:{type:"STRING",enum:SHOP_CATS},staple:{type:"BOOLEAN"}},
+    item:{type:"STRING"},ko:{type:"STRING",description:"Korean name in Hangul, e.g. 간장"},qty:{type:"NUMBER",nullable:true},unit:{type:"STRING"},cat:{type:"STRING",enum:SHOP_CATS},staple:{type:"BOOLEAN"}},
     required:["item","unit","cat","staple"]}},
   steps:{type:"ARRAY",items:{type:"STRING"}},
   notes:{type:"STRING"}},
   required:["name","category","servings","prep_min","cook_min","ingredients","steps"]};
-async function geminiJSON(prompt,system){
-  if(EMU&&window.__aiMock) return window.__aiMock(prompt);
+async function geminiJSON(prompt,system,extra){
+  if(EMU&&window.__aiMock) return window.__aiMock(prompt,extra);
   let last;
   for(const m of AI_MODELS){
     const res=await fetch(`https://firebasevertexai.googleapis.com/v1beta/projects/${FB_CONFIG.projectId}/models/${m}:generateContent`,{method:"POST",
       headers:{"Content-Type":"application/json","x-goog-api-key":FB_CONFIG.apiKey,"X-Firebase-Appid":FB_CONFIG.appId},
-      body:JSON.stringify({systemInstruction:{parts:[{text:system}]},contents:[{role:"user",parts:[{text:prompt}]}],
-        generationConfig:{responseMimeType:"application/json",responseSchema:RECIPE_SCHEMA,temperature:0.4}})});
+      body:JSON.stringify({systemInstruction:{parts:[{text:system}]},contents:[{role:"user",parts:[...(extra||[]),{text:prompt}]}],
+        generationConfig:{responseMimeType:"application/json",responseSchema:RECIPE_SCHEMA,temperature:0.4,...(extra?{mediaResolution:"MEDIA_RESOLUTION_LOW"}:{})}})});
     const j=await res.json().catch(()=>({}));
     if(res.ok){ const t=(j.candidates?.[0]?.content?.parts||[]).map(p=>p.text||"").join(""); return JSON.parse(t); }
     last=j.error||{message:"HTTP "+res.status};
@@ -1055,40 +1088,92 @@ function aiToDraft(d){
   const cat=x=>SHOP_CATS.includes(x)?x:"Others";
   return {name:String(d.name||"").trim(),category:CATS.includes(d.category)?d.category:"Main",servings:Math.max(1,parseInt(d.servings)||2),
     prep_min:Number.isFinite(d.prep_min)?d.prep_min:"",cook_min:Number.isFinite(d.cook_min)?d.cook_min:"",
-    ingredients:(d.ingredients||[]).filter(g=>g&&g.item).map(g=>({item:String(g.item).trim(),qty:(g.qty===null||g.qty===undefined)?"":g.qty,unit:String(g.unit||"").trim(),cat:cat(g.cat),...(g.staple?{staple:true}:{})})),
+    ingredients:(d.ingredients||[]).filter(g=>g&&g.item).map(g=>({item:String(g.item).trim(),...(g.ko?{ko:String(g.ko).trim().slice(0,30)}:{}),qty:(g.qty===null||g.qty===undefined)?"":g.qty,unit:String(g.unit||"").trim(),cat:cat(g.cat),...(g.staple?{staple:true}:{})})),
     steps:(d.steps||[]).map(x=>String(x).trim()).filter(Boolean),notes:String(d.notes||"").trim(),video_url:""};
 }
-function openGemini(){
-  openModal("✨ Gemini recipe",`<div class="form">
-    <p style="margin:0 0 8px;color:var(--muted);font-size:13px">Type a dish. Gemini writes the ingredients and steps; you check them before saving.</p>
-    <label>Dish</label><input id="aiDish" placeholder="e.g. Japchae, Tteokbokki, Chicken curry">
-    <label>Wishes (optional)</label><input id="aiWish" placeholder="e.g. for 3 people, not spicy, no pork">
-    <div class="msg" id="aiMsg"></div></div>`,`<span></span><button class="btn primary" id="aiGo">✨ Create recipe</button>`);
-  const go=document.getElementById("aiGo"), dish=document.getElementById("aiDish");
-  dish.focus(); dish.onkeydown=e=>{if(e.key==="Enter")go.click();};
-  go.onclick=async()=>{
-    const name=dish.value.trim(), wish=document.getElementById("aiWish").value.trim();
-    if(!name) return document.getElementById("aiMsg").innerHTML='<span class="tag bad">Type a dish</span>';
-    go.disabled=true; document.getElementById("aiMsg").innerHTML='<span class="tag warn">Gemini is writing the recipe… (about 10 s)</span>';
-    try{ const d=aiToDraft(await geminiJSON(`Write a recipe for: ${name}.${wish?" Wishes: "+wish+".":""}`,geminiSystem())); if(!d.name) d.name=name; openRecipeEdit(null,d); }
-    catch(e){ go.disabled=false; document.getElementById("aiMsg").innerHTML='<span class="tag bad">'+esc(e.message||String(e))+'</span>'; }
-  };
+async function aiRecipe(name,videoUrl){
+  const vid=ytId(videoUrl||"");
+  if(!vid) return aiToDraft(await geminiJSON(`Write a recipe for: ${name}.`,geminiSystem()));
+  const v=await videoDetails(vid), url="https://www.youtube.com/watch?v="+vid;
+  const ask=`Turn this YouTube cooking video into a recipe${name?` for "${name}"`:""}. Follow what the video shows (ingredients, amounts, order, heat, minutes). Video title: ${v.title}\nChannel: ${v.channel}\nVideo description:\n${(v.desc||"").slice(0,4000)}`;
+  let d;
+  try{ d=await geminiJSON(ask,geminiSystem(),[{fileData:{mimeType:"video/*",fileUri:url}}]); }
+  catch(e){ if(/not turned on/i.test(e.message)) throw e;
+    d=await geminiJSON(ask+"\n(The video itself could not be opened — use the title and description, and fill gaps with a standard recipe.)",geminiSystem()); }
+  const draft=aiToDraft(d); draft.video_url=url; return draft;
+}
+function fillForm(d,keepName){ // put a Gemini draft into the open recipe form
+  const set=(id,val)=>{const el=document.getElementById(id); if(el&&val!==undefined&&val!==null) el.value=val;};
+  if(!keepName||!document.getElementById("reName").value.trim()) set("reName",d.name);
+  set("reCat",d.category); set("reSv",d.servings); set("rePrep",d.prep_min); set("reCook",d.cook_min);
+  document.getElementById("ingList").innerHTML=(d.ingredients.length?d.ingredients:[{}]).map(ingRow).join("");
+  set("reSteps",d.steps.join("\n")); set("reNotes",d.notes);
+  if(d.video_url&&!document.getElementById("reVideo").value.trim()) set("reVideo",d.video_url);
 }
 async function fillWithGemini(id){
-  const nameEl=document.getElementById("reName"), name=nameEl.value.trim(), b=document.getElementById("reAI");
-  if(!name) return toast("Type the dish name first");
+  const name=document.getElementById("reName").value.trim(), video=document.getElementById("reVideo").value.trim(), b=document.getElementById("reAI");
+  if(!name&&!ytId(video)) return toast("Type the dish name or choose a video first");
   const hasData=[...document.querySelectorAll("#ingList .ii")].some(i=>i.value.trim())||document.getElementById("reSteps").value.trim();
   if(hasData&&b.dataset.sure!=="1"){ b.dataset.sure="1"; b.textContent="Replace ingredients & steps? Tap again"; return; }
-  b.disabled=true; b.textContent="✨ Writing…";
-  try{
-    const d=aiToDraft(await geminiJSON(`Write a recipe for: ${name}.`,geminiSystem()));
-    const keep={video_url:document.getElementById("reVideo").value.trim(),photo_url:id?(S.rmap[id]||{}).photo_url:null};
-    if(id){ const r=S.rmap[id]; openRecipeEditWith(id,{...r,...d,name:d.name||name,...keep}); } else openRecipeEdit(null,{...d,name:d.name||name,...keep});
-  }catch(e){ b.disabled=false; b.dataset.sure=""; b.textContent="✨ Fill with Gemini"; toast(e.message||String(e)); }
+  b.disabled=true; b.textContent=ytId(video)?"✨ Watching the video…":"✨ Writing…";
+  try{ fillForm(await aiRecipe(name,video),true); document.getElementById("reMsg").innerHTML='<span class="tag ok">✨ Filled by Gemini — check it, then press Save recipe</span>'; }
+  catch(e){ toast(e.message||String(e)); }
+  b.disabled=false; b.dataset.sure=""; b.textContent="✨ Fill with Gemini";
 }
-function openRecipeEditWith(id,draft){ // edit an existing recipe but show Gemini's draft in the form
-  const orig=S.rmap[id]; S.rmap[id]=draft; try{ openRecipeEdit(id); }finally{ S.rmap[id]=orig; }
-  document.querySelector("#modal .form").insertAdjacentHTML("afterbegin",'<p class="aihint">✨ Filled by Gemini — check it, then press <b>Save recipe</b> (Cancel keeps the old recipe).</p>');
+
+/* "Add a new dish": search YouTube → pick a video → Gemini turns it into a recipe draft */
+function finderHtml(){
+  return `<div class="secbar"><span>1. Add a new dish</span><span class="r">search YouTube → pick a video → ✨ Gemini writes the recipe</span></div>
+  <div class="finder"><div class="ytrow"><input id="fQ" placeholder="What do you want to cook? (e.g. Japchae) — or paste a YouTube link" value="${esc(S.fQ||"")}"><button class="btn primary" id="fGo">▶ Search YouTube</button></div>
+  <div class="fres" id="fRes">${S.fRes||""}</div>
+  <div class="fnote" id="fNote">${S.fNote||""}</div></div>`;
+}
+function wireFinder(){
+  const q=document.getElementById("fQ"), go=document.getElementById("fGo");
+  q.onkeydown=e=>{if(e.key==="Enter")go.click();};
+  go.onclick=()=>searchDishes(q.value.trim());
+  document.getElementById("fRes").onclick=e=>{const b=e.target.closest("[data-make]");if(b) makeFromVideo(b.dataset.make,b);};
+  document.getElementById("fNote").onclick=e=>{const a=e.target.closest("[data-nov]");if(a){e.preventDefault();makeWithoutVideo(a.dataset.nov);}};
+}
+function finderSet(res,note){ S.fRes=res; S.fNote=note; const r=document.getElementById("fRes"),n=document.getElementById("fNote"); if(r) r.innerHTML=res; if(n) n.innerHTML=note; }
+function fcard(v){ return `<div class="fcard"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" loading="lazy"><span class="t">${esc(v.title)}</span><span class="c">${esc(v.channel)}</span>
+  <div class="a"><a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Watch</a><button class="btn aibtn" data-make="${v.id}">✨ Make recipe</button></div></div>`; }
+async function searchDishes(q){
+  S.fQ=q; S.fVids=S.fVids||{};
+  if(!q) return toast("Type a dish or paste a YouTube link");
+  const noVid=`Or <a href="#" data-nov="${esc(q)}">✨ let Gemini write “${esc(q)}” without a video</a>.`;
+  const id=ytId(q);
+  if(id){ S.fVids[id]={id,title:"YouTube video",channel:"",desc:""}; return finderSet(fcard(S.fVids[id]),""); }
+  if(!S.ytKey){
+    window.open("https://www.youtube.com/results?search_query="+encodeURIComponent("how to make "+q+" recipe english"),"_blank","noopener");
+    return finderSet("",`YouTube opened in a new tab — copy the link of a video you like and paste it in the box above.${S.isOwner?" (Add a YouTube key in People to see videos here.)":""}<br>${noVid}`);
+  }
+  finderSet('<p class="empty">Searching YouTube…</p>',"");
+  try{
+    const u="https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=8&relevanceLanguage=en&safeSearch=strict&q="+encodeURIComponent("how to make "+q.replace(/\(.*?\)/g,"").trim()+" recipe")+"&key="+encodeURIComponent(S.ytKey);
+    const j=await (await fetch(u)).json(); if(j.error) throw new Error(j.error.message||"YouTube error");
+    const vids=(j.items||[]).filter(it=>/^[A-Za-z0-9_-]{11}$/.test(it.id&&it.id.videoId||"")).map(it=>({id:it.id.videoId,title:decodeHtml(it.snippet.title||""),channel:decodeHtml(it.snippet.channelTitle||""),desc:decodeHtml(it.snippet.description||"")}));
+    vids.forEach(v=>S.fVids[v.id]=v);
+    finderSet(vids.map(fcard).join("")||'<p class="empty">No videos found.</p>',noVid);
+  }catch(e){ finderSet("",`Could not search YouTube: ${esc(e.message||String(e))}<br>${noVid}`); }
+}
+async function videoDetails(id){ // full title + description (often contains the recipe)
+  const v=(S.fVids||{})[id]||{id,title:"",channel:"",desc:""};
+  if(!S.ytKey) return v;
+  try{ const j=await (await fetch("https://www.googleapis.com/youtube/v3/videos?part=snippet&id="+id+"&key="+encodeURIComponent(S.ytKey))).json();
+    const sn=j.items&&j.items[0]&&j.items[0].snippet; if(sn) return {...v,title:sn.title||v.title,channel:sn.channelTitle||v.channel,desc:sn.description||v.desc}; }catch(e){}
+  return v;
+}
+async function makeFromVideo(id,btn){
+  const old=btn.textContent; btn.disabled=true; btn.textContent="✨ Watching the video…";
+  try{ const draft=await aiRecipe("", "https://www.youtube.com/watch?v="+id); if(!draft.name) draft.name=((S.fVids||{})[id]||{}).title||S.fQ||"New dish"; openRecipeEdit(null,draft); }
+  catch(e){ toast(e.message||String(e)); }
+  btn.disabled=false; btn.textContent=old;
+}
+async function makeWithoutVideo(name){
+  toast("✨ Gemini is writing the recipe…");
+  try{ const d=aiToDraft(await geminiJSON(`Write a recipe for: ${name}.`,geminiSystem())); if(!d.name) d.name=name; openRecipeEdit(null,d); }
+  catch(e){ toast(e.message||String(e)); }
 }
 
 /* plan edits */
@@ -1172,7 +1257,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.05</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.06</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
