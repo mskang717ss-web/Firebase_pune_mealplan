@@ -20,7 +20,7 @@ Handoff from the claude.ai session on 2026-11-22. The current version is **v2.00
 
 ## 3. Infrastructure
 - **Firebase** (v2.00+): project `meal-plan-e954d` (`FB_CONFIG` in `index.html`, `.firebaserc`), web app "Pune Meal Plan". Spark (free) plan. Firestore location `asia-south1`.
-  - Hosting: `https://meal-plan-e954d.web.app`, deployed by GitHub Actions from `main`.
+  - Hosting: **`https://pune-mealplan.web.app`** (main address) and `https://meal-plan-e954d.web.app`; both get the same `index.html` (targets `pune` / `main` in `.firebaserc`). The workflow creates the `pune-mealplan` site and adds it to Auth authorized domains if missing.
   - Auth providers: Google, Email/Password. Add any extra domain (e.g. a custom domain) to Auth → Settings → Authorized domains.
   - The web config (apiKey etc.) is public by design; security comes from `firestore.rules`.
 - **Repo**: `mskang717ss-web/meal-plan` (Public). Never commit secrets or data exports.

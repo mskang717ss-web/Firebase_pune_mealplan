@@ -8,6 +8,11 @@ on:
 permissions:
   contents: read
 
+env:
+  PROJECT: meal-plan-e954d
+  EXTRA_SITE: pune-mealplan
+  FIREBASE_TOOLS: firebase-tools@15.35.0
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,15 +22,59 @@ jobs:
       - name: Build site folder (only index.html is published)
         run: mkdir -p _site && cp index.html _site/
 
-      - name: Deploy hosting + Firestore rules
+      - name: Write credentials
+        id: sa
         env:
           FIREBASE_SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
           if [ -z "$FIREBASE_SA" ]; then
             echo "::warning::Secret FIREBASE_SERVICE_ACCOUNT is not set - skipping deploy."
-            exit 0
+            echo "ok=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
           printf '%s' "$FIREBASE_SA" > "$RUNNER_TEMP/sa.json"
-          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
-          npx --yes firebase-tools@15.35.0 deploy --only hosting,firestore:rules --non-interactive
-          rm -f "$RUNNER_TEMP/sa.json"
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+
+      - name: Create extra hosting site if missing
+        if: steps.sa.outputs.ok == 'true'
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+        run: |
+          if npx --yes $FIREBASE_TOOLS hosting:sites:get "$EXTRA_SITE" --project "$PROJECT" --non-interactive >/dev/null 2>&1; then
+            echo "Site $EXTRA_SITE already exists"
+          else
+            npx --yes $FIREBASE_TOOLS hosting:sites:create "$EXTRA_SITE" --project "$PROJECT" --non-interactive
+          fi
+
+      - name: Allow the extra site in Google sign-in (authorized domains)
+        if: steps.sa.outputs.ok == 'true'
+        continue-on-error: true
+        run: |
+          gcloud auth activate-service-account --key-file="$RUNNER_TEMP/sa.json" --quiet
+          TOKEN=$(gcloud auth print-access-token)
+          API="https://identitytoolkit.googleapis.com/admin/v2/projects/$PROJECT/config"
+          curl -sf -H "Authorization: Bearer $TOKEN" -H "x-goog-user-project: $PROJECT" "$API" > "$RUNNER_TEMP/cfg.json"
+          BODY=$(python3 - "$RUNNER_TEMP/cfg.json" <<'PY'
+          import json, os, sys
+          cfg = json.load(open(sys.argv[1]))
+          doms = cfg.get("authorizedDomains", [])
+          want = os.environ["EXTRA_SITE"] + ".web.app"
+          if want in doms:
+              print("")
+          else:
+              print(json.dumps({"authorizedDomains": doms + [want]}))
+          PY
+          )
+          if [ -z "$BODY" ]; then echo "Domain already authorized"; exit 0; fi
+          curl -sf -X PATCH -H "Authorization: Bearer $TOKEN" -H "x-goog-user-project: $PROJECT" \
+            -H "Content-Type: application/json" "$API?updateMask=authorizedDomains" -d "$BODY" > /dev/null
+          echo "Added $EXTRA_SITE.web.app to authorized domains"
+
+      - name: Deploy hosting (both sites) + Firestore rules
+        if: steps.sa.outputs.ok == 'true'
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+        run: npx --yes $FIREBASE_TOOLS deploy --only hosting,firestore:rules --project "$PROJECT" --non-interactive
+
+      - name: Remove credentials
+        if: always()
+        run: rm -f "$RUNNER_TEMP/sa.json" "$RUNNER_TEMP/cfg.json"

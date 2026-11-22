@@ -1,1 +1,11 @@
-{ "projects": { "default": "meal-plan-e954d" } }
+{
+  "projects": { "default": "meal-plan-e954d" },
+  "targets": {
+    "meal-plan-e954d": {
+      "hosting": {
+        "main": ["meal-plan-e954d"],
+        "pune": ["pune-mealplan"]
+      }
+    }
+  }
+}
