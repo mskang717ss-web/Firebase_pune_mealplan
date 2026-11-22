@@ -1,0 +1,5252 @@
+{
+ "recipes": [
+  {
+   "id": "1b7d538f-8117-4271-a174-933dd2951575",
+   "name": "Gyeran-guk (Egg Drop Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Boil 3 cups of water with garlic and soy sauce.",
+    "Beat the eggs. Slowly pour them into the boiling soup in a circle. Do not stir for 30 seconds.",
+    "Add chopped spring onion, salt to taste and a few drops of sesame oil. Turn off the heat."
+   ],
+   "notes": "Ready in 10 minutes — good when there is no time.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "187a81e7-54dc-419d-9b33-3adef14dda9f",
+   "name": "Kongnamul-guk (Bean Sprout Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Bean sprouts",
+     "qty": 250,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Rinse the bean sprouts.",
+    "Boil 4 cups of water. Add bean sprouts and cook with the lid closed for 7 min (do not open the lid).",
+    "Add garlic, soy sauce and salt. Boil 3 min.",
+    "Add sliced spring onion and green chilli. Turn off the heat."
+   ],
+   "notes": "Use mung bean sprouts from the market. Keep the lid closed so the sprouts do not smell raw.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "8149a123-fa74-4e14-8201-d3d481c68b59",
+   "name": "Mu-guk (Korean Radish Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 25,
+   "ingredients": [
+    {
+     "item": "Radish (mooli)",
+     "qty": 250,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Chicken breast",
+     "qty": 150,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1.5,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut mooli into thin squares (3 cm). Cut chicken into small thin pieces.",
+    "Heat sesame oil in a pot. Stir-fry chicken and mooli for 3 min.",
+    "Add 4 cups of water and garlic. Boil 15 min on medium heat until the mooli is soft.",
+    "Add soy sauce, salt and spring onion. Boil 2 more min."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "fd8c38a4-c2d7-4ecc-9a20-dfe77ed5b78c",
+   "name": "Sigeumchi-doenjang-guk (Spinach Soybean Paste Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Spinach",
+     "qty": 1,
+     "unit": "bunch",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Doenjang (Korean soybean paste)",
+     "qty": 1.5,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Wash the spinach well and cut in half.",
+    "Boil 4 cups of water. Dissolve the doenjang in it.",
+    "Add sliced onion and garlic. Boil 5 min.",
+    "Add spinach and boil 3 min. Add spring onion and turn off the heat."
+   ],
+   "notes": "Doenjang is salty — taste before adding any salt.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "15e85f07-0169-4781-86a6-af22f9d17909",
+   "name": "Baechu-doenjang-guk (Cabbage Soybean Paste Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 20,
+   "ingredients": [
+    {
+     "item": "Cabbage",
+     "qty": 2,
+     "unit": "cup",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Doenjang (Korean soybean paste)",
+     "qty": 1.5,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Cut the cabbage into bite-size pieces.",
+    "Boil 4 cups of water and dissolve the doenjang.",
+    "Add cabbage, onion and garlic. Boil 12 min until the cabbage is soft.",
+    "Add green chilli and spring onion. Boil 2 min."
+   ],
+   "notes": "Chinese cabbage is best; normal cabbage also works.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "aa3ee387-0e90-4185-b0c7-097df3f1da71",
+   "name": "Gamja-guk (Potato Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 20,
+   "ingredients": [
+    {
+     "item": "Potato",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Black pepper",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Peel the potatoes and cut into thin half-moons.",
+    "Boil 4 cups of water. Add potatoes and garlic. Boil 10 min.",
+    "Add sliced onion and soy sauce. Boil 5 min until potatoes are soft.",
+    "Add salt, pepper and spring onion."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "0697fe0c-80ba-47e6-b07c-0b05fc536a32",
+   "name": "Dubu-guk (Tofu Clear Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Tofu",
+     "qty": 200,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Zucchini",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut tofu and zucchini into small cubes.",
+    "Boil 4 cups of water with garlic and soy sauce.",
+    "Add zucchini and boil 5 min. Add tofu and boil 3 min.",
+    "Add salt to taste and spring onion."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "443c0b90-28f2-447a-ba23-cc86bccd5f19",
+   "name": "Kimchi-guk (Kimchi Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 20,
+   "ingredients": [
+    {
+     "item": "Kimchi (well fermented)",
+     "qty": 1,
+     "unit": "cup",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Tofu",
+     "qty": 150,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut the kimchi into small pieces.",
+    "Boil 4 cups of water. Add kimchi, onion and garlic. Boil 10 min.",
+    "Add tofu, gochugaru and soy sauce. Boil 5 min.",
+    "Add spring onion. Taste and add a little salt if needed."
+   ],
+   "notes": "Lighter than kimchi stew — more water, less oil.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "d16e18ea-e956-4f78-9298-f44d9b90683f",
+   "name": "Dak-gomtang (Chicken Soup)",
+   "category": "Soup",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 50,
+   "ingredients": [
+    {
+     "item": "Chicken (curry cut, with bone)",
+     "qty": 700,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Ginger (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 2,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Black pepper",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Wash the chicken. Put it in a big pot with 8 cups of water, onion (cut in half), garlic and ginger.",
+    "Boil 40 min on medium heat. Remove the foam from the top.",
+    "Take out the chicken, tear the meat by hand and put it back.",
+    "Add salt and pepper to taste. Serve with chopped spring onion and rice."
+   ],
+   "notes": "Each person adds salt at the table. Good when someone is sick.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "a1d1bef2-6c6b-473a-852b-7ba7dc1be20f",
+   "name": "Dakgaejang (Spicy Chicken Soup)",
+   "category": "Soup",
+   "servings": 3,
+   "prep_min": 15,
+   "cook_min": 40,
+   "ingredients": [
+    {
+     "item": "Chicken breast",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Bean sprouts",
+     "qty": 150,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 3,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Eggs",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    }
+   ],
+   "steps": [
+    "Boil chicken in 6 cups of water for 20 min. Take it out and tear it into thin strips. Keep the water.",
+    "Mix the chicken with gochugaru, soy sauce, garlic and sesame oil.",
+    "Put the chicken back into the water with sliced onion, bean sprouts and long-cut spring onion. Boil 15 min.",
+    "Pour in a beaten egg, wait 30 seconds, then stir gently."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "5876fb62-1253-4770-81c3-5a62d912eca2",
+   "name": "Hobak-guk (Zucchini Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Zucchini",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Fish sauce",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Cut zucchini into thin half-moons.",
+    "Boil 4 cups of water with garlic.",
+    "Add zucchini and onion. Boil 6 min.",
+    "Add fish sauce and salt. Add spring onion."
+   ],
+   "notes": "No fish sauce? Use 1 tbsp soy sauce.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "4331dd56-300c-44ed-b3fc-f7361d539e03",
+   "name": "Saeu-mu-guk (Prawn Radish Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 20,
+   "ingredients": [
+    {
+     "item": "Prawns (cleaned)",
+     "qty": 200,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Radish (mooli)",
+     "qty": 200,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Green chilli",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Cut mooli into thin squares.",
+    "Boil 4 cups of water with mooli and garlic for 10 min.",
+    "Add prawns and boil 3 min (do not overcook).",
+    "Add soy sauce, salt, green chilli and spring onion."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "e7de5b3d-d946-4128-8913-6b056162a1b1",
+   "name": "Beoseot-guk (Mushroom Clear Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Mushrooms (button)",
+     "qty": 200,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Zucchini",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Slice the mushrooms, onion and zucchini.",
+    "Boil 4 cups of water with garlic and soy sauce.",
+    "Add all vegetables and boil 7 min.",
+    "Add salt to taste and spring onion."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "ccc405dc-f9ed-42a2-bd5d-63b4fb43cb7c",
+   "name": "Tteok-guk (Rice Cake Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Rice cakes (tteok)",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Chicken breast",
+     "qty": 100,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Eggs",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Seaweed sheets (gim)",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Soak rice cakes in water for 10 min.",
+    "Boil chicken in 4 cups of water for 10 min. Tear the chicken into strips.",
+    "Add rice cakes, garlic and soy sauce. Boil until the rice cakes float (about 4 min).",
+    "Pour in a beaten egg. Add salt and spring onion. Top with crushed seaweed."
+   ],
+   "notes": "New Year soup in Korea. Rice cakes from the Korean store.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "3f74568c-a319-4446-a329-a0d4d94bd0a3",
+   "name": "Mandu-guk (Dumpling Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 12,
+   "ingredients": [
+    {
+     "item": "Chicken momos (frozen)",
+     "qty": 12,
+     "unit": "pcs",
+     "cat": "Others"
+    },
+    {
+     "item": "Eggs",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Boil 4 cups of water with garlic and soy sauce.",
+    "Add the momos and boil 6 min until they float.",
+    "Pour in a beaten egg and stir gently.",
+    "Add salt to taste and spring onion."
+   ],
+   "notes": "Indian chicken momos work well as Korean mandu.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "5c1f7c65-2dd4-472d-9077-5c2d89646ac3",
+   "name": "Oi-naengguk (Cold Cucumber Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 15,
+   "cook_min": 0,
+   "ingredients": [
+    {
+     "item": "Cucumber",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.25,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Vinegar",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut cucumber into thin strips. Slice onion very thin.",
+    "Mix 2 cups of cold water with vinegar, sugar, soy sauce, salt and garlic.",
+    "Add cucumber, onion and green chilli. Add ice cubes.",
+    "Sprinkle sesame seeds. Serve cold."
+   ],
+   "notes": "Summer soup — keep it in the fridge.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "fb69d719-bd83-47d7-b843-34bcf62e4a17",
+   "name": "Miyeok-naengguk (Cold Seaweed Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 20,
+   "cook_min": 0,
+   "ingredients": [
+    {
+     "item": "Dried seaweed (miyeok)",
+     "qty": 5,
+     "unit": "g",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Cucumber",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Vinegar",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Soak the dried seaweed for 15 min. Put it in boiling water for 10 seconds, rinse in cold water and squeeze.",
+    "Cut seaweed into small pieces. Cut cucumber into thin strips.",
+    "Mix 2 cups of cold water with vinegar, sugar, soy sauce, salt and garlic.",
+    "Add seaweed and cucumber, add ice and sesame seeds."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "3b6814e8-d00c-48f1-801e-0271c95bf3eb",
+   "name": "Maeuntang (Spicy Fish Soup)",
+   "category": "Soup",
+   "servings": 3,
+   "prep_min": 15,
+   "cook_min": 25,
+   "ingredients": [
+    {
+     "item": "Fish (surmai or rohu, cut pieces)",
+     "qty": 500,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Radish (mooli)",
+     "qty": 200,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Zucchini",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 2,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Gochujang (Korean chilli paste)",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Clean the fish pieces with salt water.",
+    "Boil 5 cups of water with mooli for 8 min.",
+    "Add gochugaru, gochujang, garlic and soy sauce. Add the fish and boil 10 min.",
+    "Add zucchini, onion and green chilli. Boil 5 min. Add spring onion."
+   ],
+   "notes": "Do not stir hard — the fish breaks easily.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "4208ebaf-6a6c-44e7-9a65-4a2fa2de39eb",
+   "name": "Dwaeji-gukbap (Pork and Rice Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 40,
+   "ingredients": [
+    {
+     "item": "Pork belly or shoulder",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Ginger (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 2,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Black pepper",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooked rice",
+     "qty": 2,
+     "unit": "bowl",
+     "cat": "Grains"
+    }
+   ],
+   "steps": [
+    "Boil pork with onion, garlic and ginger in 6 cups of water for 35 min.",
+    "Take out the pork and slice it thin. Keep the soup.",
+    "Put rice in a bowl, add pork slices and pour hot soup over.",
+    "Add spring onion. Each person adds salt and pepper."
+   ],
+   "notes": "Serve with kimchi.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "d44bc6ca-0e50-4301-a024-d0bddfd9649e",
+   "name": "Tomato Gyeran-guk (Tomato Egg Soup)",
+   "category": "Soup",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 12,
+   "ingredients": [
+    {
+     "item": "Tomato",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Cut tomatoes into wedges and onion into slices.",
+    "Stir-fry tomato and onion with a little oil for 2 min. Add 3 cups of water and boil 5 min.",
+    "Add soy sauce, sugar and salt.",
+    "Pour in beaten eggs, wait 30 seconds, stir gently. Add spring onion."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "e99cccd1-5b99-4bb3-a76e-f1cc537ff1cc",
+   "name": "Kongnamul-muchim (Bean Sprout Salad)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 5,
+   "cook_min": 5,
+   "ingredients": [
+    {
+     "item": "Bean sprouts",
+     "qty": 250,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Boil bean sprouts in salted water for 4 min with the lid closed.",
+    "Rinse in cold water and drain well.",
+    "Mix with garlic, chopped spring onion, sesame oil, sesame seeds and salt."
+   ],
+   "notes": "Add 1 tsp gochugaru for a spicy version.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "c3cc7857-75df-499f-b0df-538560e68c79",
+   "name": "Gamja-jorim (Soy Braised Potatoes)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 20,
+   "ingredients": [
+    {
+     "item": "Potato",
+     "qty": 3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Peel potatoes and cut into 2 cm cubes. Soak in water 5 min.",
+    "Stir-fry potatoes in oil for 3 min.",
+    "Add 1 cup of water, soy sauce, sugar and garlic. Simmer 12 min until the sauce is thick.",
+    "Add honey and sesame seeds. Mix and turn off."
+   ],
+   "notes": "Keeps 4 days in the fridge.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "f6c0670b-e64b-41a3-85a0-7c5d51e9b819",
+   "name": "Gamja-bokkeum (Stir-fried Potato Strips)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Potato",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut potatoes into thin matchsticks. Soak in water 10 min, then drain.",
+    "Stir-fry potatoes in oil on medium heat for 5 min.",
+    "Add carrot and onion strips. Cook 3 more min.",
+    "Add salt and sesame seeds."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "c67a5e52-35e5-4b5f-931d-3e035ab19041",
+   "name": "Gyeran-mari (Rolled Omelette)",
+   "category": "Side",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Eggs",
+     "qty": 4,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Beat eggs with salt. Add very finely chopped carrot and spring onion.",
+    "Oil a pan on low heat. Pour in one third of the egg.",
+    "When half cooked, roll it to one side. Add more egg and roll again. Repeat.",
+    "Rest 2 min, then cut into slices."
+   ],
+   "notes": "Keep the heat LOW so the outside does not brown.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "0aeda41d-1315-4d1c-bf50-be90950ab3bf",
+   "name": "Hobak-bokkeum (Stir-fried Zucchini)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 5,
+   "cook_min": 7,
+   "ingredients": [
+    {
+     "item": "Zucchini",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Fish sauce",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut zucchini into thin half-moons.",
+    "Stir-fry with onion and garlic in oil for 4 min.",
+    "Add fish sauce (or a pinch of salt). Cook 1 min.",
+    "Sprinkle sesame seeds."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "f17bbb72-9008-4ffe-91e6-3e8df4810312",
+   "name": "Musaengchae (Spicy Radish Salad)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 15,
+   "cook_min": 0,
+   "ingredients": [
+    {
+     "item": "Radish (mooli)",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 1.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Vinegar",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Fish sauce",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut mooli into thin matchsticks.",
+    "Mix with gochugaru first so it gets a red colour.",
+    "Add garlic, sugar, vinegar, fish sauce, salt and spring onion. Mix well.",
+    "Sprinkle sesame seeds."
+   ],
+   "notes": "Best eaten within 2 days.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "cb6957b6-e08a-4d85-9df9-a8fada0f5335",
+   "name": "Gaji-namul (Seasoned Eggplant)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 8,
+   "ingredients": [
+    {
+     "item": "Eggplant (long brinjal)",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1.5,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut eggplant into finger-size strips.",
+    "Steam for 6 min (or microwave 4 min covered) until soft.",
+    "Let it cool a little and tear into thinner strips.",
+    "Mix with soy sauce, garlic, spring onion, sesame oil, gochugaru and sesame seeds."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "394b8a17-576d-480e-b58e-5aeb3d2dcb78",
+   "name": "Beoseot-bokkeum (Stir-fried Mushrooms)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 5,
+   "cook_min": 7,
+   "ingredients": [
+    {
+     "item": "Mushrooms (button)",
+     "qty": 250,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Slice the mushrooms.",
+    "Stir-fry with onion and garlic in oil on high heat for 4 min.",
+    "Add soy sauce and cook 1 min.",
+    "Add sesame oil and sesame seeds."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "4ad1d5d8-d133-41c6-a4f9-df3f4c4c0510",
+   "name": "Danggeun-bokkeum (Stir-fried Carrot)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 5,
+   "cook_min": 6,
+   "ingredients": [
+    {
+     "item": "Carrot",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut carrots into thin matchsticks.",
+    "Stir-fry with onion in oil for 4 min.",
+    "Add salt and sesame seeds."
+   ],
+   "notes": "Good in lunch boxes and bibimbap.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "7c91c5f2-0b7b-4856-9176-99ce2c06af27",
+   "name": "Yangbaechu-muchim (Cabbage Salad)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 0,
+   "ingredients": [
+    {
+     "item": "Cabbage",
+     "qty": 3,
+     "unit": "cup",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Mayonnaise",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Tomato ketchup",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Others",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Vinegar",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut cabbage and carrot into very thin strips. Soak in cold water 5 min and drain well.",
+    "Mix mayonnaise, ketchup, sugar, vinegar and salt.",
+    "Mix the sauce with the vegetables just before serving."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "0b729aa3-e77a-49ea-91a6-abc7cd4e71c5",
+   "name": "Dubu-buchim (Pan-fried Tofu with Soy Sauce)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 5,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Tofu",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut tofu into 1 cm slices. Pat dry and sprinkle salt.",
+    "Pan-fry in oil on medium heat until golden on both sides.",
+    "Mix soy sauce, garlic, spring onion, gochugaru and sesame oil.",
+    "Spoon the sauce over the tofu."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "a803409d-6d51-450e-8c39-0da0930ef710",
+   "name": "Gyeran-jangjorim (Soy Braised Eggs)",
+   "category": "Side",
+   "servings": 4,
+   "prep_min": 10,
+   "cook_min": 20,
+   "ingredients": [
+    {
+     "item": "Eggs",
+     "qty": 8,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 6,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Boil eggs for 9 min. Cool in cold water and peel.",
+    "Boil 1 cup water, soy sauce, sugar, garlic and green chilli.",
+    "Add the eggs and simmer 15 min on low heat, turning them sometimes.",
+    "Keep the eggs in the sauce in the fridge."
+   ],
+   "notes": "Keeps 5 days. One egg per meal with rice.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "efa63a5e-9db2-480c-ad99-1b20bfac797a",
+   "name": "Dak-jangjorim (Soy Braised Chicken)",
+   "category": "Side",
+   "servings": 4,
+   "prep_min": 10,
+   "cook_min": 30,
+   "ingredients": [
+    {
+     "item": "Chicken breast",
+     "qty": 400,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 5,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Ginger (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Boil chicken in 3 cups of water for 15 min.",
+    "Add soy sauce, sugar, garlic, ginger and green chilli. Simmer 15 min.",
+    "Tear the chicken into strips and keep in the sauce."
+   ],
+   "notes": "Keeps 4 days in the fridge.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "42828fa9-ee30-4667-b0a8-385f74aefbc8",
+   "name": "Gim-muchim (Seasoned Seaweed)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 3,
+   "ingredients": [
+    {
+     "item": "Seaweed sheets (gim)",
+     "qty": 6,
+     "unit": "pcs",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Toast the seaweed sheets in a dry pan for 10 seconds each side.",
+    "Put them in a plastic bag and crush into small pieces.",
+    "Mix with soy sauce, sugar, sesame oil, gochugaru and sesame seeds."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "ae7d8c60-550f-42ef-a141-cb032c790fc3",
+   "name": "Kimchi-bokkeum (Stir-fried Kimchi)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 5,
+   "cook_min": 8,
+   "ingredients": [
+    {
+     "item": "Kimchi (well fermented)",
+     "qty": 2,
+     "unit": "cup",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut kimchi into small pieces.",
+    "Stir-fry kimchi and onion in oil for 5 min.",
+    "Add sugar and cook 1 min.",
+    "Add sesame oil and sesame seeds."
+   ],
+   "notes": "Good for old, very sour kimchi.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "5cf4510b-a9d0-4d12-9372-9db8a4ed5497",
+   "name": "Hobak-jeon (Zucchini Pancakes)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 12,
+   "ingredients": [
+    {
+     "item": "Zucchini",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Flour (maida)",
+     "qty": 0.3,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Vinegar",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut zucchini into 0.5 cm rounds. Sprinkle salt and wait 5 min.",
+    "Dip in flour, then in beaten egg.",
+    "Pan-fry on medium-low heat for 2 min each side.",
+    "Dipping sauce: soy sauce + vinegar."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "a142933a-c6b9-45c6-8490-f1688fefe711",
+   "name": "Yangpa-jangajji (Soy Pickled Onions)",
+   "category": "Side",
+   "servings": 6,
+   "prep_min": 10,
+   "cook_min": 5,
+   "ingredients": [
+    {
+     "item": "Onion",
+     "qty": 3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 6,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Vinegar",
+     "qty": 6,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 4,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut onions into big squares and put them in a clean glass jar with green chillies.",
+    "Boil 0.5 cup water, soy sauce, vinegar and sugar.",
+    "Pour the hot liquid over the onions. Close the jar.",
+    "Keep at room temperature 1 day, then in the fridge."
+   ],
+   "notes": "Ready after 2 days. Keeps 3 weeks.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "c0f81404-9514-47d8-9325-c365bbfae221",
+   "name": "Beurokolli-muchim (Broccoli with Sesame)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 5,
+   "cook_min": 3,
+   "ingredients": [
+    {
+     "item": "Broccoli",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut broccoli into small florets.",
+    "Boil in salted water for 1 min. Rinse in cold water and drain.",
+    "Mix with garlic, sesame oil, sesame seeds and salt."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "436335fd-193e-4cfb-ae96-0f8ea29d745e",
+   "name": "Gamja-salad (Korean Potato Salad)",
+   "category": "Side",
+   "servings": 4,
+   "prep_min": 15,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Potato",
+     "qty": 3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Cucumber",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Mayonnaise",
+     "qty": 4,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Black pepper",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Boil potatoes and eggs until soft (about 15 min). Peel and mash.",
+    "Cut cucumber and carrot into small cubes. Salt the cucumber 5 min and squeeze.",
+    "Mix everything with mayonnaise, sugar, salt and pepper."
+   ],
+   "notes": "Also nice in sandwiches.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "6f3fedc7-1fe7-44aa-a479-5d094d1fc0f5",
+   "name": "Danhobak-jorim (Braised Pumpkin)",
+   "category": "Side",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Pumpkin (red)",
+     "qty": 400,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Peel the pumpkin and cut into bite-size cubes.",
+    "Put in a pan with 0.5 cup water, soy sauce and sugar.",
+    "Simmer 12 min until soft and the sauce is thick.",
+    "Add honey and sesame seeds."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "699cd5cd-548d-48d0-b381-9003a3794678",
+   "name": "Gyeran-bap (Egg Rice with Soy Sauce)",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 2,
+   "cook_min": 5,
+   "ingredients": [
+    {
+     "item": "Cooked rice",
+     "qty": 1,
+     "unit": "bowl",
+     "cat": "Grains"
+    },
+    {
+     "item": "Eggs",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Butter",
+     "qty": 0.5,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery",
+     "staple": true
+    },
+    {
+     "item": "Seaweed sheets (gim)",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Korean Pantry"
+    }
+   ],
+   "steps": [
+    "Fry an egg sunny side up in butter.",
+    "Put hot rice in a bowl. Add the egg.",
+    "Add soy sauce and sesame oil. Top with crushed seaweed. Mix and eat."
+   ],
+   "notes": "5-minute Korean comfort breakfast.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "18a14948-7012-4e63-8ece-02a2e6c72bbf",
+   "name": "Gilgeori-toast (Korean Street Toast)",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 5,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Bread",
+     "qty": 2,
+     "unit": "slices",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Cabbage",
+     "qty": 0.5,
+     "unit": "cup",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 0.5,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Butter",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Tomato ketchup",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Others",
+     "staple": true
+    },
+    {
+     "item": "Cheese slice",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Dairy & Bakery"
+    }
+   ],
+   "steps": [
+    "Finely shred cabbage, carrot and spring onion. Mix with eggs and a pinch of salt.",
+    "Fry the egg mix in butter, shaped like a square the size of the bread.",
+    "Toast the bread in butter.",
+    "Put the egg and cheese on the bread. Sprinkle sugar, add ketchup and close."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "b0c3fc93-01ca-4490-a9ce-2a24b5acd2c2",
+   "name": "French Toast",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Bread",
+     "qty": 4,
+     "unit": "slices",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Milk",
+     "qty": 6,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Butter",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery",
+     "staple": true
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Beat eggs, milk and sugar.",
+    "Dip each bread slice for 10 seconds.",
+    "Fry in butter on medium-low heat for 2 min each side until golden.",
+    "Serve with honey."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "cea23621-6f88-435e-b7ab-61b55069afee",
+   "name": "Omurice (Omelette Rice)",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 10,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Cooked rice",
+     "qty": 1,
+     "unit": "bowl",
+     "cat": "Grains"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Ham",
+     "qty": 2,
+     "unit": "slices",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Tomato ketchup",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Others",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Chop onion, carrot and ham into small pieces. Stir-fry 3 min.",
+    "Add rice and 2 tbsp ketchup. Fry 2 min. Put on a plate in an oval shape.",
+    "Make a thin omelette with the eggs and salt.",
+    "Cover the rice with the omelette. Add ketchup on top."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "6f0a35a5-84e7-4121-9fca-68a320fa3880",
+   "name": "Dakjuk (Chicken Rice Porridge)",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 30,
+   "ingredients": [
+    {
+     "item": "Sushi rice",
+     "qty": 0.5,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Chicken breast",
+     "qty": 150,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Wash the rice and soak 20 min.",
+    "Boil chicken in 4 cups of water 15 min. Tear into strips. Keep the water.",
+    "Fry the rice in sesame oil for 2 min. Add the chicken water and cook 15 min, stirring often.",
+    "Add chicken, chopped carrot and salt. Cook 5 min. Top with spring onion."
+   ],
+   "notes": "Good for an upset stomach.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "e39f11d8-8021-4e5e-82cb-54d348a59e59",
+   "name": "Hobak-juk (Sweet Pumpkin Porridge)",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 25,
+   "ingredients": [
+    {
+     "item": "Pumpkin (red)",
+     "qty": 400,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Rice flour",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Grains"
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Peel the pumpkin and cut into pieces. Boil in 2 cups of water for 15 min until soft.",
+    "Mash or blend until smooth.",
+    "Mix rice flour with 4 tbsp water. Stir it into the pumpkin.",
+    "Cook 5 min on low heat, stirring. Add sugar and salt."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "4e95d850-b157-4809-ac4d-a205e09a9981",
+   "name": "Yachae-juk (Vegetable Rice Porridge)",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 25,
+   "ingredients": [
+    {
+     "item": "Sushi rice",
+     "qty": 0.5,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Zucchini",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Soak rice 20 min. Chop all vegetables very small.",
+    "Fry rice and vegetables in sesame oil for 3 min.",
+    "Add 4 cups of water. Cook 20 min on low heat, stirring often.",
+    "Add salt to taste."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "bc88acd2-72be-4164-9064-82541a89efed",
+   "name": "Gyeran-juk (Egg Rice Porridge)",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 20,
+   "ingredients": [
+    {
+     "item": "Cooked rice",
+     "qty": 1,
+     "unit": "bowl",
+     "cat": "Grains"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Boil cooked rice in 3 cups of water for 12 min, stirring sometimes.",
+    "Pour in beaten eggs and stir.",
+    "Add salt, sesame oil and spring onion."
+   ],
+   "notes": "Uses leftover rice.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "a6d1b2e1-edcd-44c9-a2b2-95baeeafb095",
+   "name": "Overnight Oats with Banana",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 5,
+   "cook_min": 0,
+   "ingredients": [
+    {
+     "item": "Oats",
+     "qty": 0.5,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Milk",
+     "qty": 8,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Curd (yogurt)",
+     "qty": 0.2,
+     "unit": "cup",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Banana",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Fruits"
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Mix oats, milk, curd and honey in a jar.",
+    "Close and keep in the fridge overnight.",
+    "In the morning add sliced banana."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "bcc58484-f9eb-45af-9ee3-383d440aa0fb",
+   "name": "Banana Pancakes",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Banana",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Fruits"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Flour (maida)",
+     "qty": 0.5,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Milk",
+     "qty": 4,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Butter",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery",
+     "staple": true
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Mash the bananas. Mix with eggs, flour and milk.",
+    "Melt a little butter in a pan on low heat.",
+    "Pour small circles of batter. Cook 2 min each side.",
+    "Serve with honey."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "e65e3248-387e-4cf1-a644-dbc85e84fb6b",
+   "name": "Vegetable Omelette with Toast",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 5,
+   "cook_min": 8,
+   "ingredients": [
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Tomato",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Capsicum",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Black pepper",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Bread",
+     "qty": 2,
+     "unit": "slices",
+     "cat": "Dairy & Bakery"
+    }
+   ],
+   "steps": [
+    "Chop onion, tomato and capsicum small.",
+    "Beat eggs with salt and pepper. Add the vegetables.",
+    "Cook in oil on medium heat, fold in half.",
+    "Serve with toast."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "d572512e-67d2-4416-9895-91803e5a97ef",
+   "name": "Jumeokbap (Rice Balls)",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 0,
+   "ingredients": [
+    {
+     "item": "Cooked rice",
+     "qty": 2,
+     "unit": "bowl",
+     "cat": "Grains"
+    },
+    {
+     "item": "Seaweed sheets (gim)",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Chop carrot very small and stir-fry 2 min.",
+    "Mix rice with carrot, crushed seaweed, sesame oil, sesame seeds and salt.",
+    "Wear gloves and press the rice into small balls."
+   ],
+   "notes": "Add tuna-mayo inside for a filling.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "0c3f88ec-3815-41ee-b769-1db326fb9387",
+   "name": "Chamchi-mayo-deopbap (Tuna Mayo Rice Bowl)",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 5,
+   "cook_min": 3,
+   "ingredients": [
+    {
+     "item": "Cooked rice",
+     "qty": 1,
+     "unit": "bowl",
+     "cat": "Grains"
+    },
+    {
+     "item": "Tuna (can)",
+     "qty": 0.5,
+     "unit": "can",
+     "cat": "Others"
+    },
+    {
+     "item": "Mayonnaise",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 0.5,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Onion",
+     "qty": 0.2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Eggs",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Seaweed sheets (gim)",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Korean Pantry"
+    }
+   ],
+   "steps": [
+    "Drain the tuna. Mix with mayonnaise.",
+    "Fry an egg.",
+    "Put rice in a bowl. Add tuna-mayo, egg and thin onion slices.",
+    "Add soy sauce and crushed seaweed on top."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "ee509179-7978-477b-a36e-f1179d6cea40",
+   "name": "Gyeran-bokkeumbap (Egg Fried Rice)",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 5,
+   "cook_min": 8,
+   "ingredients": [
+    {
+     "item": "Cooked rice",
+     "qty": 1,
+     "unit": "bowl",
+     "cat": "Grains"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Heat oil. Fry chopped spring onion 1 min.",
+    "Push to one side and scramble the eggs.",
+    "Add rice and soy sauce. Fry 3 min on high heat.",
+    "Add salt and a few drops of sesame oil."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "a52a6fae-f521-4831-ab12-417c60654fbb",
+   "name": "Avocado Egg Toast",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 5,
+   "cook_min": 5,
+   "ingredients": [
+    {
+     "item": "Bread",
+     "qty": 2,
+     "unit": "slices",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Avocado",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Fruits"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Black pepper",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Toast the bread.",
+    "Mash avocado with salt and pepper and spread on the toast.",
+    "Top with fried or boiled eggs."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "44556012-551b-46a4-aea0-69aeb9179a66",
+   "name": "Fruit and Curd Bowl",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 5,
+   "cook_min": 0,
+   "ingredients": [
+    {
+     "item": "Curd (yogurt)",
+     "qty": 1,
+     "unit": "cup",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Banana",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Fruits"
+    },
+    {
+     "item": "Apple",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Fruits"
+    },
+    {
+     "item": "Oats",
+     "qty": 0.15,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Put curd in a bowl.",
+    "Add cut fruit and oats.",
+    "Add honey on top."
+   ],
+   "notes": "Use any fruit in season.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "edd0689f-4b03-49d4-9b47-e8272748020f",
+   "name": "Steamed Sweet Potato and Boiled Eggs",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 25,
+   "ingredients": [
+    {
+     "item": "Sweet potato",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Eggs",
+     "qty": 4,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Milk",
+     "qty": 8,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery"
+    }
+   ],
+   "steps": [
+    "Wash sweet potatoes. Steam or pressure cook (2 whistles) until soft.",
+    "Boil eggs for 9 min, then cool in cold water.",
+    "Serve with salt for the eggs and a glass of milk."
+   ],
+   "notes": "Simple Korean diet breakfast.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "b2cf78b5-0df9-4259-a3b1-ea4a23c2f1c2",
+   "name": "Gamja-jeon (Potato Pancake)",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 12,
+   "ingredients": [
+    {
+     "item": "Potato",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Vinegar",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Grate the potatoes and onion. Do not throw away the starch at the bottom.",
+    "Add salt and mix.",
+    "Fry thin pancakes in oil on medium heat, 3 min each side until crispy.",
+    "Dip in soy sauce + vinegar."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "a5a815e6-86b4-4113-903f-55ad00580569",
+   "name": "Cheese Tomato Toast",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 3,
+   "cook_min": 5,
+   "ingredients": [
+    {
+     "item": "Bread",
+     "qty": 2,
+     "unit": "slices",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Cheese slice",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Tomato",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Butter",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery",
+     "staple": true
+    },
+    {
+     "item": "Black pepper",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Butter the bread.",
+    "Put tomato slices and cheese on the bread.",
+    "Toast in a pan with a lid (or oven) until the cheese melts.",
+    "Add black pepper."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "5bbbe7c8-1b50-4e72-920c-ef639a90d8a0",
+   "name": "Peanut Butter Banana Toast",
+   "category": "Breakfast",
+   "servings": 1,
+   "prep_min": 3,
+   "cook_min": 3,
+   "ingredients": [
+    {
+     "item": "Bread",
+     "qty": 2,
+     "unit": "slices",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Peanut butter",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Others",
+     "staple": true
+    },
+    {
+     "item": "Banana",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Fruits"
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Toast the bread.",
+    "Spread peanut butter.",
+    "Add banana slices and a little honey."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "52981591-9447-40bb-961e-384474693668",
+   "name": "Dak-bokkeumtang (Spicy Braised Chicken)",
+   "category": "Main",
+   "servings": 3,
+   "prep_min": 15,
+   "cook_min": 35,
+   "ingredients": [
+    {
+     "item": "Chicken (curry cut, with bone)",
+     "qty": 800,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Potato",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 2,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochujang (Korean chilli paste)",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Boil chicken pieces in water 3 min, then rinse (this cleans the chicken).",
+    "Mix gochujang, gochugaru, soy sauce, sugar and garlic.",
+    "Put chicken, sauce and 2 cups of water in a pot. Boil 15 min.",
+    "Add big pieces of potato, carrot and onion. Cook 15 min until the potatoes are soft.",
+    "Add green chilli and spring onion."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "8094482b-34e4-4edd-b4bc-2aba8fbf3c65",
+   "name": "Jjimdak (Soy Braised Chicken with Glass Noodles)",
+   "category": "Main",
+   "servings": 3,
+   "prep_min": 20,
+   "cook_min": 35,
+   "ingredients": [
+    {
+     "item": "Chicken (curry cut, with bone)",
+     "qty": 800,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Glass noodles (dangmyeon)",
+     "qty": 100,
+     "unit": "g",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Potato",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 6,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 3,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Oyster sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 2,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Soak glass noodles in warm water 30 min.",
+    "Boil chicken in water 3 min and rinse.",
+    "Cook chicken with 2.5 cups water, soy sauce, sugar, oyster sauce and garlic for 15 min.",
+    "Add potato, carrot and onion. Cook 12 min.",
+    "Add glass noodles and green chilli. Cook 3 min until noodles are soft. Add spring onion."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "a401aabb-1ad1-4b82-ad12-b4925fcb3eef",
+   "name": "Dakgangjeong (Sweet Crispy Chicken)",
+   "category": "Main",
+   "servings": 3,
+   "prep_min": 20,
+   "cook_min": 25,
+   "ingredients": [
+    {
+     "item": "Chicken thigh (boneless)",
+     "qty": 500,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Corn flour",
+     "qty": 6,
+     "unit": "tbsp",
+     "cat": "Grains",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Black pepper",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 10,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Tomato ketchup",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Others",
+     "staple": true
+    },
+    {
+     "item": "Honey",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Gochujang (Korean chilli paste)",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut chicken into bite-size pieces. Mix with salt and pepper.",
+    "Coat with corn flour. Deep-fry 6 min. Rest 2 min and fry again 2 min (extra crispy).",
+    "In a pan boil soy sauce, ketchup, honey, gochujang and garlic for 2 min.",
+    "Toss the chicken in the sauce. Sprinkle sesame seeds."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "4a762560-540c-4caa-9940-79e3b3e4dc54",
+   "name": "Ganjang-chicken (Soy Garlic Chicken)",
+   "category": "Main",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 25,
+   "ingredients": [
+    {
+     "item": "Chicken thigh (boneless)",
+     "qty": 500,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 3,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 4,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Honey",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Green chilli",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Cut chicken into pieces. Pan-fry skin side down until golden.",
+    "Remove extra oil. Add soy sauce, sugar, honey, garlic and 0.5 cup water.",
+    "Simmer 10 min until the sauce is sticky.",
+    "Add sliced green chilli and spring onion."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "52718388-98e2-490b-8700-226fac872955",
+   "name": "Chicken Katsu with Cabbage Salad",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 20,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Chicken breast",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Flour (maida)",
+     "qty": 0.5,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Eggs",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Bread crumbs",
+     "qty": 1,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 10,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cabbage",
+     "qty": 2,
+     "unit": "cup",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Tomato ketchup",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Others",
+     "staple": true
+    },
+    {
+     "item": "Worcestershire or BBQ sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Others",
+     "staple": true
+    },
+    {
+     "item": "Mayonnaise",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut chicken breast in half (thin). Hit with a rolling pin. Add salt and pepper.",
+    "Coat with flour, then egg, then bread crumbs.",
+    "Deep-fry on medium heat 4 min each side until golden.",
+    "Sauce: ketchup + BBQ sauce. Serve with thin cabbage and mayonnaise."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "28ce414f-fb24-4ee8-a0df-34d9908043e0",
+   "name": "Dak-kkochi (Chicken Skewers)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 20,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Chicken thigh (boneless)",
+     "qty": 400,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 3,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochujang (Korean chilli paste)",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut chicken and spring onion into 3 cm pieces. Put them on skewers.",
+    "Mix soy sauce, sugar, honey, garlic and gochujang.",
+    "Pan-fry skewers in oil 8 min, turning.",
+    "Brush the sauce on and cook 2 more min."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "d06f46ab-0734-441a-bdec-9684931a12d7",
+   "name": "Dubu-kimchi (Tofu with Stir-fried Kimchi)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Tofu",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Kimchi (well fermented)",
+     "qty": 1.5,
+     "unit": "cup",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Pork (thin sliced shoulder/belly)",
+     "qty": 150,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochujang (Korean chilli paste)",
+     "qty": 0.5,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Boil the tofu block 3 min. Cut into thick slices.",
+    "Stir-fry pork in oil 3 min. Add kimchi and onion. Fry 5 min.",
+    "Add gochujang and sugar. Fry 2 min. Add sesame oil and seeds.",
+    "Put tofu around the plate and kimchi in the middle."
+   ],
+   "notes": "Vegetarian: skip the pork.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "8923ffc7-49f6-4c79-af85-4fc650723592",
+   "name": "Mapa-dubu (Korean Mapo Tofu)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Tofu",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Chicken breast",
+     "qty": 100,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Ginger (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochujang (Korean chilli paste)",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Oyster sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Corn flour",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Grains",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Cut tofu into cubes. Mince the chicken.",
+    "Fry chicken, onion, garlic and ginger 3 min.",
+    "Add 1 cup water, gochujang, gochugaru, soy sauce and oyster sauce. Boil.",
+    "Add tofu and cook 4 min. Add corn flour mixed with 2 tbsp water to thicken. Add spring onion."
+   ],
+   "notes": "Serve on rice.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "263a84c0-d375-4bf0-84fd-edcef4022f40",
+   "name": "Japchae (Glass Noodle Stir-fry)",
+   "category": "Main",
+   "servings": 3,
+   "prep_min": 20,
+   "cook_min": 20,
+   "ingredients": [
+    {
+     "item": "Glass noodles (dangmyeon)",
+     "qty": 150,
+     "unit": "g",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Spinach",
+     "qty": 1,
+     "unit": "bunch",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Mushrooms (button)",
+     "qty": 100,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Capsicum",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 4,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Boil glass noodles 6 min. Drain and cut with scissors.",
+    "Blanch spinach 30 seconds and squeeze.",
+    "Stir-fry onion, carrot, capsicum and mushrooms separately with a little oil and salt.",
+    "Mix noodles with soy sauce, sugar, sesame oil and garlic in a big pan for 2 min.",
+    "Add all vegetables and mix. Sprinkle sesame seeds."
+   ],
+   "notes": "Vegetarian main. Add chicken strips if you like.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "7e9a5d76-eec7-49de-a103-b02c120fd89c",
+   "name": "Bibimbap (Mixed Rice with Vegetables)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 25,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Cooked rice",
+     "qty": 2,
+     "unit": "bowl",
+     "cat": "Grains"
+    },
+    {
+     "item": "Bean sprouts",
+     "qty": 100,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spinach",
+     "qty": 0.5,
+     "unit": "bunch",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Zucchini",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Gochujang (Korean chilli paste)",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Blanch bean sprouts and spinach. Season each with salt and sesame oil.",
+    "Stir-fry carrot and zucchini strips separately with a little salt.",
+    "Fry the eggs sunny side up.",
+    "Put rice in bowls, arrange the vegetables on top, add egg.",
+    "Serve with gochujang and sesame oil. Mix before eating."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "7483b789-9227-44a9-baaa-fb9dccbdd2ae",
+   "name": "Ganjang-saeu-bokkeum (Garlic Soy Prawns)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 8,
+   "ingredients": [
+    {
+     "item": "Prawns (cleaned)",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 3,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Butter",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Dairy & Bakery",
+     "staple": true
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Pat the prawns dry.",
+    "Melt butter. Fry garlic 30 seconds.",
+    "Add prawns and cook 2 min each side.",
+    "Add soy sauce, sugar and honey. Cook 1 min. Add spring onion."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "ebe4887a-46e4-4f4a-8b47-f13ac619fe39",
+   "name": "Kkanpung-saeu (Sweet Spicy Garlic Prawns)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 15,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Prawns (cleaned)",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Corn flour",
+     "qty": 4,
+     "unit": "tbsp",
+     "cat": "Grains",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 6,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Capsicum",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Vinegar",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Tomato ketchup",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Others",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Coat prawns with corn flour and fry until crispy.",
+    "In another pan fry garlic, green chilli and capsicum 1 min.",
+    "Add soy sauce, sugar, vinegar, ketchup and 3 tbsp water. Boil 1 min.",
+    "Add the prawns and toss quickly."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "58f42c18-49c5-4c77-9198-e6042b44dce3",
+   "name": "Godeungeo-jorim (Braised Mackerel with Radish)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 15,
+   "cook_min": 25,
+   "ingredients": [
+    {
+     "item": "Mackerel (bangda)",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Radish (mooli)",
+     "qty": 250,
+     "unit": "g",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Ginger (minced)",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Clean the mackerel and cut into 3 pieces each.",
+    "Put thick mooli slices at the bottom of a pan. Put the fish on top.",
+    "Mix soy sauce, gochugaru, sugar, garlic, ginger and 1 cup water. Pour over.",
+    "Cover and cook 20 min on medium heat, spooning sauce over. Add onion, chilli, spring onion for the last 5 min."
+   ],
+   "notes": "Bangda is cheap and good in Pune fish markets.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "5255c47b-c119-4cde-92d2-b55ce5ca92f9",
+   "name": "Saengseon-gui (Pan-fried Pomfret)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 12,
+   "ingredients": [
+    {
+     "item": "Pomfret",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Flour (maida)",
+     "qty": 0.2,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Lemon",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Fruits"
+    }
+   ],
+   "steps": [
+    "Clean the fish and make 2 cuts on each side. Sprinkle salt and rest 10 min.",
+    "Pat dry and dust with a little flour.",
+    "Pan-fry in oil on medium heat 5 min each side until golden.",
+    "Serve with lemon."
+   ],
+   "notes": "Surmai slices also work.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "693790ba-afea-4ce8-a1d9-3ef22fdd45ae",
+   "name": "Ojingeo-bokkeum (Spicy Stir-fried Squid)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 15,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Squid (cleaned)",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Cabbage",
+     "qty": 1,
+     "unit": "cup",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Green chilli",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Gochujang (Korean chilli paste)",
+     "qty": 1.5,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut squid into rings or strips.",
+    "Mix gochujang, gochugaru, soy sauce, sugar and garlic.",
+    "Stir-fry vegetables in oil on high heat 2 min.",
+    "Add squid and sauce. Cook only 2-3 min (more makes it hard). Add sesame oil."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "be42ea85-b5f6-4b47-ba8c-2dbe371c3f29",
+   "name": "Suyuk (Boiled Pork Belly with Kimchi)",
+   "category": "Main",
+   "servings": 3,
+   "prep_min": 10,
+   "cook_min": 45,
+   "ingredients": [
+    {
+     "item": "Pork belly or shoulder",
+     "qty": 500,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 3,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Ginger (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Doenjang (Korean soybean paste)",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Kimchi (well fermented)",
+     "qty": 1,
+     "unit": "cup",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Lettuce",
+     "qty": 8,
+     "unit": "leaves",
+     "cat": "Vegetables"
+    }
+   ],
+   "steps": [
+    "Put pork in a pot with water to cover, onion, garlic, ginger and doenjang.",
+    "Boil 40 min on medium heat.",
+    "Rest 5 min and slice thin.",
+    "Serve with kimchi and lettuce leaves for wrapping."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "89164819-d968-45dd-bb07-9a8627e4d88f",
+   "name": "Dwaeji-bulgogi (Soy Pork Bulgogi)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 15,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Pork (thin sliced shoulder/belly)",
+     "qty": 300,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Carrot",
+     "qty": 0.3,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Black pepper",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Mix soy sauce, sugar, garlic, sesame oil and pepper. Marinate the pork 20 min.",
+    "Stir-fry on high heat 5 min.",
+    "Add onion and carrot. Cook 3 min. Add spring onion."
+   ],
+   "notes": "Not spicy — good with lettuce wraps.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "b18e62fc-d68b-4c07-8bc9-5812d155c4d0",
+   "name": "Paneer Bulgogi",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 10,
+   "ingredients": [
+    {
+     "item": "Paneer",
+     "qty": 250,
+     "unit": "g",
+     "cat": "Dairy & Bakery"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Capsicum",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 1,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Garlic (minced)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Honey",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame oil",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sesame seeds",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Cut paneer into thick strips.",
+    "Mix soy sauce, sugar, honey, garlic and sesame oil.",
+    "Pan-fry paneer until light golden. Add onion and capsicum, cook 2 min.",
+    "Add the sauce and toss 1 min. Sprinkle sesame seeds."
+   ],
+   "notes": "Vegetarian main with Korean taste.",
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "6ffe345b-64e1-46b9-a674-57fa493ca542",
+   "name": "Haemul-pajeon (Seafood Spring Onion Pancake)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 15,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Spring onion",
+     "qty": 6,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Prawns (cleaned)",
+     "qty": 150,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Squid (cleaned)",
+     "qty": 100,
+     "unit": "g",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Flour (maida)",
+     "qty": 1,
+     "unit": "cup",
+     "cat": "Grains"
+    },
+    {
+     "item": "Eggs",
+     "qty": 1,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Salt",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 3,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Vinegar",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Mix flour, 0.8 cup cold water, egg and salt.",
+    "Cut spring onion into long pieces. Chop the seafood small.",
+    "Put spring onion in an oiled pan, pour batter and seafood over.",
+    "Cook on medium heat 4 min each side until crispy.",
+    "Dipping sauce: soy sauce + vinegar."
+   ],
+   "notes": null,
+   "video_url": null,
+   "photo_url": null
+  },
+  {
+   "id": "17d9a718-3348-4b35-ab22-14f939d30849",
+   "name": "Tteokbokki (Spicy Rice Cakes)",
+   "category": "Main",
+   "servings": 2,
+   "prep_min": 10,
+   "cook_min": 15,
+   "ingredients": [
+    {
+     "item": "Rice cakes (tteok)",
+     "qty": 400,
+     "unit": "g",
+     "cat": "Korean Pantry"
+    },
+    {
+     "item": "Cabbage",
+     "qty": 1,
+     "unit": "cup",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Onion",
+     "qty": 0.5,
+     "unit": "pcs",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Spring onion",
+     "qty": 2,
+     "unit": "stalk",
+     "cat": "Vegetables"
+    },
+    {
+     "item": "Eggs",
+     "qty": 2,
+     "unit": "pcs",
+     "cat": "Meat & Eggs"
+    },
+    {
+     "item": "Gochujang (Korean chilli paste)",
+     "qty": 2,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Gochugaru (Korean chilli flakes)",
+     "qty": 1,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Soy sauce",
+     "qty": 1,
+     "unit": "tbsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": 2,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Soak rice cakes 10 min. Boil the eggs 9 min and peel.",
+    "Boil 2 cups water with gochujang, gochugaru, soy sauce and sugar.",
+    "Add rice cakes, cabbage and onion. Cook 8 min, stirring, until the sauce is thick.",
+    "Add boiled eggs and spring onion."
+   ],
+   "notes": "Korean street food. Rice cakes from the Korean store.",
+   "video_url": null,
+   "photo_url": null
+  }
+ ]
+}

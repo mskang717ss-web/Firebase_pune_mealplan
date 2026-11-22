@@ -1,0 +1,28 @@
+name: Add starter recipes
+
+# Run by hand: adds seed/recipes80.json to Firestore (existing names are skipped).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PROJECT: meal-plan-e954d
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install firebase-admin
+        run: cd seed && npm init -y >/dev/null && npm install --no-audit --no-fund firebase-admin@14.5.0
+      - name: Import recipes
+        env:
+          FIREBASE_SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          printf '%s' "$FIREBASE_SA" > "$RUNNER_TEMP/sa.json"
+          GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json" node seed/import-recipes.js
+      - name: Clean up
+        if: always()
+        run: rm -f "$RUNNER_TEMP/sa.json"
