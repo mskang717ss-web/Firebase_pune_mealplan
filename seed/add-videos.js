@@ -17,15 +17,12 @@ const LIMIT = Number(process.env.LIMIT || 90); // each search costs 100 of the 1
   const all = await db.collection("recipes").get();
   // FIX: re-search these recipes with a better query (first automatic pick was the wrong dish or language)
   const FIX = {
-    "Saeu-mu-guk (Prawn Radish Soup)": "korean radish soup muguk recipe",
-    "Hobak-guk (Zucchini Soup)": "aehobak guk korean zucchini soup recipe",
     "Tomato Gyeran-guk (Tomato Egg Soup)": "tomato egg drop soup recipe",
     "Ganjang-saeu-bokkeum (Garlic Soy Prawns)": "garlic butter soy sauce shrimp recipe",
     "Yangbaechu-muchim (Cabbage Salad)": "korean cabbage salad mayo recipe",
     "Miyeok-naengguk (Cold Seaweed Soup)": "miyeok naengguk cold seaweed soup recipe",
     "Dak-jangjorim (Soy Braised Chicken)": "dak jangjorim soy braised chicken breast korean",
     "Cheese Tomato Toast": "cheese tomato toast recipe",
-    "Peanut Butter Banana Toast": "peanut butter banana toast recipe",
     "Beurokolli-muchim (Broccoli with Sesame)": "korean broccoli side dish recipe",
   };
   const fixMode = process.env.FIX === "1";
