@@ -1,6 +1,6 @@
 # CLAUDE.md — Weekly Meal Plan (주간식단표)
 
-Handoff from the claude.ai session on 2026-11-22. The current version is **v2.00** (backend moved from Supabase to Firebase). Read this file first.
+Handoff from the claude.ai session on 2026-11-22. The current version is **v2.06** (backend on Firebase since v2.00). Read this file first.
 
 ## 1. What this is
 - A members-only web app used by the owner (Minseong Kang) and his maid in Pune. It manages the weekly meal plan, stock/shopping and recipes.
@@ -48,16 +48,17 @@ Handoff from the claude.ai session on 2026-11-22. The current version is **v2.00
 - One-time import: owner sees "Import data from the old app" on the Recipes tab while there are no recipes → `importData()`.
 - Plan tab: `renderPlan`, `cellHtml`, `chipHtml`, `paletteWrap` ("2. All dishes"); tap-to-place (`S.pick`), drag-and-drop, `openAddEntry` picture picker, weekend classes `sun`/`sat` (`wkc()`)
 - Stock tab: `renderShop`, `allStockItems`, `attachInv`, `usedBetween`, `buildNeeds`, `saveInv` (Have = counted − eaten since `counted_at`; Need = remaining meals; Buy = Need + keep − Have, rounded up for `COUNT_UNITS`; Bought adds to stock; staples Enough/Low/Out; `addRowHtml`/`addToGroup`, `openItemEdit` — edits also update the recipes using the item)
-- Gemini: `openGemini()`, `fillWithGemini()`, `geminiJSON()` call `firebasevertexai.googleapis.com/v1beta/projects/<id>/models/<model>:generateContent` with the Firebase web apiKey (AI Logic, Gemini Developer API backend; owner must enable AI Logic in the console). Models tried in order: `AI_MODELS`. JSON output via `RECIPE_SCHEMA`; existing stock names are sent so names/units match. Video → recipe: `aiRecipe(name,videoUrl)` sends the YouTube URL as `fileData` (fallback: title + description text). UI: `finderHtml`/`searchDishes`/`makeFromVideo` on the Recipes tab; `fillForm()` fills the open editor; `saveRecipe` calls Gemini first when only a video link is given.
+- Gemini: `fillWithGemini()`, `geminiJSON()` call `firebasevertexai.googleapis.com/v1beta/projects/<id>/models/<model>:generateContent` with the Firebase web apiKey (AI Logic, Gemini Developer API backend; owner must enable AI Logic in the console). Models tried in order: `AI_MODELS`. JSON output via `RECIPE_SCHEMA`; existing stock names are sent so names/units match. Video → recipe: `aiRecipe(name,videoUrl)` sends the YouTube URL as `fileData` (fallback: title + description text). UI: `finderHtml`/`searchDishes`/`makeFromVideo` on the Recipes tab; `fillForm()` fills the open editor; `saveRecipe` calls Gemini first when only a video link is given.
 - YouTube finder: `findVideos()` searches YouTube Data API v3 with the key the owner saves in People (`config/settings.ytKey`, members read, owner writes); without a key it opens a YouTube search tab. Auto-runs when a dish name is entered and no link is set.
 - Recipes tab: `renderRecipes`, `openRecipe`, `openRecipeEdit`, `saveRecipe`; photo priority: own photo → YouTube thumbnail (`photoOf`) → emoji; "Watch the video on YouTube (English)" button.
 
 ## 6. Conventions (owner's rules)
-- **Version display**: top right of the page and on the login card: `Weekly Meal Plan | vX.XX | Updated YYYY-MM-DD`. Bump both places (search for `v2.00`) on every release. Use two decimals: v2.00 → v2.01.
+- **Version display**: top right of the page and on the login card: `Weekly Meal Plan | vX.XX | Updated YYYY-MM-DD`. Bump both places (search for the current `vX.XX`) on every release. Use two decimals: v2.06 → v2.07.
 - Files handed to the owner are named `(C)_Weekly_Meal_Plan_vX.XX.html`. The repo keeps `index.html`.
 - Keep it a single self-contained HTML file with no build step.
 - Mobile matters, because the maid uses a phone. Check a 390 px viewport. Mobile shows day cards (`.daycards`) and stock cards.
 - The owner prefers concise Korean replies, conclusion first, and tables.
+- **Every reply to the owner includes the app link** https://pune-mealplan.web.app (and any other relevant link: GitHub run, console page, Drive folder).
 
 ## 7. Testing
 - Use the Firebase emulators (real rules): `firebase emulators:start --only auth,firestore --project demo-mealplan` (needs Java), then open `http://localhost:<port>/?emu=1` with Playwright.
@@ -68,7 +69,7 @@ Handoff from the claude.ai session on 2026-11-22. The current version is **v2.00
 - Never put real credentials in tests.
 
 ## 8. Open tasks (as of 2026-11-22)
-1. **Owner creates the Firebase project** (console.firebase.google.com): add a Web app, enable Auth → Google + Email/Password, create Firestore (production mode, `asia-south1`). Send the `firebaseConfig` → paste into `FB_CONFIG` and set the project id in `.firebaserc`.
+1. DONE 2026-11-22: Firebase project, web app, Auth (Google + Email/Password), Firestore, owner signed in, data imported, YouTube key saved. TODO (owner): add the maid in **People**; enable **AI Logic → Gemini Developer API** in the Firebase console (Gemini features fail until then; real Gemini calls not yet verified).
 2. **Deploy key**: Project settings → Service accounts → Generate new private key → GitHub repo Settings → Secrets → Actions → `FIREBASE_SERVICE_ACCOUNT` (paste the whole JSON). Claude must never see or handle the key. DONE 2026-11-22: the `firebase-adminsdk-fbsvc@meal-plan-e954d` account needed the extra IAM roles **Firebase Admin** and **Service Usage Consumer** (also has Hosting Admin) before deploys worked.
 3. DONE 2026-11-22: merged to `main`, first deploy succeeded (hosting + rules). Next: Owner signs in first (becomes owner), imports the JSON on the Recipes tab, adds the maid in **People**, updates the maid's bookmark.
 4. After it works: retire Cloudflare Pages / GitHub Pages / Supabase (pause or delete the project).
