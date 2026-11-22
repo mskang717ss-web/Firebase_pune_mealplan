@@ -58,7 +58,7 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .gh.today{background:var(--today);color:var(--warn)}
 .gl{background:var(--box);font-weight:700;color:var(--navy);display:flex;align-items:center}
 .cell.today{background:#FFFBF0}
-.chip{display:flex;align-items:flex-start;gap:4px;border:1px solid var(--box-line);background:#fff;border-radius:5px;padding:4px 7px;margin-bottom:5px;font-size:13px;line-height:1.3}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--box-line);background:#fff;border-radius:5px;padding:4px 7px;margin-bottom:5px;font-size:13px;line-height:1.3}
 .chip .nm{flex:1;cursor:pointer;color:var(--ink)}
 .chip .nm.link:hover{color:var(--blue);text-decoration:underline}
 .chip .nt{display:block;font-size:11.5px;color:var(--muted);font-style:italic}
@@ -122,6 +122,31 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .thumb img{width:100%;height:100%;object-fit:cover}
 .thumb.edit,.thumb.view{cursor:pointer}.thumb.edit:hover{border-color:var(--blue)}
 .sl{display:flex;gap:10px;align-items:center;min-width:0}
+.modal.wide{max-width:980px}
+.pk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;max-height:52vh;overflow:auto;padding:3px}
+.pk{border:2px solid var(--line);border-radius:8px;background:#fff;padding:0;cursor:pointer;text-align:left;overflow:hidden;position:relative;display:flex;flex-direction:column;font:inherit}
+.pk:hover{border-color:var(--blue)}
+.pk.on{border-color:var(--navy);box-shadow:0 0 0 3px var(--box-line)}
+.pk.on::after{content:"✓";position:absolute;top:6px;right:6px;background:var(--navy);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.pkimg{height:96px;background:var(--box);display:flex;align-items:center;justify-content:center;font-size:44px;line-height:1}
+.pkimg img{width:100%;height:100%;object-fit:cover}
+.pkn{padding:6px 8px 0;font-size:12.5px;font-weight:600;color:var(--navy);line-height:1.25}
+.pkm{padding:2px 8px 8px;font-size:11px;color:var(--muted)}
+.cth{width:28px;height:28px;border-radius:5px;background:var(--box);display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:1;overflow:hidden;flex:none}
+.cth img{width:100%;height:100%;object-fit:cover}
+.urow{display:grid;grid-template-columns:minmax(0,1fr) 210px 110px 110px 64px;gap:10px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--line2)}
+.urow:last-child{border-bottom:0}
+.urow.uhd{background:#FAFBFC;font-size:11.5px;font-weight:700;padding:6px 12px;color:var(--muted)}
+.urow .h-have{text-align:right;color:var(--blue)}.urow .h-need{color:var(--warn)}
+.urow .uh{display:flex;justify-content:flex-end}
+.urow .c-need,.urow .c-buy{text-align:right}
+.urow .uc{text-align:center}
+.urow.tobuy{background:#FFFBF0}
+.nm2{min-width:0;display:block}.nm2 .n{display:block}.nm2 .f{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nm2 .dsh{color:#8A93A0}
+.okmark{color:var(--ok);font-weight:700}
+.urow.uhd .c-need,.urow.uhd .c-buy{font-family:inherit;font-size:11.5px}
+.hint{font-size:12px;color:var(--muted);margin:-4px 0 10px}
 .c-have{font-size:12.5px;text-align:right;font-family:"IBM Plex Mono",monospace;color:var(--muted)}
 .rcard .n{font-weight:700;color:var(--navy)}
 .rcard .m{font-size:12px;color:var(--muted)}
@@ -167,6 +192,11 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .dcard .sl > div{padding:7px 10px}
   .dcard .sl .lb{font-weight:600;color:var(--muted);font-size:12.5px}
   .shopcols,.shopcols2,.two{grid-template-columns:1fr}
+  .urow{grid-template-columns:minmax(0,1fr) 118px 62px 28px;gap:6px;padding:7px 8px}
+  .urow .c-need{display:none}
+  .urow.uhd .uc{font-size:0}.urow.uhd .uc::after{content:"✓";font-size:12px}
+  .urow .thumb{width:32px;height:32px;font-size:17px}
+  .seg button{padding:4px 5px;font-size:10.5px}
   .two .right{order:-1}
   .brow.r5{grid-template-columns:22px minmax(0,1fr) 58px 64px 58px}
   .brow{grid-template-columns:22px minmax(0,1fr) 62px 104px 62px;padding:7px 8px;gap:6px}
@@ -187,7 +217,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 </head>
 <body>
 <div class="wrap">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.05</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.07</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -228,13 +258,13 @@ const sb = window.supabase.createClient(SB_URL, SB_KEY);
 
 const SLOTS = [["breakfast","Breakfast"],["lunch","Lunch"],["dinner","Dinner"],["snack","Snack"]];
 const CATS = ["Breakfast","Main","Soup & Stew","Side","Rice & Noodles","Snack","Other"];
-const SHOP_CATS = ["Vegetables","Meat & Eggs","Dairy & Bakery","Grains","Korean Pantry","Others"];
+const SHOP_CATS = ["Vegetables","Fruits","Meat & Eggs","Dairy & Bakery","Grains","Korean Pantry","Others"];
 const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
 const S = {
   tab: "plan", week: mondayOf(new Date()), recipes: [], rmap: {}, entries: [], note: null,
-  checks: {}, extras: [], inv: {}, rows: {}, buyRows: {}, allEntries: [], sSearch: "", session: null, isAdmin: false, hasAdmin: true,
+  checks: {}, extras: [], inv: {}, rows: {}, buyRows: {}, allEntries: [], shopFilter: "all", sSearch: "", session: null, isAdmin: false, hasAdmin: true,
   rCat: "All", rSearch: "", loadedAt: null, err: null
 };
 
@@ -346,7 +376,8 @@ function openSignIn(){
 }
 
 /* ---------- modal ---------- */
-function openModal(title,body,foot){
+function openModal(title,body,foot,wide){
+  document.getElementById("modal").className="modal"+(wide?" wide":"");
   document.getElementById("modal").innerHTML=`<div class="mh"><span>${esc(title)}</span><button onclick="closeModal()" aria-label="Close">×</button></div><div class="mb">${body}</div>${foot?`<div class="mf">${foot}</div>`:""}`;
   document.getElementById("ov").classList.add("on");
 }
@@ -370,7 +401,7 @@ function entryName(e){const r=e.recipe_id&&S.rmap[e.recipe_id];return r?r.name:(
 function chipHtml(e){
   const r=e.recipe_id&&S.rmap[e.recipe_id];
   const sv=e.servings&&r&&e.servings!==r.servings?` <span class="nt" style="display:inline">×${e.servings}</span>`:"";
-  return `<div class="chip"><span class="nm ${r?"link":""}" ${r?`onclick="openRecipe('${r.id}')"`:""}>${esc(entryName(e))}${sv}${e.note?`<span class="nt">${esc(e.note)}</span>`:""}</span>${S.isAdmin?`<button class="x" title="Remove" onclick="delEntry('${e.id}')">×</button>`:""}</div>`;
+  return `<div class="chip"><span class="cth">${r?dishPic(r):"<span>🍽️</span>"}</span><span class="nm ${r?"link":""}" ${r?`onclick="openRecipe('${r.id}')"`:""}>${esc(entryName(e))}${sv}${e.note?`<span class="nt">${esc(e.note)}</span>`:""}</span>${S.isAdmin?`<button class="x" title="Remove" onclick="delEntry('${e.id}')">×</button>`:""}</div>`;
 }
 function cellHtml(d,slot){
   const list=S.entries.filter(e=>e.meal_date===ymd(d)&&e.slot===slot);
@@ -453,8 +484,12 @@ function buildNeeds(){
     else a.buy=!(a.have>0);
     return a;});
 }
-const EMOJI=[["spring onion","🌿"],["sweet potato","🍠"],["cabbage","🥬"],["lettuce","🥬"],["spinach","🥬"],["kimchi","🥬"],["carrot","🥕"],["cucumber","🥒"],["zucchini","🥒"],["garlic","🧄"],["ginger","🫚"],["chilli","🌶️"],["chili","🌶️"],["gochugaru","🌶️"],["gochujang","🌶️"],["onion","🧅"],["potato","🥔"],["tomato","🍅"],["mushroom","🍄"],["egg","🥚"],["bacon","🥓"],["chicken","🍗"],["pork","🥩"],["beef","🥩"],["ham","🍖"],["fish","🐟"],["tofu","🫘"],["doenjang","🫘"],["bread","🍞"],["cheese","🧀"],["milk","🥛"],["butter","🧈"],["rice","🍚"],["noodle","🍜"],["seaweed","🌿"],["soy sauce","🍶"],["vinegar","🍶"],["sesame oil","🫗"],["oil","🫗"],["mayonnaise","🫙"],["sugar","🍬"],["salt","🧂"],["pepper","🧂"],["sesame seed","🌰"],["apple","🍎"],["banana","🍌"]];
-const CAT_EMOJI={"Vegetables":"🥬","Meat & Eggs":"🥩","Dairy & Bakery":"🥛","Grains":"🌾","Korean Pantry":"🫙","Others":"🛒"};
+const EMOJI=[["spring onion","🌿"],["sweet potato","🍠"],["cabbage","🥬"],["lettuce","🥬"],["spinach","🥬"],["kimchi","🥬"],["carrot","🥕"],["cucumber","🥒"],["zucchini","🥒"],["garlic","🧄"],["ginger","🫚"],["chilli","🌶️"],["chili","🌶️"],["gochugaru","🌶️"],["gochujang","🌶️"],["onion","🧅"],["potato","🥔"],["tomato","🍅"],["mushroom","🍄"],["egg","🥚"],["bacon","🥓"],["chicken","🍗"],["pork","🥩"],["beef","🥩"],["ham","🍖"],["fish","🐟"],["tofu","🫘"],["doenjang","🫘"],["bread","🍞"],["cheese","🧀"],["milk","🥛"],["butter","🧈"],["rice","🍚"],["noodle","🍜"],["seaweed","🌿"],["soy sauce","🍶"],["vinegar","🍶"],["sesame oil","🫗"],["oil","🫗"],["mayonnaise","🫙"],["sugar","🍬"],["salt","🧂"],["pepper","🧂"],["sesame seed","🌰"],["apple","🍎"],["banana","🍌"],["mango","🥭"],["orange","🍊"],["lemon","🍋"],["lime","🍋"],["grape","🍇"],["watermelon","🍉"],["melon","🍈"],["strawberr","🍓"],["pineapple","🍍"],["papaya","🥭"],["pomegranate","🍎"],["kiwi","🥝"],["pear","🍐"],["peach","🍑"],["cherr","🍒"],["guava","🍐"],["coconut","🥥"],["avocado","🥑"],["blueberr","🫐"]];
+const CAT_EMOJI={"Vegetables":"🥬","Fruits":"🍎","Meat & Eggs":"🥩","Dairy & Bakery":"🥛","Grains":"🌾","Korean Pantry":"🫙","Others":"🛒"};
+const DISH_EMOJI=[["fried rice","🍛"],["sandwich","🥪"],["scrambled","🍳"],["omelet","🍳"],["toast","🍞"],["jjigae","🍲"],["stew","🍲"],["guk","🥣"],["soup","🥣"],["bulgogi","🍗"],["chicken","🍗"],["jeyuk","🥩"],["pork","🥩"],["tofu","🍢"],["dubu","🍢"],["muchim","🥗"],["salad","🥗"],["namul","🥬"],["spinach","🥬"],["jjim","🥚"],["egg","🍳"],["noodle","🍜"],["ramen","🍜"],["kimbap","🍙"],["rice","🍚"],["fruit","🍎"],["pancake","🥞"],["jeon","🥞"]];
+const DISH_CAT_EMOJI={"Breakfast":"🍳","Main":"🍽️","Soup & Stew":"🍲","Side":"🥗","Rice & Noodles":"🍚","Snack":"🍪","Other":"🍽️"};
+function dishEmoji(r){const n=(r.name||"").toLowerCase();for(const [k,e] of DISH_EMOJI) if(n.includes(k)) return e;return DISH_CAT_EMOJI[r.category]||"🍽️";}
+function dishPic(r){return safeImg(r.photo_url)?`<img src="${esc(r.photo_url)}" alt="" loading="lazy">`:`<span>${dishEmoji(r)}</span>`;}
 function itemEmoji(a){const n=a.item.toLowerCase();for(const [k,e] of EMOJI) if(n.includes(k)) return e;return CAT_EMOJI[a.cat]||"🛒";}
 function thumb(a){
   const v=S.inv[a.key], u=v&&safeImg(v.photo_url);
@@ -487,36 +522,37 @@ function buyRow(a){
 function renderShop(m){
   S.rows={}; S.buyRows={};
   const needs=buildNeeds(), needMap=Object.fromEntries(needs.map(a=>[a.key,a]));
-  const buy=needs.filter(a=>a.buy);
   const q=S.sSearch.toLowerCase();
-  const stock=allStockItems().filter(a=>!q||a.item.toLowerCase().includes(q));
-  const leftRow=a=>{S.rows[a.key]=a;
-    const sub=a.counted?(a.staple?"Checked "+fmtShort(new Date(a.counted)):"Counted "+fmtShort(new Date(a.counted))+(a.used>0?" · "+fmtQty(a.used)+" "+a.unit+" used since":" · auto-tracked")):"Not counted yet";
-    return `<div class="srow"><span class="sl">${thumb(a)}<span><span class="n">${esc(a.item)}${needMap[a.key]?'<span class="wk">this week</span>':""}</span><span class="f">${esc(sub)}</span></span></span>${a.staple?statusBtns(a):stockInput(a)}</div>`;};
-  const stack=(list,fn,hdr)=>SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c).sort((x,y)=>x.item.localeCompare(y.item));if(!l.length)return "";
-    return `<div class="shopgrp"><div class="gt">${c}<span>${l.length}</span></div>${hdr||""}${l.map(fn).join("")}</div>`;}).join("");
-  const hdr='<div class="brow r5 bh"><span></span><span>Item</span><span style="text-align:right">Need</span><span style="text-align:right">Have</span><span style="text-align:right">Buy</span></div>';
-  const openX=S.extras.filter(x=>!S.checks["x:"+x.id]).length;
-  const left=`<div class="left">
-    <div class="secbar"><span>1. What I have (Stock)</span><span class="r">count once — then it updates itself</span></div>
-    <div class="rfilter noprint"><input id="sSearch" placeholder="Search item…" value="${esc(S.sSearch)}" style="width:100%"></div>
-    ${stack(stock.filter(a=>!a.staple),leftRow)||'<p class="empty">No items.</p>'}
-    <div class="subh">Pantry — sauces &amp; basics</div>
-    ${stack(stock.filter(a=>a.staple),leftRow)||'<p class="empty">No items.</p>'}
-    <div class="subh noprint">Add an item</div>
-    <div class="extraform noprint"><input id="stItem" placeholder="Item (e.g. Apples)" style="flex:1;min-width:140px"><input id="stUnit" placeholder="Unit (pcs, g)" style="width:100px"><select id="stCat">${SHOP_CATS.map(c=>`<option>${c}</option>`).join("")}</select><select id="stType"><option value="count">Count</option><option value="status">Enough/Low/Out</option></select><button class="btn sm primary" onclick="addStockItem()">Add</button></div>
-  </div>`;
-  let right=`<div class="right">
-    <div class="secbar"><span>2. Need to buy</span><span class="r">${buy.length+openX} item(s) · ${esc(rangeText())}</span></div>
-    <div class="noprint" style="margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn sm" onclick="refreshWeek()">Refresh</button><span style="font-size:12px;color:var(--muted)">Need = meals still to cook this week · Have = stock after meals eaten · Buy = Need − Have · tick when bought → added to stock</span></div>
-    ${buy.length?stack(buy,buyRow,hdr):'<p class="empty">Nothing to buy — stock covers this week\'s meals.</p>'}`;
+  const all=allStockItems().map(a=>{const n=needMap[a.key];
+    if(n){a.need=n.need;a.num=n.num;a.have=n.have;a.buy=n.buy;a.buyQty=n.buyQty;a.dishes=n.dishes;}
+    else{a.need=null;a.num=false;a.have=a.stock;a.buyQty=0;a.dishes=new Set();a.buy=a.staple?(a.status==="low"||a.status==="out"):false;}
+    return a;});
+  const nBuy=all.filter(a=>a.buy).length, nWeek=all.filter(a=>a.dishes.size).length;
+  const list=all.filter(a=>(!q||a.item.toLowerCase().includes(q))&&(S.shopFilter==="all"||(S.shopFilter==="buy"&&a.buy)||(S.shopFilter==="week"&&a.dishes.size)));
+  const row=a=>{S.rows[a.key]=a;S.buyRows[a.key]=a;
+    const dish=[...a.dishes].join(", ");
+    const sub=a.counted?(a.staple?"Checked "+fmtShort(new Date(a.counted)):"Counted "+fmtShort(new Date(a.counted))+(a.used>0?" · "+fmtQty(a.used)+" "+a.unit+" used since":"")):"Not counted yet";
+    const need=a.staple?(a.dishes.size?"used":"—"):(a.need==null?"—":(a.num?(fmtQty(rnd(a.need))+" "+a.unit).trim():"as needed"));
+    const buy=a.buy?(a.staple?"Buy":(a.num?(fmtQty(a.buyQty)+" "+a.unit).trim():"1")):"—";
+    const chk=a.buy?`<input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought">`:(a.dishes.size?'<span class="okmark" title="Enough for this week">✓</span>':"");
+    return `<div class="urow ${a.buy?"tobuy":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh">${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need">${esc(need)}</span><span class="c-buy">${esc(buy)}</span><span class="uc">${chk}</span></div>`;};
+  const hdr='<div class="urow uhd"><span>Item</span><span class="h-have">What I have</span><span class="c-need h-need">Need</span><span class="c-buy h-need">To buy</span><span class="uc h-need">Bought</span></div>';
+  const groups=SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c).sort((x,y)=>x.item.localeCompare(y.item));if(!l.length)return "";
+    return `<div class="shopgrp" style="margin-bottom:12px"><div class="gt">${c}<span>${l.filter(a=>a.buy).length} to buy · ${l.length} items</span></div>${hdr}${l.map(row).join("")}</div>`;}).join("");
+  const fl=[["all",`All items (${all.length})`],["week",`Used this week (${nWeek})`],["buy",`To buy (${nBuy})`]];
+  let h=`<div class="secbar"><span>1. Stock &amp; Shopping</span><span class="r">${nBuy} to buy · ${esc(rangeText())}</span></div>
+  <div class="rfilter noprint"><input id="sSearch" placeholder="Search item…" value="${esc(S.sSearch)}">${fl.map(([k,l])=>`<button class="pill sf ${S.shopFilter===k?"on":""}" data-f="${k}">${l}</button>`).join("")}<button class="btn sm" onclick="refreshWeek()">Refresh</button></div>
+  <div class="hint noprint">What I have = at home now (count once — meals eaten are taken off automatically) · Need = meals still to cook this week · To buy = Need − What I have · tick Bought → added to stock</div>
+  ${groups||'<p class="empty">No items.</p>'}`;
   if(S.extras.length||S.isAdmin){
-    right+='<div class="subh">Extra items</div>';
-    right+=S.extras.length?`<div class="shopgrp">${S.extras.map(extraRow).join("")}</div>`:'<p class="empty">No extra items.</p>';
-    if(S.isAdmin) right+=`<div class="extraform"><input id="exItem" placeholder="Extra item (e.g. Milk)"><input id="exQty" placeholder="Qty (e.g. 1 L)" style="width:110px"><select id="exCat">${SHOP_CATS.map(c=>`<option ${c==="Others"?"selected":""}>${c}</option>`).join("")}</select><button class="btn sm primary" onclick="addExtra()">Add item</button></div>`;
+    h+='<div class="subh">Extra items</div>';
+    h+=S.extras.length?`<div class="shopgrp" style="max-width:640px">${S.extras.map(extraRow).join("")}</div>`:'<p class="empty">No extra items.</p>';
+    if(S.isAdmin) h+=`<div class="extraform"><input id="exItem" placeholder="Extra item (e.g. Milk)"><input id="exQty" placeholder="Qty (e.g. 1 L)" style="width:110px"><select id="exCat">${SHOP_CATS.map(c=>`<option ${c==="Others"?"selected":""}>${c}</option>`).join("")}</select><button class="btn sm primary" onclick="addExtra()">Add item</button></div>`;
   }
-  right+='</div>';
-  m.innerHTML=`<div class="two">${left}${right}</div>`;
+  h+=`<div class="subh noprint">Add a stock item</div>
+  <div class="extraform noprint"><input id="stItem" placeholder="Item (e.g. Apples)" style="min-width:160px"><input id="stUnit" placeholder="Unit (pcs, g)" style="width:110px"><select id="stCat">${SHOP_CATS.map(c=>`<option>${c}</option>`).join("")}</select><select id="stType"><option value="count">Count</option><option value="status">Enough/Low/Out</option></select><button class="btn sm primary" onclick="addStockItem()">Add</button></div>`;
+  m.innerHTML=h;
+  m.querySelectorAll(".pill.sf").forEach(b=>b.onclick=()=>{S.shopFilter=b.dataset.f;renderShop(m);});
   const si=document.getElementById("sSearch");
   si.oninput=()=>{S.sSearch=si.value;const p=si.selectionStart;renderShop(m);const n=document.getElementById("sSearch");n.focus();n.setSelectionRange(p,p);};
 }
@@ -603,7 +639,7 @@ function renderRecipes(m){
   m.innerHTML=`<div class="secbar"><span>1. Recipes</span><span class="r">${S.recipes.length} recipes</span></div>
     <div class="rfilter"><input id="rSearch" placeholder="Search dish or ingredient…" value="${esc(S.rSearch)}">${used.map(c=>`<button class="pill ${c===S.rCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}
     ${S.isAdmin?'<span style="flex:1"></span><button class="btn primary sm" onclick="openRecipeEdit()">+ New recipe</button>':""}</div>
-    <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${safeImg(r.photo_url)?`<img class="rph" src="${esc(r.photo_url)}" loading="lazy" alt="">`:'<div class="rph none">No photo yet</div>'}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
+    <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${safeImg(r.photo_url)?`<img class="rph" src="${esc(r.photo_url)}" loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
   const s=document.getElementById("rSearch");
   s.oninput=()=>{S.rSearch=s.value;const p=s.selectionStart;renderRecipes(m);const n=document.getElementById("rSearch");n.focus();n.setSelectionRange(p,p);};
   m.querySelectorAll(".pill").forEach(b=>b.onclick=()=>{S.rCat=b.dataset.c;renderRecipes(m);});
@@ -678,21 +714,39 @@ function delRecipe(id){
 /* plan edits */
 function openAddEntry(date,slot){
   const d=parseYmd(date), lbl=SLOTS.find(s=>s[0]===slot)[1];
-  const opts=CATS.map(c=>{const l=S.recipes.filter(r=>r.category===c);return l.length?`<optgroup label="${esc(c)}">${l.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")}</optgroup>`:"";}).join("");
-  openModal(`Add to ${DAYS[d.getDay()]} ${fmtShort(d)} · ${lbl}`,`<div class="form">
-    <label>Recipe</label><select id="aeR"><option value="">— no recipe (type a name below) —</option>${opts}</select>
-    <label>Or dish name without recipe</label><input id="aeT" placeholder="e.g. Fruit, Leftovers, Eat out">
-    <div class="row" style="grid-template-columns:1fr 3fr"><div><label>Servings (optional)</label><input id="aeS" type="number" min="1"></div><div><label>Note for cook (optional)</label><input id="aeN" placeholder="e.g. less spicy"></div></div>
-    <div class="msg" id="aeMsg"></div></div>`,
-    `<span></span><button class="btn primary" id="aeGo">Add</button>`);
+  const pick=new Set(); let cat=slot==="breakfast"&&S.recipes.some(r=>r.category==="Breakfast")?"Breakfast":"All", q="";
+  const cats=["All",...CATS.filter(c=>S.recipes.some(r=>r.category===c))];
+  openModal(`Choose dishes — ${DAYS[d.getDay()]} ${fmtShort(d)} · ${lbl}`,`
+    <div class="rfilter" style="margin-bottom:10px"><input id="pkQ" placeholder="Search dish…" style="width:200px"><span id="pkCats"></span></div>
+    <div class="pk-grid" id="pkGrid"></div>
+    <div class="form row" style="grid-template-columns:2fr 1fr 2fr;margin-top:10px">
+      <div><label>Other dish without recipe (optional)</label><input id="aeT" placeholder="e.g. Fruit, Leftovers, Eat out"></div>
+      <div><label>Servings (optional)</label><input id="aeS" type="number" min="1"></div>
+      <div><label>Note for cook (optional)</label><input id="aeN" placeholder="e.g. less spicy"></div>
+    </div><div class="msg" id="aeMsg"></div>`,
+    `<span id="pkCount" style="align-self:center;color:var(--muted)">Tap pictures to choose — you can pick several</span><button class="btn primary" id="aeGo">Add</button>`,true);
+  const draw=()=>{
+    document.getElementById("pkCats").innerHTML=cats.map(c=>`<button class="pill ${c===cat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join(" ");
+    const list=S.recipes.filter(r=>(cat==="All"||r.category===cat)&&(!q||r.name.toLowerCase().includes(q)));
+    document.getElementById("pkGrid").innerHTML=list.map(r=>`<button type="button" class="pk ${pick.has(r.id)?"on":""}" data-id="${r.id}"><span class="pkimg">${dishPic(r)}</span><span class="pkn">${esc(r.name)}</span><span class="pkm">${esc(r.category)}${totalMin(r)?" · "+totalMin(r)+" min":""}</span></button>`).join("")||'<p class="empty">No dishes found.</p>';
+    const n=pick.size; document.getElementById("pkCount").textContent=n?`${n} dish${n>1?"es":""} selected`:"Tap pictures to choose — you can pick several";
+    document.getElementById("aeGo").textContent=n?`Add ${n}`:"Add";
+  };
+  draw();
+  document.getElementById("pkCats").onclick=e=>{const b=e.target.closest(".pill");if(b){cat=b.dataset.c;draw();}};
+  document.getElementById("pkQ").oninput=e=>{q=e.target.value.trim().toLowerCase();draw();};
+  document.getElementById("pkGrid").onclick=e=>{const b=e.target.closest(".pk");if(!b)return;const id=b.dataset.id;pick.has(id)?pick.delete(id):pick.add(id);draw();};
   document.getElementById("aeGo").onclick=async()=>{
-    const recipe_id=document.getElementById("aeR").value||null, title=document.getElementById("aeT").value.trim()||null;
-    if(!recipe_id&&!title){document.getElementById("aeMsg").innerHTML='<span class="tag bad">Choose a recipe or type a name</span>';return;}
-    const sort=S.entries.filter(e=>e.meal_date===date&&e.slot===slot).length;
-    const s=parseInt(document.getElementById("aeS").value);
-    const {error}=await sb.from("meal_entries").insert({meal_date:date,slot,recipe_id,title:recipe_id?null:title,servings:isNaN(s)?null:s,note:document.getElementById("aeN").value.trim()||null,sort});
-    if(error) return toast(error.message);
-    closeModal(); await refreshWeek();
+    const title=document.getElementById("aeT").value.trim()||null;
+    if(!pick.size&&!title){document.getElementById("aeMsg").innerHTML='<span class="tag bad">Choose at least one dish or type a name</span>';return;}
+    let sort=S.entries.filter(e=>e.meal_date===date&&e.slot===slot).length;
+    const sv=parseInt(document.getElementById("aeS").value), note=document.getElementById("aeN").value.trim()||null;
+    const rows=[...pick].map(id=>({meal_date:date,slot,recipe_id:id,title:null,servings:isNaN(sv)?null:sv,note,sort:sort++}));
+    if(title) rows.push({meal_date:date,slot,recipe_id:null,title,servings:isNaN(sv)?null:sv,note,sort:sort++});
+    document.getElementById("aeGo").disabled=true;
+    const {error}=await sb.from("meal_entries").insert(rows);
+    if(error){document.getElementById("aeGo").disabled=false;return toast(error.message);}
+    closeModal(); toast(rows.length+" added"); await refreshWeek();
   };
 }
 async function delEntry(id){
