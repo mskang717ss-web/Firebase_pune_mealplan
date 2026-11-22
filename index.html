@@ -346,7 +346,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.09</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.11</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -400,8 +400,8 @@ async function tryDo(fn){ try{ await fn(); return null; }catch(e){ console.error
 function eMsg(e){ const c=e&&e.code||""; return c==="permission-denied"?"No permission (are you signed in as a member?)":c==="unavailable"?"Offline — check the internet":(e&&e.message)||String(e); }
 
 const SLOTS = [["breakfast","Breakfast"],["lunch","Lunch"],["dinner","Dinner"],["snack","Snack"]];
-const CATS = ["Breakfast","Main","Soup & Stew","Side","Rice & Noodles","Snack","Other"];
-const CAT_STYLE = {"Main":["Main dish","#D9822B"],"Side":["Side dish (banchan)","#2E8B57"],"Soup & Stew":["Soup & Stew","#2E6DB4"],"Rice & Noodles":["Rice & Noodles","#8A6D3B"],"Breakfast":["Breakfast","#C9A227"],"Snack":["Snack","#B5487A"],"Other":["Other","#7A8594"]};
+const CATS = ["Breakfast","Main","Side","Soup","Stew","Rice & Noodles","Snack","Other"];
+const CAT_STYLE = {"Main":["Main dish","#D9822B"],"Side":["Side dish (banchan)","#2E8B57"],"Soup":["Soup (guk)","#2E6DB4"],"Stew":["Stew (jjigae)","#7B4FB3"],"Soup & Stew":["Soup & Stew","#2E6DB4"],"Rice & Noodles":["Rice & Noodles","#8A6D3B"],"Breakfast":["Breakfast","#C9A227"],"Snack":["Snack","#B5487A"],"Other":["Other","#7A8594"]};
 const catLabel = c => (CAT_STYLE[c]||[c])[0];
 const catColor = c => (CAT_STYLE[c]||[0,"#7A8594"])[1];
 const SHOP_CATS = ["Vegetables","Fruits","Meat & Eggs","Dairy & Bakery","Grains","Korean Pantry","Others"];
@@ -465,6 +465,12 @@ async function loadRecipes(){
   const s=await C("recipes").get();
   const data=docs(s).sort((a,b)=>String(a.name).localeCompare(String(b.name)));
   S.recipes=data; S.rmap=Object.fromEntries(data.map(r=>[r.id,r]));
+  const old=data.filter(r=>r.category==="Soup & Stew");
+  if(old.length&&S.isAdmin){ // v2.10: split into Soup (guk) and Stew (jjigae)
+    const b=fs.batch();
+    for(const r of old){ r.category=/guk|gook|soup|tang|국|탕/i.test(r.name)?"Soup":"Stew"; b.update(C("recipes").doc(r.id),{category:r.category}); }
+    b.commit().catch(e=>console.error(e));
+  }
 }
 async function loadWeek(){
   const ws=ymd(S.week), we=ymd(addDays(S.week,6)), back=ymd(addDays(new Date(),-120)), from=ws<back?ws:back;
@@ -611,7 +617,7 @@ function renderPlan(m){
     const body=vis.length?vis.map(([k,lbl])=>`<div class="sl"><div class="lb">${lbl}</div><div data-d="${ds}" data-s="${k}">${cellHtml(d,k)}</div></div>`).join(""):'<div class="sl none">No meals planned</div>';
     return `<div class="dcard ${ds===today?"today":""} ${ds<today?"past":""} ${wkc(d)}"><div class="dh"><span>${DAYS[i]} · ${fmtShort(d)}</span>${ds===today?"<span>Today</span>":""}</div>${body}</div>`;}).join("");
   const cnt=S.entries.length;
-  m.innerHTML=paletteWrap(noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish to see the recipe</span></div><div class="legend">${["Main","Side","Soup & Stew","Rice & Noodles","Breakfast"].map(c=>`<span><i style="background:${catColor(c)}"></i>${catLabel(c)}</span>`).join("")}</div><div class="grid ${S.pick?"picking":""}">${g}</div><div class="daycards ${S.pick?"picking":""}">${cards}</div>`);
+  m.innerHTML=paletteWrap(noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish to see the recipe</span></div><div class="legend">${["Main","Side","Soup","Stew","Rice & Noodles","Breakfast"].map(c=>`<span><i style="background:${catColor(c)}"></i>${catLabel(c)}</span>`).join("")}</div><div class="grid ${S.pick?"picking":""}">${g}</div><div class="daycards ${S.pick?"picking":""}">${cards}</div>`);
   m.querySelectorAll(".pill.pc").forEach(b=>b.onclick=()=>{S.palCat=b.dataset.c;renderPlan(m);});
 }
 
@@ -676,14 +682,14 @@ function buildNeeds(){
 const EMOJI=[["spring onion","🌿"],["sweet potato","🍠"],["cabbage","🥬"],["lettuce","🥬"],["spinach","🥬"],["kimchi","🥬"],["carrot","🥕"],["cucumber","🥒"],["zucchini","🥒"],["garlic","🧄"],["ginger","🫚"],["chilli","🌶️"],["chili","🌶️"],["gochugaru","🌶️"],["gochujang","🌶️"],["onion","🧅"],["potato","🥔"],["tomato","🍅"],["mushroom","🍄"],["egg","🥚"],["bacon","🥓"],["chicken","🍗"],["pork","🥩"],["beef","🥩"],["ham","🍖"],["fish","🐟"],["tofu","🫘"],["doenjang","🫘"],["bread","🍞"],["cheese","🧀"],["milk","🥛"],["butter","🧈"],["rice","🍚"],["noodle","🍜"],["seaweed","🌿"],["soy sauce","🍶"],["vinegar","🍶"],["sesame oil","🫗"],["oil","🫗"],["mayonnaise","🫙"],["sugar","🍬"],["salt","🧂"],["pepper","🧂"],["sesame seed","🌰"],["apple","🍎"],["banana","🍌"],["mango","🥭"],["orange","🍊"],["lemon","🍋"],["lime","🍋"],["grape","🍇"],["watermelon","🍉"],["melon","🍈"],["strawberr","🍓"],["pineapple","🍍"],["papaya","🥭"],["pomegranate","🍎"],["kiwi","🥝"],["pear","🍐"],["peach","🍑"],["cherr","🍒"],["guava","🍐"],["coconut","🥥"],["avocado","🥑"],["blueberr","🫐"]];
 const CAT_EMOJI={"Vegetables":"🥬","Fruits":"🍎","Meat & Eggs":"🥩","Dairy & Bakery":"🥛","Grains":"🌾","Korean Pantry":"🫙","Others":"🛒"};
 const DISH_EMOJI=[["fried rice","🍛"],["sandwich","🥪"],["scrambled","🍳"],["omelet","🍳"],["toast","🍞"],["jjigae","🍲"],["stew","🍲"],["guk","🥣"],["soup","🥣"],["bulgogi","🍗"],["chicken","🍗"],["jeyuk","🥩"],["pork","🥩"],["tofu","🍢"],["dubu","🍢"],["muchim","🥗"],["salad","🥗"],["namul","🥬"],["spinach","🥬"],["jjim","🥚"],["egg","🍳"],["noodle","🍜"],["ramen","🍜"],["kimbap","🍙"],["rice","🍚"],["fruit","🍎"],["pancake","🥞"],["jeon","🥞"]];
-const DISH_CAT_EMOJI={"Breakfast":"🍳","Main":"🍽️","Soup & Stew":"🍲","Side":"🥗","Rice & Noodles":"🍚","Snack":"🍪","Other":"🍽️"};
+const DISH_CAT_EMOJI={"Breakfast":"🍳","Main":"🍽️","Soup":"🥣","Stew":"🍲","Soup & Stew":"🍲","Side":"🥗","Rice & Noodles":"🍚","Snack":"🍪","Other":"🍽️"};
 function dishEmoji(r){const n=(r.name||"").toLowerCase();for(const [k,e] of DISH_EMOJI) if(n.includes(k)) return e;return DISH_CAT_EMOJI[r.category]||"🍽️";}
 function ytId(u){const m=String(u||"").match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);return m?m[1]:"";}
 function ytThumb(r){const id=ytId(r.video_url);return id?`https://i.ytimg.com/vi/${id}/hqdefault.jpg`:"";}
 function photoOf(r){return safeImg(r.photo_url)||ytThumb(r);}
 function videoLink(r){return ytId(r.video_url)?r.video_url:"https://www.youtube.com/results?search_query="+encodeURIComponent("how to make "+r.name.replace(/\(.*?\)/g,"")+" recipe english");}
 function dishPic(r){const p=photoOf(r);return p?`<img ${imgSrc(p)} alt="" loading="lazy">`:`<span>${dishEmoji(r)}</span>`;}
-const KO=[["salt & black pepper","소금·후추"],["sweet potato","고구마"],["spring onion","대파"],["green onion","대파"],["cooked rice","밥"],["sushi rice","초밥용 쌀"],["rice cake","떡"],["glass noodle","당면"],["sesame oil","참기름"],["sesame seed","참깨"],["soy sauce","간장"],["fish sauce","액젓"],["oyster sauce","굴소스"],["black pepper","후추"],["chilli flakes","고춧가루"],["gochugaru","고춧가루"],["gochujang","고추장"],["doenjang","된장"],["chicken breast","닭가슴살"],["chicken thigh","닭다리살"],["pork belly","삼겹살"],["seaweed sheet","김"],["gim","김"],["dried seaweed","미역"],["miyeok","미역"],["bean sprout","콩나물"],["perilla","깻잎"],["rice wine","맛술"],["mirin","맛술"],["corn syrup","물엿"],["cooking oil","식용유"],["green chilli","풋고추"],["cheese","치즈"],["mayonnaise","마요네즈"],["kimchi","김치"],["tofu","두부"],["zucchini","애호박"],["potato","감자"],["onion","양파"],["garlic","마늘"],["ginger","생강"],["cabbage","양배추"],["carrot","당근"],["spinach","시금치"],["cucumber","오이"],["lettuce","상추"],["tomato","토마토"],["mushroom","버섯"],["radish","무"],["egg","계란"],["bacon","베이컨"],["ham","햄"],["pork","돼지고기"],["beef","소고기"],["chicken","닭고기"],["anchovy","멸치"],["fish","생선"],["bread","식빵"],["milk","우유"],["butter","버터"],["flour","밀가루"],["noodle","면"],["rice","쌀"],["sugar","설탕"],["salt","소금"],["vinegar","식초"],["honey","꿀"],["watermelon","수박"],["apple","사과"],["banana","바나나"],["orange","오렌지"],["papaya","파파야"],["pomegranate","석류"],["mango","망고"],["grape","포도"],["lemon","레몬"],["kiwi","키위"],["pear","배"],["strawberr","딸기"]];
+const KO=[["salt & black pepper","소금·후추"],["sweet potato","고구마"],["spring onion","대파"],["green onion","대파"],["cooked rice","밥"],["sushi rice","초밥용 쌀"],["paneer","파니르"],["pomfret","병어"],["mackerel","고등어"],["bangda","고등어"],["squid","오징어"],["prawn","새우"],["shrimp","새우"],["oats","오트밀"],["curd","요거트"],["yogurt","요거트"],["avocado","아보카도"],["broccoli","브로콜리"],["pumpkin","단호박"],["capsicum","피망"],["bell pepper","피망"],["eggplant","가지"],["brinjal","가지"],["momos","만두"],["dumpling","만두"],["tuna","참치"],["bread crumb","빵가루"],["corn flour","전분"],["rice flour","쌀가루"],["ketchup","케첩"],["peanut butter","땅콩버터"],["bbq sauce","돈가스 소스"],["worcestershire","돈가스 소스"],["rohu","생선"],["surmai","생선"],["rice cake","떡"],["glass noodle","당면"],["sesame oil","참기름"],["sesame seed","참깨"],["soy sauce","간장"],["fish sauce","액젓"],["oyster sauce","굴소스"],["black pepper","후추"],["chilli flakes","고춧가루"],["gochugaru","고춧가루"],["gochujang","고추장"],["doenjang","된장"],["chicken breast","닭가슴살"],["chicken thigh","닭다리살"],["pork belly","삼겹살"],["seaweed sheet","김"],["gim","김"],["dried seaweed","미역"],["miyeok","미역"],["bean sprout","콩나물"],["perilla","깻잎"],["rice wine","맛술"],["mirin","맛술"],["corn syrup","물엿"],["cooking oil","식용유"],["green chilli","풋고추"],["cheese","치즈"],["mayonnaise","마요네즈"],["kimchi","김치"],["tofu","두부"],["zucchini","애호박"],["potato","감자"],["onion","양파"],["garlic","마늘"],["ginger","생강"],["cabbage","양배추"],["carrot","당근"],["spinach","시금치"],["cucumber","오이"],["lettuce","상추"],["tomato","토마토"],["mushroom","버섯"],["radish","무"],["egg","계란"],["bacon","베이컨"],["ham","햄"],["pork","돼지고기"],["beef","소고기"],["chicken","닭고기"],["anchovy","멸치"],["fish","생선"],["bread","식빵"],["milk","우유"],["butter","버터"],["flour","밀가루"],["noodle","면"],["rice","쌀"],["sugar","설탕"],["salt","소금"],["vinegar","식초"],["honey","꿀"],["watermelon","수박"],["apple","사과"],["banana","바나나"],["orange","오렌지"],["papaya","파파야"],["pomegranate","석류"],["mango","망고"],["grape","포도"],["lemon","레몬"],["kiwi","키위"],["pear","배"],["strawberr","딸기"]];
 function koName(a){ const v=S.inv[a.key]; if(v&&v.ko) return v.ko; if(a.ko) return a.ko; return koLookup(a.item); }
 function koLookup(name){ // the match that ends last wins (English head noun is last: "sweet potato glass noodles" → 당면)
   const full=String(name||"").toLowerCase(), base=full.replace(/\(.*?\)/g," ");
@@ -935,7 +941,8 @@ function renderRecipes(m){
     <div class="rfilter"><input id="rSearch" placeholder="Search dish or ingredient…" value="${esc(S.rSearch)}">${used.map(c=>`<button class="pill ${c===S.rCat?"on":""}" data-c="${esc(c)}">${esc(catLabel(c))}</button>`).join("")}
     ${S.isAdmin?'<span style="flex:1"></span><button class="btn sm" onclick="openRecipeEdit()">+ Write a recipe myself</button>':""}</div>
     ${S.isOwner&&!S.recipes.length?`<div class="notebox"><div class="h">Import data from the old app</div>Choose the data file (.json) to copy recipes, meal plans and stock into this app. <input type="file" accept=".json,application/json" onchange="this.files[0]&&importData(this.files[0])" style="margin-top:6px;display:block"></div>`:""}
-    <div class="rgrid">${list.map(r=>`<div class="rcard" style="border-top-color:${catColor(r.category)}" onclick="openRecipe('${r.id}')">${photoOf(r)?`<img class="rph" ${imgSrc(photoOf(r))} loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m"><span class="catb" style="background:${catColor(r.category)}">${esc(catLabel(r.category))}</span> · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
+    <div class="rgrid">${list.map(r=>`<div class="rcard" style="border-top-color:${catColor(r.category)}" onclick="openRecipe('${r.id}')">${photoOf(r)?`<img class="rph" ${imgSrc(photoOf(r))} loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m"><span class="catb" style="background:${catColor(r.category)}">${esc(catLabel(r.category))}</span> · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>
+    ${S.isOwner&&S.recipes.length?`<div class="fnote noprint" style="margin-top:14px">Owner: <label style="color:var(--blue);text-decoration:underline;cursor:pointer">import recipes from a file (.json)<input type="file" accept=".json,application/json" style="display:none" onchange="this.files[0]&&importData(this.files[0])"></label> — recipes with the same name are skipped.</div>`:""}`;
   const s=document.getElementById("rSearch");
   s.oninput=()=>{S.rSearch=s.value;const p=s.selectionStart;renderRecipes(m);const n=document.getElementById("rSearch");n.focus();n.setSelectionRange(p,p);};
   m.querySelectorAll(".rfilter .pill").forEach(b=>b.onclick=()=>{S.rCat=b.dataset.c;renderRecipes(m);});
@@ -1172,7 +1179,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.09</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.11</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
@@ -1244,17 +1251,18 @@ function renderGate(){
 async function importData(file){
   let d; try{ d=JSON.parse(await file.text()); }catch(e){ return toast("Not a valid data file"); }
   const ops=[], strip=o=>{const x={...o};delete x.id;return x;};
-  for(const r of d.recipes||[]) ops.push([C("recipes").doc(r.id),{...strip(r),photo_url:null}]);
+  const have=new Set(S.recipes.map(r=>String(r.name).trim().toLowerCase())); let skipped=0;
+  for(const r of d.recipes||[]){ if(have.has(String(r.name).trim().toLowerCase())){skipped++;continue;} ops.push([C("recipes").doc(r.id||C("recipes").doc().id),{...strip(r),photo_url:null,created_at:r.created_at||nowIso(),updated_at:nowIso()}]); }
   for(const e of d.entries||[]) ops.push([C("entries").doc(e.id),strip(e)]);
   for(const n of d.week_notes||[]) ops.push([C("weekNotes").doc(n.week_start),n]);
   for(const x of d.shopping_extras||[]) ops.push([C("shopExtras").doc(x.id),strip(x)]);
   for(const c of d.shopping_checks||[]) ops.push([C("shopChecks").doc(kid(c.week_start+"|"+c.item_key)),c]);
   for(const v of d.inventory||[]) ops.push([C("inventory").doc(kid(v.item_key)),{...v,photo_url:null}]);
-  if(!ops.length) return toast("The file has no data");
+  if(!ops.length) return toast(skipped?`All ${skipped} recipes are already in the app`:"The file has no data");
   toast("Importing "+ops.length+" rows…");
   try{ for(let i=0;i<ops.length;i+=400){ const b=fs.batch(); ops.slice(i,i+400).forEach(([ref,val])=>b.set(ref,val)); await b.commit(); } }
   catch(e){ return toast("Import failed: "+eMsg(e)); }
-  toast("Imported "+ops.length+" rows"); await loadAll();
+  toast("Imported "+ops.length+" rows"+(skipped?` (${skipped} recipes already there, skipped)`:"")); await loadAll();
 }
 
 if(CONFIGURED){
