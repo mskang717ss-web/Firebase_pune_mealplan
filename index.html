@@ -220,7 +220,7 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 }
 .nm2{min-width:0;display:block}.nm2 .n{display:block}.nm2 .f{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nm2 .dsh{color:#8A93A0}
-.ko{color:var(--muted);font-weight:400;font-size:.92em}
+.ko{color:var(--muted);font-weight:400;font-size:.92em}.ko::before{content:"/ "}
 .okmark{color:var(--ok);font-weight:700}
 .undo{border:1px solid #BFDCCB;background:var(--ok-bg);color:var(--ok);border-radius:5px;font-size:11.5px;font-weight:700;padding:2px 6px;cursor:pointer;white-space:nowrap}.undo:hover{border-color:var(--ok)}
 .urow .ml{display:none}
@@ -310,24 +310,29 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .secbar{padding:6px 10px;font-size:13.5px}
   .secbar .r{display:none}
   .shopcols,.shopcols2,.two{grid-template-columns:1fr}
-  .urow{grid-template-columns:minmax(0,1fr) 64px 52px 84px;grid-template-areas:"item have need buy";gap:0 6px;padding:7px 8px;align-items:center;background-image:none}
+  .urow{grid-template-columns:minmax(0,1fr) 54px 54px 84px;grid-template-areas:"item have need buy";gap:0 4px;padding:6px 8px;align-items:center;min-height:50px;background-image:none}
   .urow.uhd{display:grid;position:sticky;top:0;z-index:2;font-size:10.5px;padding:5px 8px;text-transform:uppercase;letter-spacing:.3px}
   .urow.uhd .uc{display:none}
   .urow .sl{grid-area:item;gap:6px}
-  .urow .uh{grid-area:have}.urow .c-need{grid-area:need;text-align:right}.urow .c-buy{grid-area:buy;text-align:left;padding-right:30px}
+  .urow .uh{grid-area:have}.urow .c-need{grid-area:need;text-align:center;justify-content:center}.urow .c-buy{grid-area:buy;text-align:center;justify-content:center;padding-right:30px}
+  .urow .c-need,.urow .c-buy{display:flex;align-items:center;white-space:nowrap;overflow:hidden}
+  .urow.uhd .c-need,.urow.uhd .c-buy{justify-content:center}
   .urow .uc{grid-area:buy;justify-self:end;align-self:center}
   .urow .ml,.urow .keep,.urow .nm2 .f,.urow .iedit{display:none}
   .urow .mv{font-size:13px;font-weight:600;color:var(--ink);font-family:"IBM Plex Mono",monospace}
   .urow .c-buy .mv{color:var(--blue);font-weight:700}
   .urow.tobuy{background-color:#FFF6E3}
-  .urow .stkw{justify-content:flex-start;gap:2px}
-  .urow .stkw .u{min-width:0;font-size:10.5px}
-  .urow .stk{width:40px;font-size:13px;padding:2px 3px}
+  .urow .stkw{flex-direction:column;align-items:center;gap:0}
+  .urow .stkw .u{min-width:0;font-size:10px;line-height:1.1;text-align:center}
+  .urow .stk{width:46px;font-size:13px;padding:2px 3px;text-align:center}
+  .urow .mv{display:flex;flex-direction:column;align-items:center;line-height:1.15}
+  .urow .mv .mu{font-size:10px;font-weight:500;color:var(--muted);font-family:"Noto Sans",sans-serif}
   .urow.st{grid-template-areas:"item have have buy"}
   .urow.st .c-need{display:none}
   .urow .nm2{cursor:pointer}
-  .urow .nm2 .n{font-weight:600;font-size:13.5px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .urow .nm2 .ko{font-size:11.5px;white-space:nowrap}
+  .urow .nm2 .n{font-weight:600;font-size:13.5px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .urow .nm2 .ko{display:none}
+  .urow:not(.uhd) .nm2{min-height:34px;display:flex;flex-direction:column;justify-content:center}
   .bought{width:24px;height:24px}
   .urow .undo{font-size:10px;padding:2px 4px}
   .hint{display:none}
@@ -355,7 +360,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.13</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.14</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -753,11 +758,12 @@ function renderShop(m){
   const row=a=>{S.rows[a.key]=a;S.buyRows[a.key]=a;
     const dish=[...a.dishes].join(", ");
     const sub=(a.counted&&(a.staple?a.status:a.raw!=null))?(a.staple?"Checked "+fmtShort(new Date(a.counted)):"Counted "+fmtShort(new Date(a.counted))+(a.used>0?" · "+fmtQty(a.used)+" "+a.unit+" used since":"")):"Not counted yet";
-    const need=a.staple?(a.dishes.size?"used":"—"):((a.need==null||(!a.dishes.size&&a.par))?(a.par?"—":"—"):(a.num?(fmtQty(rnd(a.need))+" "+a.unit).trim():"as needed"));
-    const buy=a.buy?(a.staple?"Buy":(a.num?(fmtQty(a.buyQty)+" "+a.unit).trim():"1")):"—";
+    const qu=(q,u)=>esc(q)+(u?`<small class="mu"> ${esc(u)}</small>`:""); // number + unit (unit drops below the number on phones)
+    const need=a.staple?(a.dishes.size?"used":"—"):((a.need==null||(!a.dishes.size&&a.par))?"—":(a.num?qu(fmtQty(rnd(a.need)),a.unit):"as needed"));
+    const buy=a.buy?(a.staple?"Buy":(a.num?qu(fmtQty(a.buyQty),a.unit):"1")):"—";
     const lb=(S.inv[a.key]||{}).last_buy, recent=lb&&lb.at&&(Date.now()-new Date(lb.at))<3*864e5;
     const chk=a.buy?`<input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought">`:recent?`<button class="undo noprint" data-k="${esc(a.key)}" title="Cancel the last “Bought”">✓ Undo</button>`:(a.dishes.size?'<span class="okmark" title="Enough for this week">✓</span>':"");
-    return `<div class="urow ${a.buy?"tobuy":""} ${a.staple?"st":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}${koName(a)?` <span class="ko">/ ${esc(koName(a))}</span>`:""}${S.isAdmin?` <button class="iedit noprint" data-ek="${esc(a.key)}" title="Edit item">Edit</button>`:""}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh"><span class="ml">Have</span>${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need"><span class="ml">Need</span><span class="mv">${esc(need)}</span>${a.staple?"":`<span class="keep">keep <input type="number" class="par" min="0" step="any" inputmode="decimal" data-k="${esc(a.key)}" value="${a.par||""}" placeholder="0"></span>`}</span><span class="c-buy"><span class="ml">Buy</span><span class="mv">${esc(buy)}</span></span><span class="uc">${chk}</span></div>`;};
+    return `<div class="urow ${a.buy?"tobuy":""} ${a.staple?"st":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}${koName(a)?` <span class="ko">${esc(koName(a))}</span>`:""}${S.isAdmin?` <button class="iedit noprint" data-ek="${esc(a.key)}" title="Edit item">Edit</button>`:""}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh"><span class="ml">Have</span>${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need"><span class="ml">Need</span><span class="mv">${need}</span>${a.staple?"":`<span class="keep">keep <input type="number" class="par" min="0" step="any" inputmode="decimal" data-k="${esc(a.key)}" value="${a.par||""}" placeholder="0"></span>`}</span><span class="c-buy"><span class="ml">Buy</span><span class="mv">${buy}</span></span><span class="uc">${chk}</span></div>`;};
   const hdr='<div class="urow uhd"><span>Item</span><span class="uh h-have">Have</span><span class="c-need h-need">Need</span><span class="c-buy h-need">Buy</span><span class="uc h-need">Bought</span></div>';
   const groups=SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c);if(!l.length&&!(S.isAdmin&&!q&&S.shopFilter==="all"))return "";return grp(c,l);}).join("");
   function grp(c,l0){const l=l0.sort((x,y)=>x.item.localeCompare(y.item));
@@ -1206,7 +1212,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.13</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.14</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
