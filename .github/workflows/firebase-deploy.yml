@@ -1,0 +1,31 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build site folder (only index.html is published)
+        run: mkdir -p _site && cp index.html _site/
+
+      - name: Deploy hosting + Firestore rules
+        env:
+          FIREBASE_SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$FIREBASE_SA" ]; then
+            echo "::warning::Secret FIREBASE_SERVICE_ACCOUNT is not set - skipping deploy."
+            exit 0
+          fi
+          printf '%s' "$FIREBASE_SA" > "$RUNNER_TEMP/sa.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
+          npx --yes firebase-tools@15.35.0 deploy --only hosting,firestore:rules --non-interactive
+          rm -f "$RUNNER_TEMP/sa.json"

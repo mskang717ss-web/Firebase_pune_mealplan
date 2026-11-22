@@ -1,0 +1,45 @@
+rules_version = '2';
+// Weekly Meal Plan — members only.
+// owner  = config/owner.uid (first verified account to sign in claims it)
+// editor = verified email listed in editors/{email} (managed by the owner in "People")
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function verified() { return signedIn() && request.auth.token.email_verified == true; }
+    function myEmail() { return request.auth.token.email.lower(); }
+    function ownerPath() { return /databases/$(database)/documents/config/owner; }
+    function isOwner() { return signedIn() && exists(ownerPath()) && get(ownerPath()).data.uid == request.auth.uid; }
+    function isMember() {
+      return isOwner() || (verified() && exists(/databases/$(database)/documents/editors/$(myEmail())));
+    }
+
+    match /config/owner {
+      allow get: if signedIn();
+      allow create: if verified()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['uid', 'email', 'claimed_at']);
+      // no update/delete from the app (change it in the Firebase console if ever needed)
+    }
+
+    match /editors/{em} {
+      allow get: if isOwner() || (signedIn() && em == myEmail());
+      allow list, delete: if isOwner();
+      allow create, update: if isOwner() && em == em.lower()
+        && request.resource.data.email == em
+        && request.resource.data.keys().hasOnly(['email', 'label', 'added_at']);
+    }
+
+    match /photos/{id} {
+      allow read, delete: if isMember();
+      allow create, update: if isMember()
+        && request.resource.data.data is string
+        && request.resource.data.data.size() < 1000000
+        && request.resource.data.data.matches('data:image/(jpeg|png|webp);base64,.*');
+    }
+
+    match /{coll}/{id} {
+      allow read, write: if isMember()
+        && coll in ['recipes', 'entries', 'weekNotes', 'shopExtras', 'shopChecks', 'inventory'];
+    }
+  }
+}

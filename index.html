@@ -9,7 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@13.2.0/firebase-app-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@13.2.0/firebase-auth-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@13.2.0/firebase-firestore-compat.js"></script>
 <style>
 :root{
   --ink:#1E2430; --muted:#656B75; --navy:#1F3A5F; --blue:#2E5A8A;
@@ -301,7 +303,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.14</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.00</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -328,7 +330,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 
   <main id="main"><div class="loading">Loading…</div></main>
 
-  <footer><span>Weekly Meal Plan · data saved online</span><span id="syncInfo"></span></footer>
+  <footer><span>Weekly Meal Plan · data saved online (Firebase)</span><span id="syncInfo"></span></footer>
 </div>
 
 <div class="ov" id="ov"><div class="modal" id="modal"></div></div>
@@ -336,10 +338,23 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <input type="file" id="itemPhotoInput" accept="image/*" style="display:none">
 
 <script>
-const SB_URL = "https://sqnuivviqajivhjtsaxn.supabase.co";
-const SB_KEY = "sb_publishable_yLpUeDDRpo8wg2HRjzfJMw_9SOrRnq6";
-const sb = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:true}});
-const GOOGLE_LOGIN = false; // turn on after the Google provider is enabled in Supabase
+/* Firebase web config (public values; paste from Firebase console → Project settings → Your apps) */
+const FB_CONFIG = {apiKey:"", authDomain:"", projectId:"", storageBucket:"", messagingSenderId:"", appId:""};
+const EMU = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /[?&]emu=1/.test(location.search); // local test only
+const CONFIGURED = EMU || !!FB_CONFIG.apiKey;
+let auth=null, fs=null;
+if(CONFIGURED){
+  firebase.initializeApp(EMU?{apiKey:"demo-key",authDomain:"localhost",projectId:"demo-mealplan",appId:"demo"}:FB_CONFIG);
+  auth=firebase.auth(); fs=firebase.firestore();
+  if(EMU){ auth.useEmulator("http://127.0.0.1:9099",{disableWarnings:true}); fs.useEmulator("127.0.0.1",8080); }
+  else fs.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+}
+const C = n => fs.collection(n);
+const nowIso = () => new Date().toISOString();
+const docs = snap => snap.docs.map(d=>({...d.data(),id:d.id}));
+const kid = k => encodeURIComponent(k); // Firestore doc id from an item key
+async function tryDo(fn){ try{ await fn(); return null; }catch(e){ console.error(e); return e; } }
+function eMsg(e){ const c=e&&e.code||""; return c==="permission-denied"?"No permission (are you signed in as a member?)":c==="unavailable"?"Offline — check the internet":(e&&e.message)||String(e); }
 
 const SLOTS = [["breakfast","Breakfast"],["lunch","Lunch"],["dinner","Dinner"],["snack","Snack"]];
 const CATS = ["Breakfast","Main","Soup & Stew","Side","Rice & Noodles","Snack","Other"];
@@ -366,123 +381,119 @@ function rangeText(){const e=addDays(S.week,6),s=S.week;return (s.getMonth()===e
 function fmtQty(n){if(n===null||n===undefined||n==="")return "";const v=Math.round(Number(n)*100)/100;const fr={0.25:"¼",0.5:"½",0.75:"¾"};const w=Math.floor(v),f=Math.round((v-w)*100)/100;if(fr[f])return (w?w:"")+fr[f];return String(v);}
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("on"),2600);}
 function totalMin(r){return (r.prep_min||0)+(r.cook_min||0);}
-function safeImg(u){return /^https:\/\/[^"'<>\s]+$/.test(u||"")?u:"";}
-async function shrinkImage(file,max=1280){
+function safeImg(u){return /^https:\/\/[^"'<>\s]+$/.test(u||"")||/^fs:[A-Za-z0-9_-]+$/.test(u||"")?u:"";}
+/* photos live in Firestore (collection "photos", one compressed JPEG data URL per doc); fields hold "fs:<docId>" */
+const BLANK="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+const PH={}, PHP={};
+const okData = d => /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(d||"");
+function blobToDataUrl(b){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(new Error("Cannot read image"));r.readAsDataURL(b);});}
+async function savePhoto(file,max){
+  let m=max,q=0.8,d="";
+  for(let i=0;i<5;i++){ d=await blobToDataUrl(await shrinkImage(file,m,q)); if(d.length<600000) break; m=Math.round(m*0.8); q=Math.max(0.6,q-0.05); }
+  if(d.length>=900000) throw new Error("Photo too large");
+  const ref=await C("photos").add({data:d,created_at:nowIso()}); PH[ref.id]=d; return "fs:"+ref.id;
+}
+function dropPhoto(u){ if(/^fs:/.test(u||"")) C("photos").doc(u.slice(3)).delete().catch(()=>{}); }
+function loadPhoto(id){
+  if(PHP[id]) return PHP[id];
+  return PHP[id]=(async()=>{const r=C("photos").doc(id);let s=null;try{s=await r.get({source:"cache"});}catch(_){}if(!s||!s.exists)s=await r.get();
+    const d=s.exists?s.data().data:"";PH[id]=d;return d;})().catch(()=>{delete PHP[id];return "";});
+}
+function imgSrc(u){ // src attribute for an https URL or an "fs:" photo
+  if(/^fs:/.test(u||"")){const id=u.slice(3);return okData(PH[id])?`src="${PH[id]}"`:`src="${BLANK}" data-ph="${esc(id)}"`;}
+  return `src="${esc(u)}"`;
+}
+function hydratePhotos(){document.querySelectorAll("img[data-ph]").forEach(im=>{const id=im.dataset.ph;im.removeAttribute("data-ph");loadPhoto(id).then(d=>{if(okData(d))im.src=d;});});}
+new MutationObserver(()=>{if(!hydratePhotos._q){hydratePhotos._q=1;queueMicrotask(()=>{hydratePhotos._q=0;hydratePhotos();});}}).observe(document.body,{childList:true,subtree:true});
+async function shrinkImage(file,max=1280,quality=0.82){
   let src,w,h;
   try{src=await createImageBitmap(file);w=src.width;h=src.height;}
   catch(_){src=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error("Cannot read image"));i.src=URL.createObjectURL(file);});w=src.naturalWidth;h=src.naturalHeight;}
   const k=Math.min(1,max/Math.max(w,h)),c=document.createElement("canvas");c.width=Math.round(w*k);c.height=Math.round(h*k);
   c.getContext("2d").drawImage(src,0,0,c.width,c.height);
-  return await new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new Error("Image conversion failed")),"image/jpeg",0.82));
+  return await new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new Error("Image conversion failed")),"image/jpeg",quality));
 }
 
 /* ---------- data ---------- */
 async function loadRecipes(){
-  const {data,error}=await sb.from("meal_recipes").select("*").order("name");
-  if(error) throw error;
+  const s=await C("recipes").get();
+  const data=docs(s).sort((a,b)=>String(a.name).localeCompare(String(b.name)));
   S.recipes=data; S.rmap=Object.fromEntries(data.map(r=>[r.id,r]));
 }
 async function loadWeek(){
   const ws=ymd(S.week), we=ymd(addDays(S.week,6)), back=ymd(addDays(new Date(),-120)), from=ws<back?ws:back;
   const [e,n,c,x,iv]=await Promise.all([
-    sb.from("meal_entries").select("*").gte("meal_date",from).lte("meal_date",we).order("sort").order("created_at"),
-    sb.from("meal_week_notes").select("*").eq("week_start",ws).maybeSingle(),
-    sb.from("meal_shopping_checks").select("item_key,checked").eq("week_start",ws),
-    sb.from("meal_shopping_extras").select("*").eq("week_start",ws).order("created_at"),
-    sb.from("meal_inventory").select("*")
+    C("entries").where("meal_date",">=",from).where("meal_date","<=",we).get(),
+    C("weekNotes").doc(ws).get(),
+    C("shopChecks").where("week_start","==",ws).get(),
+    C("shopExtras").where("week_start","==",ws).get(),
+    C("inventory").get()
   ]);
-  for(const r of [e,n,c,x,iv]) if(r.error) throw r.error;
-  S.inv=Object.fromEntries(iv.data.map(v=>[v.item_key,v]));
-  S.allEntries=e.data; S.entries=e.data.filter(v=>v.meal_date>=ws&&v.meal_date<=we); S.note=n.data; S.extras=x.data;
-  S.checks=Object.fromEntries(c.data.map(k=>[k.item_key,k.checked]));
+  const byTime=(a,b)=>String(a.created_at||"").localeCompare(String(b.created_at||""));
+  const ent=docs(e).sort((a,b)=>(a.sort||0)-(b.sort||0)||byTime(a,b));
+  S.inv=Object.fromEntries(docs(iv).map(v=>[v.item_key,v]));
+  S.allEntries=ent; S.entries=ent.filter(v=>v.meal_date>=ws&&v.meal_date<=we); S.note=n.exists?n.data():null; S.extras=docs(x).sort(byTime);
+  S.checks=Object.fromEntries(docs(c).map(k=>[k.item_key,k.checked]));
   S.loadedAt=new Date();
 }
 async function loadAll(){
   try{ S.err=null; await Promise.all([loadRecipes(),loadWeek()]); }
-  catch(err){ console.error(err); S.err=err.message||String(err); }
+  catch(err){ console.error(err); S.err=eMsg(err); }
   render();
 }
-async function refreshWeek(){ try{ S.err=null; await loadWeek(); }catch(err){ S.err=err.message||String(err);} render(); }
+async function refreshWeek(){ try{ S.err=null; await loadWeek(); }catch(err){ S.err=eMsg(err);} render(); }
 
 /* ---------- auth ---------- */
 async function refreshAuth(){
-  const {data:{session}}=await sb.auth.getSession();
-  S.session=session;
-  try{ const {data}=await sb.rpc("meal_has_admin"); S.hasAdmin=!!data; }catch(e){}
-  if(session){
-    if(!S.hasAdmin){ const {data}=await sb.rpc("claim_meal_admin"); if(data){S.hasAdmin=true; toast("You are now the owner of this meal plan.");} }
-    const {data}=await sb.rpc("meal_role"); S.role=data||"none";
+  const u=auth.currentUser;
+  S.user=u; S.session=u?{user:{email:u.email}}:null;
+  S.isAdmin=false; S.isOwner=false; S.role=u?"none":"viewer";
+  if(u){
+    try{
+      const ref=C("config").doc("owner"); let o=await ref.get();
+      if(!o.exists&&u.emailVerified){
+        try{ await ref.set({uid:u.uid,email:u.email||"",claimed_at:nowIso()}); toast("You are now the owner of this meal plan."); }catch(e){ console.error(e); }
+        o=await ref.get();
+      }
+      S.hasAdmin=o.exists;
+      if(o.exists&&o.data().uid===u.uid) S.role="owner";
+      else if(u.emailVerified&&u.email){ const ed=await C("editors").doc(u.email.toLowerCase()).get(); if(ed.exists) S.role="editor"; }
+    }catch(e){ console.error(e); S.authErr=eMsg(e); }
     S.isAdmin=S.role==="owner"||S.role==="editor"; S.isOwner=S.role==="owner";
-  } else {S.isAdmin=false;S.isOwner=false;S.role="viewer";}
+  }
   renderOwner();
 }
 function renderOwner(){
   const el=document.getElementById("ownerArea");
-  if(S.session){
-    el.innerHTML=(S.isOwner?'<span class="tag ok">Owner · edit mode</span> <button class="btn sm" id="teamBtn">People</button>':
-      S.isAdmin?'<span class="tag ok">Editor · edit mode</span>':'<span class="tag bad">View only — ask the owner to add your email</span>')+
-      ' <button class="btn sm" id="signOut">Sign out</button>';
-    const tb=document.getElementById("teamBtn"); if(tb) tb.onclick=openTeam;
-    document.getElementById("signOut").onclick=async()=>{await sb.auth.signOut();};
-  } else {
-    el.innerHTML='<button class="btn sm" id="ownerBtn">Sign in to edit</button>';
-    document.getElementById("ownerBtn").onclick=openSignIn;
-  }
-}
-function openSignIn(){
-  openModal("Sign in to edit",`
-    <div class="form">
-      <p style="margin:0 0 10px;color:var(--muted)">Signed-in members (the owner and people the owner has added) can change meals and recipes. Everyone with the link can view, update stock and tick the shopping list.<br><b>First time?</b> Enter the email the owner added, choose a password (8+ characters) and press <b>Create account</b>.</p>
-      ${GOOGLE_LOGIN?`<button class="btn primary" id="siGoogle" style="width:100%;padding:10px;font-weight:600">Sign in with Google</button>
-      <div style="text-align:center;color:var(--muted);font-size:12px;margin:12px 0 2px">or with email</div>`:""}
-      <label>Email</label><input id="siEmail" type="email" autocomplete="username">
-      <label>Password</label><input id="siPw" type="password" autocomplete="current-password">
-      <div class="msg" id="siMsg"></div>
-    </div>`,
-    `<span><button class="btn" id="siUp">${S.hasAdmin?"Create account":"Create owner account"}</button></span><button class="btn primary" id="siGo">Sign in</button>`);
-  const msg=t=>document.getElementById("siMsg").innerHTML=t;
-  if(GOOGLE_LOGIN) document.getElementById("siGoogle").onclick=async()=>{
-    const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+location.pathname}});
-    if(error) msg('<span class="tag bad">'+esc(error.message)+'</span>');
-  };
-  document.getElementById("siGo").onclick=async()=>{
-    const email=document.getElementById("siEmail").value.trim(), password=document.getElementById("siPw").value;
-    if(!email||!password) return msg('<span class="tag bad">Enter email and password</span>');
-    const {error}=await sb.auth.signInWithPassword({email,password});
-    if(error) return msg('<span class="tag bad">'+esc(error.message)+'</span>');
-    closeModal(); await refreshAuth(); render();
-  };
-  const up=document.getElementById("siUp");
-  if(up) up.onclick=async()=>{
-    const email=document.getElementById("siEmail").value.trim(), password=document.getElementById("siPw").value;
-    if(!email||password.length<8) return msg('<span class="tag bad">Email and a password of 8+ characters needed</span>');
-    const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});
-    if(error) return msg('<span class="tag bad">'+esc(error.message)+'</span>');
-    if(data.session){ closeModal(); await refreshAuth(); render(); }
-    else msg('<span class="tag warn">Check your email and click the confirm link</span> The page it opens may show an error — that is fine. Then come back and press <b>Sign in</b>.');
-  };
+  if(!S.session){ el.innerHTML=""; return; }
+  el.innerHTML=(S.isOwner?'<span class="tag ok">Owner · edit mode</span> <button class="btn sm" id="teamBtn">People</button>':
+    S.isAdmin?'<span class="tag ok">Editor · edit mode</span>':'<span class="tag bad">No access</span>')+
+    ' <button class="btn sm" id="signOut">Sign out</button>';
+  const tb=document.getElementById("teamBtn"); if(tb) tb.onclick=openTeam;
+  document.getElementById("signOut").onclick=()=>auth.signOut();
 }
 
 async function openTeam(){
-  const {data,error}=await sb.from("meal_editors").select("*").order("added_at");
-  if(error) return toast(error.message);
-  const rows=(data||[]).map(e=>`<tr><td>${esc(e.label||"")}</td><td>${esc(e.email)}</td><td style="text-align:right"><button class="btn sm danger" data-rm="${esc(e.email)}">Remove</button></td></tr>`).join("")||'<tr><td colspan="3" style="color:var(--muted)">No one added yet.</td></tr>';
+  let data;
+  try{ data=docs(await C("editors").get()).sort((a,b)=>String(a.added_at||"").localeCompare(String(b.added_at||""))); }
+  catch(e){ return toast(eMsg(e)); }
+  const rows=data.map(e=>`<tr><td>${esc(e.label||"")}</td><td>${esc(e.email)}</td><td style="text-align:right"><button class="btn sm danger" data-rm="${esc(e.email)}">Remove</button></td></tr>`).join("")||'<tr><td colspan="3" style="color:var(--muted)">No one added yet.</td></tr>';
   openModal("People who can edit",`
     <div class="form">
-      <p style="margin:0 0 10px;color:var(--muted)">People added here can edit meals and recipes (same as you) after they create an account with this email and confirm it.</p>
+      <p style="margin:0 0 10px;color:var(--muted)">People added here can edit meals and recipes (same as you). They sign in with <b>Continue with Google</b> using this email, or create an account with this email and confirm it.</p>
       <table class="tbl" style="width:100%;margin-bottom:12px"><thead><tr><th>Name</th><th>Email</th><th></th></tr></thead><tbody>${rows}</tbody></table>
       <label>Name</label><input id="tmLabel" placeholder="e.g. Maid">
       <label>Email</label><input id="tmEmail" type="email" placeholder="name@example.com">
     </div>`,`<span></span><button class="btn primary" id="tmAdd">Add person</button>`);
   document.getElementById("tmAdd").onclick=async()=>{
     const email=document.getElementById("tmEmail").value.trim().toLowerCase(), label=document.getElementById("tmLabel").value.trim();
-    if(!/^\S+@\S+\.\S+$/.test(email)) return toast("Enter a valid email");
-    const {error}=await sb.from("meal_editors").upsert({email,label:label||null});
-    if(error) return toast(error.message); toast("Added"); openTeam();
+    if(!/^[^\s/]+@[^\s/]+\.[^\s/]+$/.test(email)) return toast("Enter a valid email");
+    const err=await tryDo(()=>C("editors").doc(email).set({email,label:label||null,added_at:nowIso()}));
+    if(err) return toast(eMsg(err)); toast("Added"); openTeam();
   };
   document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{
-    const {error}=await sb.from("meal_editors").delete().eq("email",b.dataset.rm);
-    if(error) return toast(error.message); toast("Removed"); openTeam();
+    const err=await tryDo(()=>C("editors").doc(b.dataset.rm).delete());
+    if(err) return toast(eMsg(err)); toast("Removed"); openTeam();
   });
 }
 
@@ -618,11 +629,11 @@ function ytId(u){const m=String(u||"").match(/(?:youtube\.com\/(?:watch\?(?:.*&)
 function ytThumb(r){const id=ytId(r.video_url);return id?`https://i.ytimg.com/vi/${id}/hqdefault.jpg`:"";}
 function photoOf(r){return safeImg(r.photo_url)||ytThumb(r);}
 function videoLink(r){return ytId(r.video_url)?r.video_url:"https://www.youtube.com/results?search_query="+encodeURIComponent("how to make "+r.name.replace(/\(.*?\)/g,"")+" recipe english");}
-function dishPic(r){const p=photoOf(r);return p?`<img src="${esc(p)}" alt="" loading="lazy">`:`<span>${dishEmoji(r)}</span>`;}
+function dishPic(r){const p=photoOf(r);return p?`<img ${imgSrc(p)} alt="" loading="lazy">`:`<span>${dishEmoji(r)}</span>`;}
 function itemEmoji(a){const n=a.item.toLowerCase();for(const [k,e] of EMOJI) if(n.includes(k)) return e;return CAT_EMOJI[a.cat]||"🛒";}
 function thumb(a){
   const v=S.inv[a.key], u=v&&safeImg(v.photo_url);
-  const inner=u?`<img src="${esc(u)}" alt="" loading="lazy">`:`<span>${itemEmoji(a)}</span>`;
+  const inner=u?`<img ${imgSrc(u)} alt="" loading="lazy">`:`<span>${itemEmoji(a)}</span>`;
   if(S.isAdmin) return `<span class="thumb edit" data-pk="${esc(a.key)}" title="Tap to add / change photo">${inner}</span>`;
   return u?`<span class="thumb view" data-vk="${esc(a.key)}" title="View photo">${inner}</span>`:`<span class="thumb">${inner}</span>`;
 }
@@ -696,8 +707,8 @@ async function addToGroup(ci){
   if(!item) return toast("Type an item name");
   const key=invKey(item,unit,false); if(S.inv[key]) return toast("Already in the list");
   const par=pr===""?null:parseFloat(pr); if(par!==null&&(isNaN(par)||par<0)) return toast("Keep must be a number");
-  const row={item_key:key,item,unit:unit||null,category:c,is_staple:false,qty:null,status:null,par,updated_at:new Date().toISOString()};
-  const {error}=await sb.from("meal_inventory").insert(row); if(error) return toast("Not saved: "+error.message);
+  const row={item_key:key,item,unit:unit||null,category:c,is_staple:false,qty:null,status:null,par,counted_at:nowIso(),updated_at:nowIso()};
+  const error=await tryDo(()=>C("inventory").doc(kid(key)).set(row)); if(error) return toast("Not saved: "+eMsg(error));
   S.inv[key]=row; toast(item+" added"); render();
 }
 function recipeUses(key){return S.recipes.filter(r=>(r.ingredients||[]).some(g=>g.item&&invKey(g.item,g.staple?"":String(g.unit||"").trim(),!!g.staple)===key)).map(r=>r.name);}
@@ -714,8 +725,8 @@ function openItemEdit(key){
   const del=document.getElementById("ieDel");
   if(del) del.onclick=async()=>{
     if(del.dataset.sure!=="1"){del.dataset.sure="1";del.textContent="Tap again to delete";return;}
-    const {error}=await sb.from("meal_inventory").delete().eq("item_key",key); if(error) return toast(error.message);
-    delete S.inv[key]; closeModal(); toast(a.item+" deleted"); render();
+    const error=await tryDo(()=>C("inventory").doc(kid(key)).delete()); if(error) return toast(eMsg(error));
+    dropPhoto(cur.photo_url); delete S.inv[key]; closeModal(); toast(a.item+" deleted"); render();
   };
   document.getElementById("ieSave").onclick=async()=>{
     const pEl=document.getElementById("ieP"), pr=pEl?pEl.value.trim():""; const par=pr===""?null:parseFloat(pr);
@@ -724,9 +735,10 @@ function openItemEdit(key){
     const unit=a.staple?"":(locked?(a.unit||""):document.getElementById("ieU").value.trim());
     const cat=locked?a.cat:document.getElementById("ieC").value, nk=invKey(item,unit,!!a.staple);
     if(nk!==key&&S.inv[nk]) return toast("An item with that name already exists");
-    const row={...cur,item_key:nk,item,unit:unit||null,category:cat,is_staple:!!a.staple,qty:cur.qty??null,status:cur.status??null,counted_at:cur.counted_at??null,par,updated_at:new Date().toISOString()};
-    const {error}=await sb.from("meal_inventory").upsert(row); if(error) return toast("Not saved: "+error.message);
-    if(nk!==key){const d=await sb.from("meal_inventory").delete().eq("item_key",key); if(d.error) toast(d.error.message); delete S.inv[key];}
+    const row={...cur,item_key:nk,item,unit:unit||null,category:cat,is_staple:!!a.staple,qty:cur.qty??null,status:cur.status??null,counted_at:cur.counted_at??nowIso(),par,updated_at:nowIso()};
+    delete row.id;
+    const error=await tryDo(()=>C("inventory").doc(kid(nk)).set(row)); if(error) return toast("Not saved: "+eMsg(error));
+    if(nk!==key){const d=await tryDo(()=>C("inventory").doc(kid(key)).delete()); if(d) toast(eMsg(d)); delete S.inv[key];}
     S.inv[nk]=row; closeModal(); toast("Saved"); render();
   };
 }
@@ -743,10 +755,10 @@ function allStockItems(){
 async function saveInv(a,patch,recount){
   const cur=S.inv[a.key]||{};
   const qty=("qty" in patch)?patch.qty:(cur.qty??null), status=("status" in patch)?patch.status:(cur.status??null);
-  const {error}=await sb.rpc("set_meal_inventory",{p_key:a.key,p_item:a.item,p_unit:a.unit||"",p_category:a.cat,p_staple:!!a.staple,p_qty:qty,p_status:status,p_recount:!!recount});
-  if(error){toast("Not saved: "+error.message);render();return false;}
-  const now=new Date().toISOString();
-  S.inv[a.key]={...cur,item_key:a.key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:!!a.staple,qty,status,updated_at:now,counted_at:(recount||!cur.counted_at)?now:cur.counted_at};
+  const now=nowIso(), row={item_key:a.key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:!!a.staple,qty,status,updated_at:now,counted_at:(recount||!cur.counted_at)?now:cur.counted_at};
+  const error=await tryDo(()=>C("inventory").doc(kid(a.key)).set(row,{merge:true}));
+  if(error){toast("Not saved: "+eMsg(error));render();return false;}
+  S.inv[a.key]={...cur,...row};
   render();return true;
 }
 async function addStockItem(){
@@ -760,9 +772,11 @@ document.getElementById("main").addEventListener("click",e=>{const b=e.target.cl
 document.getElementById("main").addEventListener("change",async e=>{
   const t=e.target;
   if(t.classList.contains("par")){const a=S.rows[t.dataset.k];if(!a)return;const raw=t.value.trim();const v=raw===""?null:parseFloat(raw);if(v!==null&&(isNaN(v)||v<0))return toast("Enter a number");
-    const {error}=await sb.rpc("set_meal_inventory_par",{p_key:a.key,p_item:a.item,p_unit:a.unit||"",p_category:a.cat,p_par:v});
-    if(error){toast("Not saved: "+error.message);return;}
-    S.inv[a.key]={...(S.inv[a.key]||{item_key:a.key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:false,qty:null,status:null,counted_at:null}),par:v};render();return;}
+    const base=S.inv[a.key]||{item_key:a.key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:false,qty:null,status:null,counted_at:nowIso()};
+    const row={...base,par:v,updated_at:nowIso()}; delete row.id;
+    const error=await tryDo(()=>C("inventory").doc(kid(a.key)).set(row,{merge:true}));
+    if(error){toast("Not saved: "+eMsg(error));return;}
+    S.inv[a.key]=row;render();return;}
   if(t.classList.contains("stk")){const a=S.rows[t.dataset.k];if(!a)return;const raw=t.value.trim();const v=raw===""?null:parseFloat(raw);if(v!==null&&(isNaN(v)||v<0))return toast("Enter a number");await saveInv(a,{qty:v===null?null:rnd(v)},true);}
   else if(t.classList.contains("bought")){const a=S.buyRows[t.dataset.k];if(!a)return;
     const ok=a.staple?await saveInv(a,{status:"ok"},true):(a.raw==null?await saveInv(a,{qty:rnd((a.num?a.buyQty:1)+(a.have||0))},true):await saveInv(a,{qty:rnd(a.raw+(a.num?a.buyQty:1))},false));
@@ -772,7 +786,7 @@ document.getElementById("main").addEventListener("click",e=>{
   const ed=e.target.closest(".thumb[data-pk]");
   if(ed){e.preventDefault();S.photoKey=ed.dataset.pk;const inp=document.getElementById("itemPhotoInput");inp.value="";inp.click();return;}
   const vw=e.target.closest(".thumb[data-vk]");
-  if(vw){const v=S.inv[vw.dataset.vk];if(v&&safeImg(v.photo_url))openModal(v.item,`<img class="mphoto" style="max-height:70vh;object-fit:contain" src="${esc(v.photo_url)}" alt="">`);}
+  if(vw){const v=S.inv[vw.dataset.vk];if(v&&safeImg(v.photo_url))openModal(v.item,`<img class="mphoto" style="max-height:70vh;object-fit:contain" ${imgSrc(v.photo_url)} alt="">`);}
 });
 (function(){
   const M=document.getElementById("main");
@@ -783,8 +797,8 @@ document.getElementById("main").addEventListener("click",e=>{
     e.preventDefault();e.stopPropagation();
     const d=cell.dataset.d,sl=cell.dataset.s,rid=S.pick;S.pick=null;
     const sort=S.entries.filter(x=>x.meal_date===d&&x.slot===sl).length;
-    const {error}=await sb.from("meal_entries").insert({meal_date:d,slot:sl,recipe_id:rid,sort});
-    if(error)return toast(error.message);toast("Added");await refreshWeek();
+    const error=await tryDo(()=>C("entries").add({meal_date:d,slot:sl,recipe_id:rid,title:null,servings:null,note:null,sort,created_at:nowIso()}));
+    if(error)return toast(eMsg(error));toast("Added");await refreshWeek();
   },true);
   M.addEventListener("dragstart",e=>{const c=e.target.closest("[data-eid],[data-rid]");if(!c||!S.isAdmin)return;
     S.drag=c.dataset.eid?{eid:c.dataset.eid}:{rid:c.dataset.rid};
@@ -796,23 +810,21 @@ document.getElementById("main").addEventListener("click",e=>{
   M.addEventListener("drop",async e=>{const cell=e.target.closest("[data-d][data-s]");if(!cell||!S.drag)return;e.preventDefault();
     const d=cell.dataset.d,sl=cell.dataset.s,drag=S.drag;S.drag=null;cell.classList.remove("dropok");
     const sort=S.entries.filter(x=>x.meal_date===d&&x.slot===sl).length;let r;
-    if(drag.rid) r=await sb.from("meal_entries").insert({meal_date:d,slot:sl,recipe_id:drag.rid,sort});
-    else{const en=S.entries.find(x=>x.id===drag.eid);if(!en||(en.meal_date===d&&en.slot===sl))return;r=await sb.from("meal_entries").update({meal_date:d,slot:sl,sort}).eq("id",drag.eid);}
-    if(r.error)return toast(r.error.message);toast(drag.rid?"Added":"Moved");await refreshWeek();});
+    if(drag.rid) r=await tryDo(()=>C("entries").add({meal_date:d,slot:sl,recipe_id:drag.rid,title:null,servings:null,note:null,sort,created_at:nowIso()}));
+    else{const en=S.entries.find(x=>x.id===drag.eid);if(!en||(en.meal_date===d&&en.slot===sl))return;r=await tryDo(()=>C("entries").doc(drag.eid).update({meal_date:d,slot:sl,sort}));}
+    if(r)return toast(eMsg(r));toast(drag.rid?"Added":"Moved");await refreshWeek();});
 })();
 document.getElementById("itemPhotoInput").addEventListener("change",async e=>{
   const f=e.target.files[0], key=S.photoKey, a=S.rows[key]||S.buyRows[key]; if(!f||!a) return;
   toast("Uploading photo…");
   try{
-    const blob=await shrinkImage(f,700), path="items/"+key.replace(/[^a-z0-9]+/gi,"-").slice(0,80)+"-"+Date.now()+".jpg";
-    const up=await sb.storage.from("recipe-photos").upload(path,blob,{contentType:"image/jpeg",upsert:true}); if(up.error) throw up.error;
-    const url=sb.storage.from("recipe-photos").getPublicUrl(path).data.publicUrl;
-    const q=S.inv[key]?sb.from("meal_inventory").update({photo_url:url}).eq("item_key",key)
-      :sb.from("meal_inventory").insert({item_key:key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:!!a.staple,photo_url:url});
-    const {error}=await q; if(error) throw error;
-    S.inv[key]={...(S.inv[key]||{item_key:key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:!!a.staple,qty:null,status:null,counted_at:null}),photo_url:url};
+    const old=(S.inv[key]||{}).photo_url, url=await savePhoto(f,500);
+    const base=S.inv[key]||{item_key:key,item:a.item,unit:a.unit||null,category:a.cat,is_staple:!!a.staple,qty:null,status:null,counted_at:nowIso()};
+    const row={...base,photo_url:url,updated_at:nowIso()}; delete row.id;
+    await C("inventory").doc(kid(key)).set(row,{merge:true});
+    dropPhoto(old); S.inv[key]=row;
     toast("Photo saved"); render();
-  }catch(err){toast("Photo not saved: "+(err.message||err));}
+  }catch(err){toast("Photo not saved: "+eMsg(err));}
 });
 document.getElementById("main").addEventListener("click",async e=>{
   const b=e.target.closest("button.st");if(!b)return;const a=S.rows[b.dataset.k];if(!a)return;
@@ -820,19 +832,20 @@ document.getElementById("main").addEventListener("click",async e=>{
 });
 async function toggleCheck(el,key){
   const val=el.checked; S.checks[key]=val;
-  const {error}=await sb.rpc("set_meal_shopping_check",{p_week:ymd(S.week),p_key:key,p_checked:val});
-  if(error){ toast("Not saved: "+error.message); S.checks[key]=!val; }
+  const ws=ymd(S.week), error=await tryDo(()=>C("shopChecks").doc(kid(ws+"|"+key)).set({week_start:ws,item_key:key,checked:val,updated_at:nowIso()}));
+  if(error){ toast("Not saved: "+eMsg(error)); S.checks[key]=!val; }
   render();
 }
 async function addExtra(){
   const item=document.getElementById("exItem").value.trim(); if(!item) return;
-  const {error}=await sb.from("meal_shopping_extras").insert({week_start:ymd(S.week),item,qty:document.getElementById("exQty").value.trim()||null,category:document.getElementById("exCat").value});
-  if(error) return toast(error.message);
+  const row={week_start:ymd(S.week),item,qty:document.getElementById("exQty").value.trim()||null,category:document.getElementById("exCat").value,created_at:nowIso()};
+  const error=await tryDo(()=>C("shopExtras").add(row));
+  if(error) return toast(eMsg(error));
   await refreshWeek();
 }
 async function delExtra(id){
-  const {error}=await sb.from("meal_shopping_extras").delete().eq("id",id);
-  if(error) return toast(error.message);
+  const error=await tryDo(()=>C("shopExtras").doc(id).delete());
+  if(error) return toast(eMsg(error));
   await refreshWeek();
 }
 
@@ -844,7 +857,8 @@ function renderRecipes(m){
   m.innerHTML=`<div class="secbar"><span>1. Recipes</span><span class="r">${S.recipes.length} recipes</span></div>
     <div class="rfilter"><input id="rSearch" placeholder="Search dish or ingredient…" value="${esc(S.rSearch)}">${used.map(c=>`<button class="pill ${c===S.rCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}
     ${S.isAdmin?'<span style="flex:1"></span><button class="btn primary sm" onclick="openRecipeEdit()">+ New recipe</button>':""}</div>
-    <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${photoOf(r)?`<img class="rph" src="${esc(photoOf(r))}" loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
+    ${S.isOwner&&!S.recipes.length?`<div class="notebox"><div class="h">Import data from the old app</div>Choose the data file (.json) to copy recipes, meal plans and stock into this app. <input type="file" accept=".json,application/json" onchange="this.files[0]&&importData(this.files[0])" style="margin-top:6px;display:block"></div>`:""}
+    <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${photoOf(r)?`<img class="rph" ${imgSrc(photoOf(r))} loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
   const s=document.getElementById("rSearch");
   s.oninput=()=>{S.rSearch=s.value;const p=s.selectionStart;renderRecipes(m);const n=document.getElementById("rSearch");n.focus();n.setSelectionRange(p,p);};
   m.querySelectorAll(".pill").forEach(b=>b.onclick=()=>{S.rCat=b.dataset.c;renderRecipes(m);});
@@ -852,7 +866,7 @@ function renderRecipes(m){
 function openRecipe(id){
   const r=S.rmap[id]; if(!r) return;
   const ings=(r.ingredients||[]);
-  const body=`${photoOf(r)?`<img class="mphoto" src="${esc(photoOf(r))}" alt="">`:""}<a class="ytbtn" href="${esc(videoLink(r))}" target="_blank" rel="noopener">▶ ${ytId(r.video_url)?"Watch the video on YouTube (English)":"Find an English video on YouTube"}</a><div class="meta"><span class="tag ok">${esc(r.category)}</span><span class="tag warn">Serves ${r.servings}</span>${r.prep_min?`<span class="tag warn">Prep ${r.prep_min} min</span>`:""}${r.cook_min?`<span class="tag warn">Cook ${r.cook_min} min</span>`:""}</div>
+  const body=`${photoOf(r)?`<img class="mphoto" ${imgSrc(photoOf(r))} alt="">`:""}<a class="ytbtn" href="${esc(videoLink(r))}" target="_blank" rel="noopener">▶ ${ytId(r.video_url)?"Watch the video on YouTube (English)":"Find an English video on YouTube"}</a><div class="meta"><span class="tag ok">${esc(r.category)}</span><span class="tag warn">Serves ${r.servings}</span>${r.prep_min?`<span class="tag warn">Prep ${r.prep_min} min</span>`:""}${r.cook_min?`<span class="tag warn">Cook ${r.cook_min} min</span>`:""}</div>
     <div class="subh">Ingredients</div>
     <table class="t"><tr><th>Ingredient</th><th style="width:130px">Amount</th></tr>${ings.map(i=>`<tr><td>${esc(i.item)}${i.staple?' <span style="color:var(--muted);font-size:11.5px">(pantry)</span>':""}</td><td class="q">${esc((fmtQty(i.qty)+" "+(i.unit||"")).trim())}</td></tr>`).join("")}</table>
     <div class="subh">Steps</div><ol class="steps">${(r.steps||[]).map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
@@ -878,7 +892,7 @@ function openRecipeEdit(id){
     <label>Steps (one step per line)</label><textarea id="reSteps">${esc((r.steps||[]).join("\n"))}</textarea>
     <label>Tip / notes</label><input id="reNotes" value="${esc(r.notes||"")}">
     <label>YouTube video link (English)</label><input id="reVideo" placeholder="https://www.youtube.com/watch?v=..." value="${esc(r.video_url||"")}">
-    <label>Photo</label><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><img class="pprev" id="rePrev" ${safeImg(r.photo_url)?`src="${esc(r.photo_url)}"`:'style="display:none"'} alt=""><div style="flex:1;min-width:200px"><input type="file" id="rePhoto" accept="image/*">${safeImg(r.photo_url)?'<label style="display:flex;gap:6px;align-items:center;margin-top:6px;color:var(--ink)"><input type="checkbox" id="reNoPhoto" style="width:auto"> Remove photo</label>':""}</div></div>
+    <label>Photo</label><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><img class="pprev" id="rePrev" ${safeImg(r.photo_url)?imgSrc(r.photo_url):'style="display:none"'} alt=""><div style="flex:1;min-width:200px"><input type="file" id="rePhoto" accept="image/*">${safeImg(r.photo_url)?'<label style="display:flex;gap:6px;align-items:center;margin-top:6px;color:var(--ink)"><input type="checkbox" id="reNoPhoto" style="width:auto"> Remove photo</label>':""}</div></div>
     <div class="msg" id="reMsg"></div></div>`;
   openModal(id?"Edit recipe":"New recipe",body,`<button class="btn" onclick="${id?`openRecipe('${id}')`:"closeModal()"}">Cancel</button><button class="btn primary" onclick="saveRecipe(${id?`'${id}'`:"null"})">Save recipe</button>`);
   document.getElementById("rePhoto").onchange=e=>{const f=e.target.files[0];if(f){const p=document.getElementById("rePrev");p.src=URL.createObjectURL(f);p.style.display="block";}};
@@ -891,28 +905,25 @@ async function saveRecipe(id){
     return {item:row.querySelector(".ii").value.trim(),qty:qRaw===""?"":(isNaN(qn)?qRaw:qn),unit:row.querySelector(".iu").value.trim(),cat:row.querySelector(".ic").value,...(row.querySelector(".is").checked?{staple:true}:{})};
   }).filter(i=>i.item);
   const rec={name,category:v("reCat"),servings:Math.max(1,parseInt(v("reSv"))||1),prep_min:v("rePrep")===""?null:parseInt(v("rePrep")),cook_min:v("reCook")===""?null:parseInt(v("reCook")),
-    ingredients,steps:v("reSteps").split("\n").map(s=>s.trim()).filter(Boolean),notes:v("reNotes").trim()||null,video_url:/^https:\/\//.test(v("reVideo").trim())?v("reVideo").trim():null,updated_at:new Date().toISOString()};
-  const q=id?sb.from("meal_recipes").update(rec).eq("id",id).select().single():sb.from("meal_recipes").insert(rec).select().single();
-  const pf=document.getElementById("rePhoto")?.files?.[0], rmPhoto=!!document.getElementById("reNoPhoto")?.checked;
+    ingredients,steps:v("reSteps").split("\n").map(s=>s.trim()).filter(Boolean),notes:v("reNotes").trim()||null,video_url:/^https:\/\//.test(v("reVideo").trim())?v("reVideo").trim():null,updated_at:nowIso()};
+  const pf=document.getElementById("rePhoto")?.files?.[0], rmPhoto=!!document.getElementById("reNoPhoto")?.checked, oldPhoto=id?(S.rmap[id]||{}).photo_url:null;
   document.getElementById("reMsg").innerHTML='<span class="tag warn">Saving…</span>';
-  const {data,error}=await q;
-  if(error){document.getElementById("reMsg").innerHTML='<span class="tag bad">'+esc(error.message)+'</span>';return;}
+  let rid=id;
+  const error=await tryDo(async()=>{ if(id) await C("recipes").doc(id).update(rec); else { const ref=await C("recipes").add({...rec,photo_url:null,created_at:nowIso()}); rid=ref.id; } });
+  if(error){document.getElementById("reMsg").innerHTML='<span class="tag bad">'+esc(eMsg(error))+'</span>';return;}
   if(pf){
-    try{const blob=await shrinkImage(pf);const path=data.id+"/"+Date.now()+".jpg";
-      const up=await sb.storage.from("recipe-photos").upload(path,blob,{contentType:"image/jpeg",upsert:true});if(up.error)throw up.error;
-      const url=sb.storage.from("recipe-photos").getPublicUrl(path).data.publicUrl;
-      const {error:e3}=await sb.from("meal_recipes").update({photo_url:url}).eq("id",data.id);if(e3)throw e3;
-    }catch(err){toast("Photo not saved: "+(err.message||err));}
-  } else if(rmPhoto){await sb.from("meal_recipes").update({photo_url:null}).eq("id",data.id);}
-  await loadRecipes(); render(); openRecipe(data.id); toast("Recipe saved");
+    try{const url=await savePhoto(pf,1000); await C("recipes").doc(rid).update({photo_url:url}); dropPhoto(oldPhoto);}
+    catch(err){toast("Photo not saved: "+eMsg(err));}
+  } else if(rmPhoto){ await tryDo(()=>C("recipes").doc(rid).update({photo_url:null})); dropPhoto(oldPhoto); }
+  await loadRecipes(); render(); openRecipe(rid); toast("Recipe saved");
 }
 function delRecipe(id){
   const r=S.rmap[id], uses=S.entries.filter(e=>e.recipe_id===id).length;
   openModal("Delete recipe",`<p>Delete <b>${esc(r.name)}</b>? This cannot be undone.${uses?` It is used ${uses} time(s) this week — those dishes will show as untitled.`:""}</p>`,
     `<button class="btn" onclick="openRecipe('${id}')">Cancel</button><button class="btn danger" id="delGo">Delete</button>`);
   document.getElementById("delGo").onclick=async()=>{
-    const {error}=await sb.from("meal_recipes").delete().eq("id",id);
-    if(error) return toast(error.message);
+    const error=await tryDo(()=>C("recipes").doc(id).delete());
+    if(error) return toast(eMsg(error)); dropPhoto(r.photo_url);
     closeModal(); await loadAll(); toast("Recipe deleted");
   };
 }
@@ -950,31 +961,31 @@ function openAddEntry(date,slot){
     const rows=[...pick].map(id=>({meal_date:date,slot,recipe_id:id,title:null,servings:isNaN(sv)?null:sv,note,sort:sort++}));
     if(title) rows.push({meal_date:date,slot,recipe_id:null,title,servings:isNaN(sv)?null:sv,note,sort:sort++});
     document.getElementById("aeGo").disabled=true;
-    const {error}=await sb.from("meal_entries").insert(rows);
-    if(error){document.getElementById("aeGo").disabled=false;return toast(error.message);}
+    const error=await tryDo(()=>{const b=fs.batch();rows.forEach(x=>b.set(C("entries").doc(),{...x,created_at:nowIso()}));return b.commit();});
+    if(error){document.getElementById("aeGo").disabled=false;return toast(eMsg(error));}
     closeModal(); toast(rows.length+" added"); await refreshWeek();
   };
 }
 async function delEntry(id){
-  const {error}=await sb.from("meal_entries").delete().eq("id",id);
-  if(error) return toast(error.message);
+  const error=await tryDo(()=>C("entries").doc(id).delete());
+  if(error) return toast(eMsg(error));
   await refreshWeek();
 }
 async function saveNote(){
   const note=document.getElementById("wkNote").value.trim();
-  const {error}=await sb.from("meal_week_notes").upsert({week_start:ymd(S.week),note,updated_at:new Date().toISOString()});
-  if(error) return toast(error.message);
+  const ws=ymd(S.week), error=await tryDo(()=>C("weekNotes").doc(ws).set({week_start:ws,note,updated_at:nowIso()}));
+  if(error) return toast(eMsg(error));
   toast("Note saved"); await refreshWeek();
 }
 async function copyPrevWeek(){
   const ps=ymd(addDays(S.week,-7)), pe=ymd(addDays(S.week,-1));
-  const {data,error}=await sb.from("meal_entries").select("*").gte("meal_date",ps).lte("meal_date",pe);
-  if(error) return toast(error.message);
+  let data;
+  try{ data=docs(await C("entries").where("meal_date",">=",ps).where("meal_date","<=",pe).get()); }catch(e){ return toast(eMsg(e)); }
   if(!data.length) return toast("Previous week has no plan.");
   const go=async()=>{
     const rows=data.map(e=>({meal_date:ymd(addDays(parseYmd(e.meal_date),7)),slot:e.slot,recipe_id:e.recipe_id,title:e.title,servings:e.servings,note:e.note,sort:e.sort}));
-    const {error:e2}=await sb.from("meal_entries").insert(rows);
-    if(e2) return toast(e2.message);
+    const e2=await tryDo(()=>{const b=fs.batch();rows.forEach(x=>b.set(C("entries").doc(),{...x,created_at:nowIso()}));return b.commit();});
+    if(e2) return toast(eMsg(e2));
     closeModal(); toast(rows.length+" dishes copied"); await refreshWeek();
   };
   if(S.entries.length){
@@ -990,59 +1001,103 @@ document.getElementById("nextW").onclick=()=>{S.week=addDays(S.week,7);refreshWe
 document.getElementById("thisW").onclick=()=>{S.week=mondayOf(new Date());refreshWeek();};
 document.getElementById("printBtn").onclick=()=>window.print();
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S.loadedAt&&(Date.now()-S.loadedAt)>60000)refreshWeek();});
-sb.auth.onAuthStateChange((ev,session)=>{
-  if(ev==="SIGNED_OUT"){S.isAdmin=false;S.session=null;setTimeout(boot,0);}
-  else if(ev==="SIGNED_IN"&&session&&!S.session){setTimeout(boot,0);}
-});
 const h=location.hash.replace("#",""); if(["plan","shopping","recipes"].includes(h)) S.tab=h;
+let bootN=0;
 async function boot(){
-  await refreshAuth();
+  const n=++bootN;
+  await refreshAuth(); if(n!==bootN) return;
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.00</b> | Updated 2026-11-22</div>';
+function authErr(e){
+  const c=e&&e.code||"";
+  const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
+    "auth/invalid-email":"Enter a valid email","auth/email-already-in-use":"This email already has an account — press Sign in (or Forgot password)",
+    "auth/weak-password":"Password must be 8+ characters","auth/too-many-requests":"Too many tries — wait a few minutes","auth/network-request-failed":"No internet connection",
+    "auth/unauthorized-domain":"This web address is not allowed in Firebase Authentication settings"};
+  return m[c]||(e&&e.message)||String(e);
+}
 function renderGate(){
   const g=document.getElementById("gate"); g.style.display="flex";
-  const ver='<div class="gv">Weekly Meal Plan | <b>v1.14</b> | Updated 2026-11-22</div>';
-  if(S.session){
-    const em=esc(S.session.user&&S.session.user.email||"");
-    g.innerHTML=`<div class="gcard">${ver}<h1>No access yet</h1><div class="gs">Signed in as <b>${em}</b>.</div>
+  if(!CONFIGURED){ g.innerHTML=`<div class="gcard">${VER}<h1>Setup needed</h1><p style="font-size:14px">The Firebase settings are not filled in yet.</p></div>`; return; }
+  const u=S.user;
+  if(u&&!u.emailVerified){
+    g.innerHTML=`<div class="gcard">${VER}<h1>Confirm your email</h1><div class="gs">Signed in as <b>${esc(u.email||"")}</b>.</div>
+      <p style="font-size:14px;line-height:1.55">We sent a link to this email. Open the email, click the link, then come back and press <b>Check again</b>. (Check the Spam folder too.)</p>
+      <button class="btn primary" id="gAgain">Check again</button><button class="btn" id="gResend">Send the email again</button><button class="btn" id="gOut">Sign out</button><div class="msg" id="gMsg"></div></div>`;
+    document.getElementById("gAgain").onclick=async()=>{ try{ await u.reload(); await u.getIdToken(true); }catch(e){} boot(); };
+    document.getElementById("gResend").onclick=async()=>{ const e=await tryDo(()=>u.sendEmailVerification()); document.getElementById("gMsg").innerHTML=e?'<span class="tag bad">'+esc(authErr(e))+'</span>':'<span class="tag ok">Email sent</span>'; };
+    document.getElementById("gOut").onclick=()=>auth.signOut();
+    return;
+  }
+  if(u){
+    g.innerHTML=`<div class="gcard">${VER}<h1>No access yet</h1><div class="gs">Signed in as <b>${esc(u.email||"")}</b>.</div>
       <p style="font-size:14px;line-height:1.55">This account is not on the list. Ask the owner to add this email, then press <b>Check again</b>.</p>
       <button class="btn primary" id="gAgain">Check again</button><button class="btn" id="gOut">Sign out</button></div>`;
     document.getElementById("gAgain").onclick=boot;
-    document.getElementById("gOut").onclick=async()=>{await sb.auth.signOut();boot();};
+    document.getElementById("gOut").onclick=()=>auth.signOut();
     return;
   }
-  g.innerHTML=`<div class="gcard">${ver}<h1>Weekly Meal Plan</h1><div class="gs">Members only. Sign in once — this device stays signed in.</div>
-    <div id="gGoogleWrap" style="display:none"><button class="btn gbtn" id="gGoogle"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-2.9-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.9l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg><span>Continue with Google</span></button>
-    <div class="gor">or with email</div></div>
+  g.innerHTML=`<div class="gcard">${VER}<h1>Weekly Meal Plan</h1><div class="gs">Members only. Sign in once — this device stays signed in.</div>
+    <button class="btn gbtn" id="gGoogle"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-2.9-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.9l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg><span>Continue with Google</span></button>
+    <div class="gor">or with email</div>
     <label>Email</label><input id="gEmail" type="email" autocomplete="username">
     <label>Password</label><input id="gPw" type="password" autocomplete="current-password">
     <button class="btn primary" id="gGo">Sign in</button>
-    <button class="btn" id="gUp">${S.hasAdmin?"First time? Create account":"Create owner account"}</button>
+    <button class="btn" id="gUp">First time? Create account</button>
+    <div style="text-align:center;margin-top:10px"><a href="#" id="gForgot" style="font-size:12.5px;color:var(--blue)">Forgot password?</a></div>
     <div class="msg" id="gMsg"></div></div>`;
-  fetch(SB_URL+"/auth/v1/settings",{headers:{apikey:SB_KEY}}).then(r=>r.json()).then(j=>{if(j&&j.external&&j.external.google){const w=document.getElementById("gGoogleWrap");if(w)w.style.display="";}}).catch(()=>{});
-  document.getElementById("gGoogle").onclick=async()=>{
-    const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+location.pathname,queryParams:{prompt:"select_account"}}});
-    if(error) document.getElementById("gMsg").innerHTML='<span class="tag bad">'+esc(error.message)+'</span>';
-  };
   const msg=t=>document.getElementById("gMsg").innerHTML=t, val=()=>[document.getElementById("gEmail").value.trim(),document.getElementById("gPw").value];
+  document.getElementById("gGoogle").onclick=async()=>{
+    const p=new firebase.auth.GoogleAuthProvider(); p.setCustomParameters({prompt:"select_account"});
+    try{ await auth.signInWithPopup(p); }
+    catch(e){
+      if(e.code==="auth/popup-blocked"||e.code==="auth/operation-not-supported-in-this-environment"){ const e2=await tryDo(()=>auth.signInWithRedirect(p)); if(e2) msg('<span class="tag bad">'+esc(authErr(e2))+'</span>'); }
+      else if(e.code!=="auth/popup-closed-by-user"&&e.code!=="auth/cancelled-popup-request") msg('<span class="tag bad">'+esc(authErr(e))+'</span>');
+    }
+  };
   document.getElementById("gPw").onkeydown=e=>{if(e.key==="Enter")document.getElementById("gGo").click();};
   document.getElementById("gGo").onclick=async()=>{
     const [email,password]=val(); if(!email||!password) return msg('<span class="tag bad">Enter email and password</span>');
     msg("Signing in…");
-    const {error}=await sb.auth.signInWithPassword({email,password});
-    if(error) return msg('<span class="tag bad">'+esc(error.message)+'</span>');
-    boot();
+    const e=await tryDo(()=>auth.signInWithEmailAndPassword(email,password));
+    if(e) msg('<span class="tag bad">'+esc(authErr(e))+'</span>');
   };
   document.getElementById("gUp").onclick=async()=>{
     const [email,password]=val(); if(!email||password.length<8) return msg('<span class="tag bad">Email and a password of 8+ characters needed</span>');
-    const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});
-    if(error) return msg('<span class="tag bad">'+esc(error.message)+'</span>');
-    if(data.session) return boot();
-    msg('<span class="tag warn">Check your email</span> Click the confirm link in the email. It opens this page and signs you in.');
+    msg("Creating account…");
+    try{ const c=await auth.createUserWithEmailAndPassword(email,password); await c.user.sendEmailVerification(); }
+    catch(e){ msg('<span class="tag bad">'+esc(authErr(e))+'</span>'); }
+  };
+  document.getElementById("gForgot").onclick=async ev=>{
+    ev.preventDefault(); const [email]=val(); if(!email) return msg('<span class="tag bad">Type your email first</span>');
+    const e=await tryDo(()=>auth.sendPasswordResetEmail(email));
+    msg(e?'<span class="tag bad">'+esc(authErr(e))+'</span>':'<span class="tag ok">Password reset email sent</span>');
   };
 }
-boot();
+
+/* one-time import of the old (Supabase) data — owner only, shown while there are no recipes */
+async function importData(file){
+  let d; try{ d=JSON.parse(await file.text()); }catch(e){ return toast("Not a valid data file"); }
+  const ops=[], strip=o=>{const x={...o};delete x.id;return x;};
+  for(const r of d.recipes||[]) ops.push([C("recipes").doc(r.id),{...strip(r),photo_url:null}]);
+  for(const e of d.entries||[]) ops.push([C("entries").doc(e.id),strip(e)]);
+  for(const n of d.week_notes||[]) ops.push([C("weekNotes").doc(n.week_start),n]);
+  for(const x of d.shopping_extras||[]) ops.push([C("shopExtras").doc(x.id),strip(x)]);
+  for(const c of d.shopping_checks||[]) ops.push([C("shopChecks").doc(kid(c.week_start+"|"+c.item_key)),c]);
+  for(const v of d.inventory||[]) ops.push([C("inventory").doc(kid(v.item_key)),{...v,photo_url:null}]);
+  if(!ops.length) return toast("The file has no data");
+  toast("Importing "+ops.length+" rows…");
+  try{ for(let i=0;i<ops.length;i+=400){ const b=fs.batch(); ops.slice(i,i+400).forEach(([ref,val])=>b.set(ref,val)); await b.commit(); } }
+  catch(e){ return toast("Import failed: "+eMsg(e)); }
+  toast("Imported "+ops.length+" rows"); await loadAll();
+}
+
+if(CONFIGURED){
+  auth.onAuthStateChanged(()=>boot());
+  auth.getRedirectResult().catch(e=>{ if(e&&e.code&&e.code!=="auth/no-auth-event") toast(authErr(e)); });
+} else renderGate();
 </script>
 </body>
 </html>

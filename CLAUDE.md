@@ -1,6 +1,6 @@
 # CLAUDE.md — Weekly Meal Plan (주간식단표)
 
-Handoff from the claude.ai session on 2026-11-22. The current version is **v1.14**. Read this file first.
+Handoff from the claude.ai session on 2026-11-22. The current version is **v2.00** (backend moved from Supabase to Firebase). Read this file first.
 
 ## 1. What this is
 - A members-only web app used by the owner (Minseong Kang) and his maid in Pune. It manages the weekly meal plan, stock/shopping and recipes.
@@ -10,83 +10,67 @@ Handoff from the claude.ai session on 2026-11-22. The current version is **v1.14
 ## 2. Files
 | File | Purpose |
 |---|---|
-| `index.html` | The whole app: HTML + CSS + JS (~1,050 lines). This is what gets deployed. |
-| `supabase-schema.sql` | Snapshot of the live DB (tables, functions, policies). Reference only. Do not re-run it. |
+| `index.html` | The whole app: HTML + CSS + JS (~1,100 lines). This is what gets deployed. |
+| `firestore.rules` | Firestore security rules (deployed with hosting by the workflow) |
+| `firebase.json`, `.firebaserc` | Hosting (publishes `_site/` = copy of `index.html`), rules, emulator ports. `.firebaserc` holds the project id. |
+| `.github/workflows/firebase-deploy.yml` | On push to `main`: deploy hosting + rules. Needs repo secret `FIREBASE_SERVICE_ACCOUNT` (service-account JSON). Skips if missing. |
+| `supabase-schema.sql` | Old Supabase DB snapshot (v1.x). Legacy reference only. |
+| `(C)_*.json` | Local data exports — git-ignored, never commit (public repo). |
 | `README.md` | Short summary |
 
 ## 3. Infrastructure
-- **Hosting**: Cloudflare Pages project `zgdi-mealplan` → https://zgdi-mealplan.pages.dev. It auto-builds on every push to `main` (about 40 s, no build step). GitHub Pages also serves the same file.
-- **Repo**: `mskang717ss-web/meal-plan` (Public). Never commit secrets. The Supabase publishable key in `index.html` is meant to be public.
-- **Supabase**: org MSKang (Free), project `weekly-meal-plan`, ref `sqnuivviqajivhjtsaxn`, region ap-south-1
-  - URL `https://sqnuivviqajivhjtsaxn.supabase.co`, publishable key is already in `index.html`
-  - Auth → Site URL `https://zgdi-mealplan.pages.dev/`, Redirect URLs `https://zgdi-mealplan.pages.dev/**` and `https://mskang717ss-web.github.io/meal-plan/**`
-  - Free plan: max 2 active projects per account (1 used). A project pauses after 7 days with no activity.
-- **Google Drive backup**: folder "02. 주간식단표" (id `1dL8BCN1cH4fI-IfE9CPabDs0XS6A3Z8p`). It holds Google Sheets of recipes, meals and stock from 2026-11-22 plus the HTML file. No automatic backup is set up.
+- **Firebase** (v2.00+): project id = TBD (owner creates it; fill `FB_CONFIG` in `index.html` and `.firebaserc`). Spark (free) plan. Firestore location `asia-south1`.
+  - Hosting: `https://<project-id>.web.app`, deployed by GitHub Actions from `main`.
+  - Auth providers: Google, Email/Password. Add any extra domain (e.g. a custom domain) to Auth → Settings → Authorized domains.
+  - The web config (apiKey etc.) is public by design; security comes from `firestore.rules`.
+- **Repo**: `mskang717ss-web/meal-plan` (Public). Never commit secrets or data exports.
+- **Old stack (v1.x, retire after the switch)**: Cloudflare Pages `zgdi-mealplan.pages.dev` (also auto-builds `main`), GitHub Pages, Supabase project `weekly-meal-plan` (ref `sqnuivviqajivhjtsaxn`). Data was exported 2026-11-22 to `(C)_Weekly_Meal_Plan_data_2026-11-22.json` (14 recipes, 31 entries, 8 stock items, 0 photos).
+- **Google Drive**: old folder "02. 주간식단표" (id `1dL8BCN1cH4fI-IfE9CPabDs0XS6A3Z8p`); new backup folder "3. Mealplan_Firebase".
 
 ## 4. Access model (security)
 - **Before sign-in, only the login screen (`#gate`) is shown.** `#app` stays hidden.
-- On the DB side, anon cannot read or write any table. Only `meal_has_admin()` is callable by anon.
-- Roles:
-  - `owner`: the first account that signs in (`claim_meal_admin()`)
-  - `editor`: an email the owner added in **People** (`meal_editors`). The account's email must be confirmed.
-  - Owner and editors have the same rights. Only the owner can manage People.
-  - Every RLS policy uses `is_meal_admin()`.
-- Sessions persist: `persistSession:true` and `autoRefreshToken:true`. Sign-in is needed once per device.
-- Email/password sign-up is open, but an account that is not on the list sees the "No access yet" screen.
-- **Google sign-in**: the "Continue with Google" button appears only when `GET /auth/v1/settings` returns `external.google === true`. The Google provider is **not configured yet**. See section 8.
+- Firestore collections: `config/owner` {uid,email}, `editors/{lowercase email}`, `recipes`, `entries`, `weekNotes/{week_start}`, `shopExtras`, `shopChecks/{enc(week|key)}`, `inventory/{enc(item_key)}`, `photos`.
+- Roles (enforced in `firestore.rules`):
+  - `owner`: the first account with a **verified email** that signs in creates `config/owner` (create-only; change it in the console if ever needed).
+  - `editor`: verified email listed in `editors` (owner manages it in **People**).
+  - Owner and editors have the same data rights. Only the owner reads/writes `editors`.
+  - Signed-out users and unlisted/unverified accounts can read nothing.
+- Email/password sign-up sends a verification email; the gate shows "Confirm your email" until verified. Google accounts are verified automatically.
+- Sessions persist (Firebase default local persistence). Firestore offline cache is on (`enablePersistence`).
 
 ## 5. Code map (`index.html`)
 - Constants: `SLOTS`, `CATS` (recipe categories), `SHOP_CATS` (Vegetables, Fruits, Meat & Eggs, Dairy & Bakery, Grains, Korean Pantry, Others), `DAYS` (**week starts on Sunday**; `mondayOf()` actually returns that Sunday)
-- State object `S`: tab, week, recipes, rmap, entries, allEntries, inv, rows, isAdmin, isOwner, role, pick, …
+- Firebase: `FB_CONFIG`, `auth`, `fs`, helpers `C(name)`, `docs()`, `kid()` (doc id from item key), `tryDo()`, `eMsg()`. `?emu=1` on localhost uses the local emulators.
+- State object `S`: tab, week, recipes, rmap, entries, allEntries, inv, rows, isAdmin, isOwner, role, pick, user, …
 - Data: `loadRecipes`, `loadWeek` (entries from today−120 days up to the end of the week, for stock deduction), `loadAll`, `refreshWeek`
-- Auth: `boot()` → `refreshAuth()` → shows the app or `renderGate()`. People manager: `openTeam()`
-- Plan tab: `renderPlan`, `cellHtml`, `chipHtml`, `paletteWrap` ("2. All dishes")
-  - Tap a dish, then tap a cell to place it (`S.pick`, capture-phase click handler)
-  - Drag-and-drop also works
-  - `openAddEntry` = picture picker
-  - Weekend columns use classes `sun` / `sat` (`wkc()`)
-- Stock tab: `renderShop`, `allStockItems`, `attachInv`, `usedBetween`, `buildNeeds`, `saveInv`
-  - Have = counted qty − meals eaten since `counted_at`
-  - Need = remaining meals this week
-  - Buy = Need + keep(par) − Have, rounded up for `COUNT_UNITS`
-  - Ticking Bought adds the bought amount to stock
-  - Staples use Enough / Low / Out
-  - Inline add per category: `addRowHtml` / `addToGroup`. Edit/Delete: `openItemEdit` (name and unit are locked when a recipe uses the item)
-- Recipes tab: `renderRecipes`, `openRecipe`, `openRecipeEdit`, `saveRecipe`
-  - Photo priority: uploaded `photo_url`, then the YouTube thumbnail from `video_url` (`photoOf`), then an emoji
-  - The recipe card has a "Watch the video on YouTube (English)" button. With no `video_url`, it links to a YouTube search.
-- Photos are shrunk with `shrinkImage()` to 1280 px JPEG before upload to the `recipe-photos` bucket.
+- Auth: `auth.onAuthStateChanged` → `boot()` → `refreshAuth()` → app or `renderGate()` (sign-in / confirm email / no access). People: `openTeam()`
+- Photos: `savePhoto(file,maxPx)` shrinks to JPEG (<~600 KB data URL) and stores it in `photos/{id}`; fields hold `fs:<id>`. `imgSrc()` + `hydratePhotos()` (MutationObserver) load them lazily, from cache first. Recipes 1000 px, stock items 500 px.
+- One-time import: owner sees "Import data from the old app" on the Recipes tab while there are no recipes → `importData()`.
+- Plan tab: `renderPlan`, `cellHtml`, `chipHtml`, `paletteWrap` ("2. All dishes"); tap-to-place (`S.pick`), drag-and-drop, `openAddEntry` picture picker, weekend classes `sun`/`sat` (`wkc()`)
+- Stock tab: `renderShop`, `allStockItems`, `attachInv`, `usedBetween`, `buildNeeds`, `saveInv` (Have = counted − eaten since `counted_at`; Need = remaining meals; Buy = Need + keep − Have, rounded up for `COUNT_UNITS`; Bought adds to stock; staples Enough/Low/Out; `addRowHtml`/`addToGroup`, `openItemEdit`)
+- Recipes tab: `renderRecipes`, `openRecipe`, `openRecipeEdit`, `saveRecipe`; photo priority: own photo → YouTube thumbnail (`photoOf`) → emoji; "Watch the video on YouTube (English)" button.
 
 ## 6. Conventions (owner's rules)
-- **Version display**: top right of the page and on the login card: `Weekly Meal Plan | vX.XX | Updated YYYY-MM-DD`. Bump both places (search for `v1.14`) on every release. Use two decimals: v1.14 → v1.15.
+- **Version display**: top right of the page and on the login card: `Weekly Meal Plan | vX.XX | Updated YYYY-MM-DD`. Bump both places (search for `v2.00`) on every release. Use two decimals: v2.00 → v2.01.
 - Files handed to the owner are named `(C)_Weekly_Meal_Plan_vX.XX.html`. The repo keeps `index.html`.
 - Keep it a single self-contained HTML file with no build step.
 - Mobile matters, because the maid uses a phone. Check a 390 px viewport. Mobile shows day cards (`.daycards`) and stock cards.
 - The owner prefers concise Korean replies, conclusion first, and tables.
 
 ## 7. Testing
-- Use Playwright (headless Chromium) against `file://…/index.html` with **mocked Supabase routes** (`page.route("**/*", …)`).
-  - Fulfil `/rest/v1/meal_*`, `/rpc/*` and `/auth/v1/settings` with JSON fixtures.
-  - Serve supabase-js UMD locally from `node_modules/@supabase/supabase-js/dist/umd/supabase.js` instead of the CDN.
-- To simulate a signed-in member, after load run `S.session={user:{email:'a@b.c'}};S.isAdmin=true;S.isOwner=true;` show `#app`, then `loadAll()`.
-- Check the JS syntax quickly with `node -e "new Function(<script body>)"`.
+- Use the Firebase emulators (real rules): `firebase emulators:start --only auth,firestore --project demo-mealplan` (needs Java), then open `http://localhost:<port>/?emu=1` with Playwright.
+  - Serve the Firebase compat SDK files from `node_modules/firebase/` by routing `https://cdn.jsdelivr.net/**`.
+  - Verify emails through `GET http://127.0.0.1:9099/emulator/v1/projects/demo-mealplan/oobCodes` and open each `oobLink`.
+  - Cover: first verified account → owner, import, recipe photo, stock save, People → editor access, stranger/unverified/signed-out denied.
+- Check the JS syntax quickly with `node -e "new Function(<script body>)"`. Check a 390 px viewport.
 - Never put real credentials in tests.
 
 ## 8. Open tasks (as of 2026-11-22)
-1. **The owner account does not exist yet.** The owner must sign in first; the first account becomes owner. Then add the maid's email in **People**.
-2. **Google sign-in setup.** The owner wants to register with his Google account. The secret must be entered by the owner, never by Claude.
-   - In Google Cloud Console: create a project → OAuth consent screen (External, then **Publish app**)
-   - Credentials → OAuth client ID (Web)
-     - JS origin: `https://zgdi-mealplan.pages.dev`
-     - Redirect: `https://sqnuivviqajivhjtsaxn.supabase.co/auth/v1/callback`
-   - Supabase → Authentication → Sign In / Providers → Google → paste the Client ID and Secret
-   - The button then appears on its own (no code change needed).
-3. Optional: a weekly Drive backup (Sheets) scheduled task. It was not set up.
-4. **Option B, under consideration**: migrate the backend to Firebase.
-   - Firestore + Firebase Auth (Google sign-in is a single toggle) + Hosting
-   - Note: Cloud Storage for Firebase needs the Blaze plan (card on file; free quota still applies), which is needed for photos. Set a budget alert.
-   - Work involved: replace every `sb.from/rpc/storage` call, re-create RLS as Firestore rules, move the stock RPCs into client or rule logic, migrate the data (small).
-   - Get the owner's go-ahead before starting.
+1. **Owner creates the Firebase project** (console.firebase.google.com): add a Web app, enable Auth → Google + Email/Password, create Firestore (production mode, `asia-south1`). Send the `firebaseConfig` → paste into `FB_CONFIG` and set the project id in `.firebaserc`.
+2. **Deploy key**: Project settings → Service accounts → Generate new private key → GitHub repo Settings → Secrets → Actions → `FIREBASE_SERVICE_ACCOUNT` (paste the whole JSON). Claude must never see or handle the key. If deploy fails with permission errors, give that service account the roles "Firebase Hosting Admin" and "Firebase Rules Admin".
+3. Merge to `main` → workflow deploys. Owner signs in first (becomes owner), imports the JSON on the Recipes tab, adds the maid in **People**, updates the maid's bookmark.
+4. After it works: retire Cloudflare Pages / GitHub Pages / Supabase (pause or delete the project).
+5. Weekly Drive backup into "3. Mealplan_Firebase" (not set up yet; needs a way to read Firestore, e.g. an owner-only "Export" button or a scheduled job with credentials).
 
 ## 9. Version history
-v1.00 first · v1.01 new Supabase project · v1.02 block auto-translate · v1.03 Sunday start · v1.04 stock/shopping, recipe photos · v1.05 auto-tracked stock, item photos · v1.06 picture menu, fruit category · v1.07 stock/need on one row · v1.08 mobile readability · v1.09 mobile stock cards, round up · v1.10 All dishes drag, keep(par) · v1.11 tap-to-place from All dishes · v1.12 editor accounts (People) · v1.13 members-only login gate, persistent session, weekend colours, column lines, inline stock add/edit/delete, Watermelon, YouTube videos + thumbnails · v1.14 "Continue with Google" button (appears once provider enabled)
+v1.00 first · v1.01 new Supabase project · v1.02 block auto-translate · v1.03 Sunday start · v1.04 stock/shopping, recipe photos · v1.05 auto-tracked stock, item photos · v1.06 picture menu, fruit category · v1.07 stock/need on one row · v1.08 mobile readability · v1.09 mobile stock cards, round up · v1.10 All dishes drag, keep(par) · v1.11 tap-to-place from All dishes · v1.12 editor accounts (People) · v1.13 members-only login gate, persistent session, weekend colours, column lines, inline stock add/edit/delete, Watermelon, YouTube videos + thumbnails · v1.14 "Continue with Google" button (appears once provider enabled) · v2.00 backend moved to Firebase (Auth + Firestore + Hosting), photos in Firestore, email verification, forgot password, one-time import
