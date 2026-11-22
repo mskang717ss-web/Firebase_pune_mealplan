@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="google" content="notranslate">
+<meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Weekly Meal Plan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,6 +36,20 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
 .btn.primary:hover{background:var(--blue);border-color:var(--blue);color:#fff}
 .btn.danger{color:var(--bad);border-color:#E7B7B7}
+.ytbtn{display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;padding:8px 14px;background:#CC0000;color:#fff!important;border-radius:6px;font-weight:600;font-size:14px;text-decoration:none}
+.ytbtn:hover{background:#A80000}
+.iedit{border:1px solid var(--box-line);background:#fff;border-radius:4px;font-size:11px;padding:0 6px;margin-left:6px;color:var(--blue);cursor:pointer;vertical-align:1px}
+.addrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 12px;background:#FAFBFC;border-top:1px dashed var(--line)}
+.addrow .ar-l{font-size:12.5px;font-weight:600;color:var(--blue);margin-right:4px}
+.addrow input{padding:5px 8px;border:1px solid var(--line);border-radius:4px;font-size:13px}
+.addrow .ar-n{flex:1;min-width:120px}.addrow .ar-u{width:100px}.addrow .ar-p{width:70px}
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:#F4F6F9}
+.gcard{width:100%;max-width:380px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px 24px;box-shadow:0 6px 24px rgba(20,40,80,.08)}
+.gcard h1{font-size:22px;margin:0 0 4px;color:var(--navy)}.gcard .gs{color:var(--muted);font-size:13px;margin-bottom:18px}
+.gcard label{display:block;font-size:12.5px;font-weight:600;margin:10px 0 4px}
+.gcard input{width:100%;box-sizing:border-box;padding:10px;font-size:15px;border:1px solid var(--line);border-radius:6px}
+.gcard .btn{width:100%;padding:10px;margin-top:12px;font-size:14.5px}.gcard .msg{margin-top:10px;font-size:13px;line-height:1.5}
+.gcard .gv{text-align:right;font-size:11px;color:var(--muted);margin:-12px -10px 10px 0}
 .tbl{border-collapse:collapse;font-size:13px}.tbl th,.tbl td{border-bottom:1px solid var(--box-line);padding:6px 4px;text-align:left}
 .btn.sm{padding:3px 9px;font-size:12.5px}
 .btn:disabled{opacity:.5;cursor:default}
@@ -59,6 +74,10 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .gh.today{background:var(--today);color:var(--warn)}
 .gl{background:var(--box);font-weight:700;color:var(--navy);display:flex;align-items:center}
 .cell.today{background:#FFFBF0}
+.gh.sun{background:#FCEDED;color:#C0392B}.gh.sat{background:#E9F0FB;color:#1F5FBF}
+.gh.sun .d{color:#C0392B}.gh.sat .d{color:#1F5FBF}
+.cell.sun{background:#FFF8F8}.cell.sat{background:#F5F8FE}
+.gh.today.sun,.gh.today.sat{background:var(--today)}.cell.today.sun,.cell.today.sat{background:#FFFBF0}
 .chip{display:flex;align-items:center;gap:6px;border:1px solid var(--box-line);background:#fff;border-radius:5px;padding:4px 7px;margin-bottom:5px;font-size:13px;line-height:1.3}
 .chip .nm{flex:1;cursor:pointer;color:var(--ink)}
 .chip .nm.link:hover{color:var(--blue);text-decoration:underline}
@@ -154,12 +173,13 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .cth img{width:100%;height:100%;object-fit:cover}
 .urow{display:grid;grid-template-columns:minmax(0,1fr) 210px 110px 110px 64px;gap:10px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--line2)}
 .urow:last-child{border-bottom:0}
-.urow.uhd{background:#FAFBFC;font-size:11.5px;font-weight:700;padding:6px 12px;color:var(--muted)}
+.urow{background-image:linear-gradient(var(--line2),var(--line2)),linear-gradient(var(--line2),var(--line2)),linear-gradient(var(--line2),var(--line2)),linear-gradient(var(--line2),var(--line2));background-repeat:no-repeat;background-size:1px 100%;background-position:right 81px top,right 201px top,right 321px top,right 541px top}
+.urow.uhd{background-color:#FAFBFC;font-size:11.5px;font-weight:700;padding:6px 12px;color:var(--muted)}
 .urow .h-have{text-align:right;color:var(--blue)}.urow .h-need{color:var(--warn)}
 .urow .uh{display:flex;justify-content:flex-end}
 .urow .c-need,.urow .c-buy{text-align:right}
 .urow .uc{text-align:center}
-.urow.tobuy{background:#FFFBF0}
+.urow.tobuy{background-color:#FFFBF0}
 .nm2{min-width:0;display:block}.nm2 .n{display:block}.nm2 .f{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nm2 .dsh{color:#8A93A0}
 .okmark{color:var(--ok);font-weight:700}
@@ -208,7 +228,8 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .daycards{display:block}
   .dcard{border:1px solid var(--line);border-radius:4px;margin-bottom:10px;overflow:hidden}
   .dcard .dh{background:var(--box);padding:7px 12px;font-weight:700;color:var(--navy);display:flex;justify-content:space-between}
-  .dcard.today .dh{background:var(--today);color:var(--warn)}
+  .dcard.sun .dh{background:#FCEDED;color:#C0392B}.dcard.sat .dh{background:#E9F0FB;color:#1F5FBF}
+  .dcard.today .dh{background:var(--today);color:var(--warn)}.dcard.today.sun .dh{color:#C0392B}
   .dcard .sl{display:grid;grid-template-columns:78px 1fr;border-top:1px solid var(--line2)}
   .dcard .sl > div{padding:7px 10px}
   .dcard .sl .lb{font-weight:600;color:var(--muted);font-size:12px}
@@ -238,6 +259,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .shopcols,.shopcols2,.two{grid-template-columns:1fr}
   .urow{grid-template-columns:repeat(3,minmax(0,1fr)) 36px;grid-template-areas:"item item item chk" "have need buy buy";gap:6px 8px;padding:9px 10px}
   .urow.uhd{display:none}
+  .urow{background-image:none}
   .urow .sl{grid-area:item}.urow .uc{grid-area:chk;align-self:center}
   .urow .uh{grid-area:have}.urow .c-need{grid-area:need}.urow .c-buy{grid-area:buy}
   .urow .uh,.urow .c-need,.urow .c-buy{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;background:#F6F8FB;border:1px solid var(--line2);border-radius:6px;padding:4px 8px;min-height:50px}
@@ -274,8 +296,9 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.12</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+<div id="gate" class="gate" style="display:none"></div>
+<div class="wrap" id="app" style="display:none">
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.13</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -312,7 +335,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <script>
 const SB_URL = "https://sqnuivviqajivhjtsaxn.supabase.co";
 const SB_KEY = "sb_publishable_yLpUeDDRpo8wg2HRjzfJMw_9SOrRnq6";
-const sb = window.supabase.createClient(SB_URL, SB_KEY);
+const sb = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:true}});
 const GOOGLE_LOGIN = false; // turn on after the Google provider is enabled in Supabase
 
 const SLOTS = [["breakfast","Breakfast"],["lunch","Lunch"],["dinner","Dinner"],["snack","Snack"]];
@@ -397,7 +420,7 @@ function renderOwner(){
       S.isAdmin?'<span class="tag ok">Editor · edit mode</span>':'<span class="tag bad">View only — ask the owner to add your email</span>')+
       ' <button class="btn sm" id="signOut">Sign out</button>';
     const tb=document.getElementById("teamBtn"); if(tb) tb.onclick=openTeam;
-    document.getElementById("signOut").onclick=async()=>{await sb.auth.signOut();await refreshAuth();render();};
+    document.getElementById("signOut").onclick=async()=>{await sb.auth.signOut();};
   } else {
     el.innerHTML='<button class="btn sm" id="ownerBtn">Sign in to edit</button>';
     document.getElementById("ownerBtn").onclick=openSignIn;
@@ -471,6 +494,7 @@ document.getElementById("ov").addEventListener("mousedown",e=>{if(e.target.id===
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();if(S.pick){S.pick=null;render();}}});
 
 /* ---------- render ---------- */
+function wkc(d){const w=d.getDay();return w===0?"sun":w===6?"sat":"";}
 function render(){
   document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
   document.getElementById("rangeLbl").textContent=rangeText();
@@ -511,14 +535,14 @@ function renderPlan(m){
   let noteHtml;
   if(S.isAdmin) noteHtml=`<div class="notebox"><div class="h">Notes for this week</div><textarea id="wkNote" placeholder="Instructions for this week (e.g. guests on Saturday, no lunch on Friday)">${esc(S.note?.note||"")}</textarea><div style="margin-top:6px;display:flex;gap:6px;justify-content:flex-end"><button class="btn sm" onclick="copyPrevWeek()">Copy previous week's plan</button><button class="btn sm primary" onclick="saveNote()">Save note</button></div></div>`;
   else noteHtml=S.note?.note?`<div class="notebox"><div class="h">Notes for this week</div>${esc(S.note.note).replace(/\n/g,"<br>")}</div>`:"";
-  let g=`<div class="gh">&nbsp;</div>`+days.map((d,i)=>`<div class="gh ${ymd(d)===today?"today":""}">${DAYS[i]}<span class="d">${fmtShort(d)}</span></div>`).join("");
+  let g=`<div class="gh">&nbsp;</div>`+days.map((d,i)=>`<div class="gh ${ymd(d)===today?"today":""} ${wkc(d)}">${DAYS[i]}<span class="d">${fmtShort(d)}</span></div>`).join("");
   for(const [k,lbl] of slots){
-    g+=`<div class="gl">${lbl}</div>`+days.map(d=>`<div class="cell ${ymd(d)===today?"today":""}" data-d="${ymd(d)}" data-s="${k}">${cellHtml(d,k)}</div>`).join("");
+    g+=`<div class="gl">${lbl}</div>`+days.map(d=>`<div class="cell ${ymd(d)===today?"today":""} ${wkc(d)}" data-d="${ymd(d)}" data-s="${k}">${cellHtml(d,k)}</div>`).join("");
   }
   const cards=days.map((d,i)=>{const ds=ymd(d);
     const vis=S.isAdmin?slots:slots.filter(([k])=>S.entries.some(e=>e.meal_date===ds&&e.slot===k));
     const body=vis.length?vis.map(([k,lbl])=>`<div class="sl"><div class="lb">${lbl}</div><div data-d="${ds}" data-s="${k}">${cellHtml(d,k)}</div></div>`).join(""):'<div class="sl none">No meals planned</div>';
-    return `<div class="dcard ${ds===today?"today":""} ${ds<today?"past":""}"><div class="dh"><span>${DAYS[i]} · ${fmtShort(d)}</span>${ds===today?"<span>Today</span>":""}</div>${body}</div>`;}).join("");
+    return `<div class="dcard ${ds===today?"today":""} ${ds<today?"past":""} ${wkc(d)}"><div class="dh"><span>${DAYS[i]} · ${fmtShort(d)}</span>${ds===today?"<span>Today</span>":""}</div>${body}</div>`;}).join("");
   const cnt=S.entries.length;
   m.innerHTML=paletteWrap(noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish to see the recipe</span></div><div class="grid ${S.pick?"picking":""}">${g}</div><div class="daycards ${S.pick?"picking":""}">${cards}</div>`);
   m.querySelectorAll(".pill.pc").forEach(b=>b.onclick=()=>{S.palCat=b.dataset.c;renderPlan(m);});
@@ -587,7 +611,11 @@ const CAT_EMOJI={"Vegetables":"🥬","Fruits":"🍎","Meat & Eggs":"🥩","Dairy
 const DISH_EMOJI=[["fried rice","🍛"],["sandwich","🥪"],["scrambled","🍳"],["omelet","🍳"],["toast","🍞"],["jjigae","🍲"],["stew","🍲"],["guk","🥣"],["soup","🥣"],["bulgogi","🍗"],["chicken","🍗"],["jeyuk","🥩"],["pork","🥩"],["tofu","🍢"],["dubu","🍢"],["muchim","🥗"],["salad","🥗"],["namul","🥬"],["spinach","🥬"],["jjim","🥚"],["egg","🍳"],["noodle","🍜"],["ramen","🍜"],["kimbap","🍙"],["rice","🍚"],["fruit","🍎"],["pancake","🥞"],["jeon","🥞"]];
 const DISH_CAT_EMOJI={"Breakfast":"🍳","Main":"🍽️","Soup & Stew":"🍲","Side":"🥗","Rice & Noodles":"🍚","Snack":"🍪","Other":"🍽️"};
 function dishEmoji(r){const n=(r.name||"").toLowerCase();for(const [k,e] of DISH_EMOJI) if(n.includes(k)) return e;return DISH_CAT_EMOJI[r.category]||"🍽️";}
-function dishPic(r){return safeImg(r.photo_url)?`<img src="${esc(r.photo_url)}" alt="" loading="lazy">`:`<span>${dishEmoji(r)}</span>`;}
+function ytId(u){const m=String(u||"").match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);return m?m[1]:"";}
+function ytThumb(r){const id=ytId(r.video_url);return id?`https://i.ytimg.com/vi/${id}/hqdefault.jpg`:"";}
+function photoOf(r){return safeImg(r.photo_url)||ytThumb(r);}
+function videoLink(r){return ytId(r.video_url)?r.video_url:"https://www.youtube.com/results?search_query="+encodeURIComponent("how to make "+r.name.replace(/\(.*?\)/g,"")+" recipe english");}
+function dishPic(r){const p=photoOf(r);return p?`<img src="${esc(p)}" alt="" loading="lazy">`:`<span>${dishEmoji(r)}</span>`;}
 function itemEmoji(a){const n=a.item.toLowerCase();for(const [k,e] of EMOJI) if(n.includes(k)) return e;return CAT_EMOJI[a.cat]||"🛒";}
 function thumb(a){
   const v=S.inv[a.key], u=v&&safeImg(v.photo_url);
@@ -636,10 +664,11 @@ function renderShop(m){
     const need=a.staple?(a.dishes.size?"used":"—"):((a.need==null||(!a.dishes.size&&a.par))?(a.par?"—":"—"):(a.num?(fmtQty(rnd(a.need))+" "+a.unit).trim():"as needed"));
     const buy=a.buy?(a.staple?"Buy":(a.num?(fmtQty(a.buyQty)+" "+a.unit).trim():"1")):"—";
     const chk=a.buy?`<input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought">`:(a.dishes.size?'<span class="okmark" title="Enough for this week">✓</span>':"");
-    return `<div class="urow ${a.buy?"tobuy":""} ${a.staple?"st":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh"><span class="ml">Have</span>${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need"><span class="ml">Need</span><span class="mv">${esc(need)}</span>${a.staple?"":`<span class="keep">keep <input type="number" class="par" min="0" step="any" inputmode="decimal" data-k="${esc(a.key)}" value="${a.par||""}" placeholder="0"></span>`}</span><span class="c-buy"><span class="ml">Buy</span><span class="mv">${esc(buy)}</span></span><span class="uc">${chk}</span></div>`;};
+    return `<div class="urow ${a.buy?"tobuy":""} ${a.staple?"st":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}${S.isAdmin?` <button class="iedit noprint" data-ek="${esc(a.key)}" title="Edit item">Edit</button>`:""}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh"><span class="ml">Have</span>${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need"><span class="ml">Need</span><span class="mv">${esc(need)}</span>${a.staple?"":`<span class="keep">keep <input type="number" class="par" min="0" step="any" inputmode="decimal" data-k="${esc(a.key)}" value="${a.par||""}" placeholder="0"></span>`}</span><span class="c-buy"><span class="ml">Buy</span><span class="mv">${esc(buy)}</span></span><span class="uc">${chk}</span></div>`;};
   const hdr='<div class="urow uhd"><span>Item</span><span class="h-have">What I have</span><span class="c-need h-need">Need</span><span class="c-buy h-need">To buy</span><span class="uc h-need">Bought</span></div>';
-  const groups=SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c).sort((x,y)=>x.item.localeCompare(y.item));if(!l.length)return "";
-    return `<div class="shopgrp" style="margin-bottom:12px"><div class="gt">${c}<span>${l.filter(a=>a.buy).length} to buy · ${l.length} items</span></div>${hdr}${l.map(row).join("")}</div>`;}).join("");
+  const groups=SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c);if(!l.length&&!(S.isAdmin&&!q&&S.shopFilter==="all"))return "";return grp(c,l);}).join("");
+  function grp(c,l0){const l=l0.sort((x,y)=>x.item.localeCompare(y.item));
+    return `<div class="shopgrp" style="margin-bottom:12px"><div class="gt">${c}<span>${l.filter(a=>a.buy).length} to buy · ${l.length} items</span></div>${hdr}${l.map(row).join("")}${S.isAdmin?addRowHtml(c):""}</div>`;}
   const fl=[["all",`All items (${all.length})`],["week",`Used this week (${nWeek})`],["buy",`To buy (${nBuy})`]];
   let h=`<div class="secbar"><span>1. Stock &amp; Shopping</span><span class="r">${nBuy} to buy · ${esc(rangeText())}</span></div>
   <div class="rfilter noprint"><input id="sSearch" placeholder="Search item…" value="${esc(S.sSearch)}">${fl.map(([k,l])=>`<button class="pill sf ${S.shopFilter===k?"on":""}" data-f="${k}">${l}</button>`).join("")}<button class="btn sm" onclick="refreshWeek()">Refresh</button></div>
@@ -656,6 +685,47 @@ function renderShop(m){
   m.querySelectorAll(".pill.sf").forEach(b=>b.onclick=()=>{S.shopFilter=b.dataset.f;renderShop(m);});
   const si=document.getElementById("sSearch");
   si.oninput=()=>{S.sSearch=si.value;const p=si.selectionStart;renderShop(m);const n=document.getElementById("sSearch");n.focus();n.setSelectionRange(p,p);};
+}
+function addRowHtml(c){const ci=SHOP_CATS.indexOf(c);
+  return `<div class="addrow noprint"><span class="ar-l">+ Add to ${esc(c)}</span><input class="ar-n" id="arN${ci}" placeholder="Item name"><input class="ar-u" id="arU${ci}" placeholder="Unit (pcs, kg)" value="pcs"><input class="ar-p" id="arP${ci}" type="number" min="0" step="any" inputmode="decimal" placeholder="keep"><button class="btn sm primary" onclick="addToGroup(${ci})">Add</button></div>`;}
+async function addToGroup(ci){
+  const c=SHOP_CATS[ci], item=document.getElementById("arN"+ci).value.trim(), unit=document.getElementById("arU"+ci).value.trim(), pr=document.getElementById("arP"+ci).value.trim();
+  if(!item) return toast("Type an item name");
+  const key=invKey(item,unit,false); if(S.inv[key]) return toast("Already in the list");
+  const par=pr===""?null:parseFloat(pr); if(par!==null&&(isNaN(par)||par<0)) return toast("Keep must be a number");
+  const row={item_key:key,item,unit:unit||null,category:c,is_staple:false,qty:null,status:null,par,updated_at:new Date().toISOString()};
+  const {error}=await sb.from("meal_inventory").insert(row); if(error) return toast("Not saved: "+error.message);
+  S.inv[key]=row; toast(item+" added"); render();
+}
+function recipeUses(key){return S.recipes.filter(r=>(r.ingredients||[]).some(g=>g.item&&invKey(g.item,g.staple?"":String(g.unit||"").trim(),!!g.staple)===key)).map(r=>r.name);}
+function openItemEdit(key){
+  const a=S.rows[key]; if(!a) return; const cur=S.inv[key]||{}; const uses=recipeUses(key);
+  const locked=uses.length>0;
+  openModal("Edit item",`<div class="form">
+    ${locked?`<p style="margin:0 0 10px;color:var(--muted);font-size:13px">Used in: ${esc(uses.join(", "))}. Name and unit come from the recipe — change them in the recipe.</p>`:""}
+    <label>Name</label><input id="ieN" value="${esc(a.item)}" ${locked?"disabled":""}>
+    ${a.staple?"":`<label>Unit</label><input id="ieU" value="${esc(a.unit||"")}" ${locked?"disabled":""}>`}
+    <label>Category</label><select id="ieC" ${locked?"disabled":""}>${SHOP_CATS.map(c=>`<option ${c===a.cat?"selected":""}>${c}</option>`).join("")}</select>
+    ${a.staple?"":`<label>Keep at least (optional)</label><input id="ieP" type="number" min="0" step="any" inputmode="decimal" value="${cur.par??""}">`}
+  </div>`,`<span>${locked?"":'<button class="btn danger" id="ieDel">Delete item</button>'}</span><button class="btn primary" id="ieSave">Save</button>`);
+  const del=document.getElementById("ieDel");
+  if(del) del.onclick=async()=>{
+    if(del.dataset.sure!=="1"){del.dataset.sure="1";del.textContent="Tap again to delete";return;}
+    const {error}=await sb.from("meal_inventory").delete().eq("item_key",key); if(error) return toast(error.message);
+    delete S.inv[key]; closeModal(); toast(a.item+" deleted"); render();
+  };
+  document.getElementById("ieSave").onclick=async()=>{
+    const pEl=document.getElementById("ieP"), pr=pEl?pEl.value.trim():""; const par=pr===""?null:parseFloat(pr);
+    if(par!==null&&(isNaN(par)||par<0)) return toast("Keep must be a number");
+    const item=locked?a.item:document.getElementById("ieN").value.trim(); if(!item) return toast("Name is empty");
+    const unit=a.staple?"":(locked?(a.unit||""):document.getElementById("ieU").value.trim());
+    const cat=locked?a.cat:document.getElementById("ieC").value, nk=invKey(item,unit,!!a.staple);
+    if(nk!==key&&S.inv[nk]) return toast("An item with that name already exists");
+    const row={...cur,item_key:nk,item,unit:unit||null,category:cat,is_staple:!!a.staple,qty:cur.qty??null,status:cur.status??null,counted_at:cur.counted_at??null,par,updated_at:new Date().toISOString()};
+    const {error}=await sb.from("meal_inventory").upsert(row); if(error) return toast("Not saved: "+error.message);
+    if(nk!==key){const d=await sb.from("meal_inventory").delete().eq("item_key",key); if(d.error) toast(d.error.message); delete S.inv[key];}
+    S.inv[nk]=row; closeModal(); toast("Saved"); render();
+  };
 }
 function allStockItems(){
   const map={};
@@ -683,6 +753,7 @@ async function addStockItem(){
   if(S.inv[a.key]) return toast("Already in the list");
   if(await saveInv(a,{qty:null,status:null},true)) toast(item+" added");
 }
+document.getElementById("main").addEventListener("click",e=>{const b=e.target.closest(".iedit");if(b){e.stopPropagation();openItemEdit(b.dataset.ek);}});
 document.getElementById("main").addEventListener("change",async e=>{
   const t=e.target;
   if(t.classList.contains("par")){const a=S.rows[t.dataset.k];if(!a)return;const raw=t.value.trim();const v=raw===""?null:parseFloat(raw);if(v!==null&&(isNaN(v)||v<0))return toast("Enter a number");
@@ -770,7 +841,7 @@ function renderRecipes(m){
   m.innerHTML=`<div class="secbar"><span>1. Recipes</span><span class="r">${S.recipes.length} recipes</span></div>
     <div class="rfilter"><input id="rSearch" placeholder="Search dish or ingredient…" value="${esc(S.rSearch)}">${used.map(c=>`<button class="pill ${c===S.rCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}
     ${S.isAdmin?'<span style="flex:1"></span><button class="btn primary sm" onclick="openRecipeEdit()">+ New recipe</button>':""}</div>
-    <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${safeImg(r.photo_url)?`<img class="rph" src="${esc(r.photo_url)}" loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
+    <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${photoOf(r)?`<img class="rph" src="${esc(photoOf(r))}" loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
   const s=document.getElementById("rSearch");
   s.oninput=()=>{S.rSearch=s.value;const p=s.selectionStart;renderRecipes(m);const n=document.getElementById("rSearch");n.focus();n.setSelectionRange(p,p);};
   m.querySelectorAll(".pill").forEach(b=>b.onclick=()=>{S.rCat=b.dataset.c;renderRecipes(m);});
@@ -778,7 +849,7 @@ function renderRecipes(m){
 function openRecipe(id){
   const r=S.rmap[id]; if(!r) return;
   const ings=(r.ingredients||[]);
-  const body=`${safeImg(r.photo_url)?`<img class="mphoto" src="${esc(r.photo_url)}" alt="">`:""}<div class="meta"><span class="tag ok">${esc(r.category)}</span><span class="tag warn">Serves ${r.servings}</span>${r.prep_min?`<span class="tag warn">Prep ${r.prep_min} min</span>`:""}${r.cook_min?`<span class="tag warn">Cook ${r.cook_min} min</span>`:""}</div>
+  const body=`${photoOf(r)?`<img class="mphoto" src="${esc(photoOf(r))}" alt="">`:""}<a class="ytbtn" href="${esc(videoLink(r))}" target="_blank" rel="noopener">▶ ${ytId(r.video_url)?"Watch the video on YouTube (English)":"Find an English video on YouTube"}</a><div class="meta"><span class="tag ok">${esc(r.category)}</span><span class="tag warn">Serves ${r.servings}</span>${r.prep_min?`<span class="tag warn">Prep ${r.prep_min} min</span>`:""}${r.cook_min?`<span class="tag warn">Cook ${r.cook_min} min</span>`:""}</div>
     <div class="subh">Ingredients</div>
     <table class="t"><tr><th>Ingredient</th><th style="width:130px">Amount</th></tr>${ings.map(i=>`<tr><td>${esc(i.item)}${i.staple?' <span style="color:var(--muted);font-size:11.5px">(pantry)</span>':""}</td><td class="q">${esc((fmtQty(i.qty)+" "+(i.unit||"")).trim())}</td></tr>`).join("")}</table>
     <div class="subh">Steps</div><ol class="steps">${(r.steps||[]).map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
@@ -803,6 +874,7 @@ function openRecipeEdit(id){
     <button class="btn sm" onclick="document.getElementById('ingList').insertAdjacentHTML('beforeend',ingRow())">+ Add ingredient</button>
     <label>Steps (one step per line)</label><textarea id="reSteps">${esc((r.steps||[]).join("\n"))}</textarea>
     <label>Tip / notes</label><input id="reNotes" value="${esc(r.notes||"")}">
+    <label>YouTube video link (English)</label><input id="reVideo" placeholder="https://www.youtube.com/watch?v=..." value="${esc(r.video_url||"")}">
     <label>Photo</label><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><img class="pprev" id="rePrev" ${safeImg(r.photo_url)?`src="${esc(r.photo_url)}"`:'style="display:none"'} alt=""><div style="flex:1;min-width:200px"><input type="file" id="rePhoto" accept="image/*">${safeImg(r.photo_url)?'<label style="display:flex;gap:6px;align-items:center;margin-top:6px;color:var(--ink)"><input type="checkbox" id="reNoPhoto" style="width:auto"> Remove photo</label>':""}</div></div>
     <div class="msg" id="reMsg"></div></div>`;
   openModal(id?"Edit recipe":"New recipe",body,`<button class="btn" onclick="${id?`openRecipe('${id}')`:"closeModal()"}">Cancel</button><button class="btn primary" onclick="saveRecipe(${id?`'${id}'`:"null"})">Save recipe</button>`);
@@ -816,7 +888,7 @@ async function saveRecipe(id){
     return {item:row.querySelector(".ii").value.trim(),qty:qRaw===""?"":(isNaN(qn)?qRaw:qn),unit:row.querySelector(".iu").value.trim(),cat:row.querySelector(".ic").value,...(row.querySelector(".is").checked?{staple:true}:{})};
   }).filter(i=>i.item);
   const rec={name,category:v("reCat"),servings:Math.max(1,parseInt(v("reSv"))||1),prep_min:v("rePrep")===""?null:parseInt(v("rePrep")),cook_min:v("reCook")===""?null:parseInt(v("reCook")),
-    ingredients,steps:v("reSteps").split("\n").map(s=>s.trim()).filter(Boolean),notes:v("reNotes").trim()||null,updated_at:new Date().toISOString()};
+    ingredients,steps:v("reSteps").split("\n").map(s=>s.trim()).filter(Boolean),notes:v("reNotes").trim()||null,video_url:/^https:\/\//.test(v("reVideo").trim())?v("reVideo").trim():null,updated_at:new Date().toISOString()};
   const q=id?sb.from("meal_recipes").update(rec).eq("id",id).select().single():sb.from("meal_recipes").insert(rec).select().single();
   const pf=document.getElementById("rePhoto")?.files?.[0], rmPhoto=!!document.getElementById("reNoPhoto")?.checked;
   document.getElementById("reMsg").innerHTML='<span class="tag warn">Saving…</span>';
@@ -916,11 +988,51 @@ document.getElementById("thisW").onclick=()=>{S.week=mondayOf(new Date());refres
 document.getElementById("printBtn").onclick=()=>window.print();
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S.loadedAt&&(Date.now()-S.loadedAt)>60000)refreshWeek();});
 sb.auth.onAuthStateChange((ev,session)=>{
-  if(ev==="SIGNED_OUT"){S.isAdmin=false;S.session=null;renderOwner();}
-  else if(ev==="SIGNED_IN"&&session&&!S.session){setTimeout(async()=>{await refreshAuth();render();},0);}
+  if(ev==="SIGNED_OUT"){S.isAdmin=false;S.session=null;setTimeout(boot,0);}
+  else if(ev==="SIGNED_IN"&&session&&!S.session){setTimeout(boot,0);}
 });
 const h=location.hash.replace("#",""); if(["plan","shopping","recipes"].includes(h)) S.tab=h;
-(async()=>{ renderOwner(); await refreshAuth(); await loadAll(); })();
+async function boot(){
+  await refreshAuth();
+  if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; await loadAll(); }
+  else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
+}
+function renderGate(){
+  const g=document.getElementById("gate"); g.style.display="flex";
+  const ver='<div class="gv">Weekly Meal Plan | <b>v1.13</b> | Updated 2026-11-22</div>';
+  if(S.session){
+    const em=esc(S.session.user&&S.session.user.email||"");
+    g.innerHTML=`<div class="gcard">${ver}<h1>No access yet</h1><div class="gs">Signed in as <b>${em}</b>.</div>
+      <p style="font-size:14px;line-height:1.55">This account is not on the list. Ask the owner to add this email, then press <b>Check again</b>.</p>
+      <button class="btn primary" id="gAgain">Check again</button><button class="btn" id="gOut">Sign out</button></div>`;
+    document.getElementById("gAgain").onclick=boot;
+    document.getElementById("gOut").onclick=async()=>{await sb.auth.signOut();boot();};
+    return;
+  }
+  g.innerHTML=`<div class="gcard">${ver}<h1>Weekly Meal Plan</h1><div class="gs">Members only. Sign in once — this device stays signed in.</div>
+    <label>Email</label><input id="gEmail" type="email" autocomplete="username">
+    <label>Password</label><input id="gPw" type="password" autocomplete="current-password">
+    <button class="btn primary" id="gGo">Sign in</button>
+    <button class="btn" id="gUp">${S.hasAdmin?"First time? Create account":"Create owner account"}</button>
+    <div class="msg" id="gMsg"></div></div>`;
+  const msg=t=>document.getElementById("gMsg").innerHTML=t, val=()=>[document.getElementById("gEmail").value.trim(),document.getElementById("gPw").value];
+  document.getElementById("gPw").onkeydown=e=>{if(e.key==="Enter")document.getElementById("gGo").click();};
+  document.getElementById("gGo").onclick=async()=>{
+    const [email,password]=val(); if(!email||!password) return msg('<span class="tag bad">Enter email and password</span>');
+    msg("Signing in…");
+    const {error}=await sb.auth.signInWithPassword({email,password});
+    if(error) return msg('<span class="tag bad">'+esc(error.message)+'</span>');
+    boot();
+  };
+  document.getElementById("gUp").onclick=async()=>{
+    const [email,password]=val(); if(!email||password.length<8) return msg('<span class="tag bad">Email and a password of 8+ characters needed</span>');
+    const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});
+    if(error) return msg('<span class="tag bad">'+esc(error.message)+'</span>');
+    if(data.session) return boot();
+    msg('<span class="tag warn">Check your email</span> Click the confirm link in the email. It opens this page and signs you in.');
+  };
+}
+boot();
 </script>
 </body>
 </html>
