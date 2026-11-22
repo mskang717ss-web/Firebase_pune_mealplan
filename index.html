@@ -345,7 +345,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.07</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.08</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -1066,7 +1066,7 @@ async function geminiJSON(prompt,system,extra){
       body:JSON.stringify({systemInstruction:{parts:[{text:system}]},contents:[{role:"user",parts:[...(extra||[]),{text:prompt}]}],
         generationConfig:{responseMimeType:"application/json",responseSchema:RECIPE_SCHEMA,temperature:0.4,...(extra?{mediaResolution:"MEDIA_RESOLUTION_LOW"}:{})}})});
     const j=await res.json().catch(()=>({}));
-    if(res.ok){ const t=(j.candidates?.[0]?.content?.parts||[]).map(p=>p.text||"").join(""); return JSON.parse(t); }
+    if(res.ok){ const t=(j.candidates?.[0]?.content?.parts||[]).filter(p=>!p.thought).map(p=>p.text||"").join(""); return JSON.parse(t); }
     last=j.error||{message:"HTTP "+res.status};
     if(!(res.status===404||(res.status===400&&/model/i.test(last.message||"")))) break; // only try the next model if this one is unknown
   }
@@ -1257,7 +1257,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.07</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.08</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
