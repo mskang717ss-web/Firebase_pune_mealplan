@@ -35,6 +35,7 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
 .btn.primary:hover{background:var(--blue);border-color:var(--blue);color:#fff}
 .btn.danger{color:var(--bad);border-color:#E7B7B7}
+.tbl{border-collapse:collapse;font-size:13px}.tbl th,.tbl td{border-bottom:1px solid var(--box-line);padding:6px 4px;text-align:left}
 .btn.sm{padding:3px 9px;font-size:12.5px}
 .btn:disabled{opacity:.5;cursor:default}
 .toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
@@ -131,6 +132,13 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .palc .pkn{padding:5px 7px 7px;line-height:1.25}
 .palc .n1{display:block;font-weight:600;font-size:12.5px;color:var(--navy)}.palc .n2{display:block;font-size:10.5px;color:var(--muted)}
 .chip[draggable=true]{cursor:grab}
+.palc{position:relative}.palc.on{border:2px solid var(--navy);box-shadow:0 0 0 3px var(--box-line)}
+.palinfo{position:absolute;top:5px;right:5px;border:1px solid var(--box-line);background:#fff;border-radius:4px;font-size:10.5px;padding:1px 6px;cursor:pointer;color:var(--blue)}
+.pickbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;background:var(--navy);color:#fff;padding:8px 12px;border-radius:6px;margin-bottom:10px;font-size:13.5px}
+.pickbar .btn{margin-left:auto}
+.picking [data-d][data-s]{cursor:copy;background:#F3F8FF}
+.picking .addlink{border-color:var(--blue);color:var(--blue);font-weight:600}
+.picking [data-d][data-s]:hover{outline:2px dashed var(--blue);outline-offset:-3px}
 .dragging{opacity:.45}
 .dropok{outline:2px dashed var(--blue);outline-offset:-3px;background:#EEF4FF!important}
 .pk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;max-height:52vh;overflow:auto;padding:3px}
@@ -267,7 +275,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 </head>
 <body>
 <div class="wrap">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.10</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.12</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -315,7 +323,7 @@ const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","
 
 const S = {
   tab: "plan", week: mondayOf(new Date()), recipes: [], rmap: {}, entries: [], note: null,
-  checks: {}, extras: [], inv: {}, rows: {}, buyRows: {}, allEntries: [], shopFilter: "all", palCat: "All", drag: null, sSearch: "", session: null, isAdmin: false, hasAdmin: true,
+  checks: {}, extras: [], inv: {}, rows: {}, buyRows: {}, allEntries: [], shopFilter: "all", palCat: "All", drag: null, pick: null, sSearch: "", session: null, isAdmin: false, hasAdmin: true,
   rCat: "All", rSearch: "", loadedAt: null, err: null
 };
 
@@ -377,32 +385,35 @@ async function refreshAuth(){
   try{ const {data}=await sb.rpc("meal_has_admin"); S.hasAdmin=!!data; }catch(e){}
   if(session){
     if(!S.hasAdmin){ const {data}=await sb.rpc("claim_meal_admin"); if(data){S.hasAdmin=true; toast("You are now the owner of this meal plan.");} }
-    const {data}=await sb.rpc("is_meal_admin"); S.isAdmin=!!data;
-  } else S.isAdmin=false;
+    const {data}=await sb.rpc("meal_role"); S.role=data||"none";
+    S.isAdmin=S.role==="owner"||S.role==="editor"; S.isOwner=S.role==="owner";
+  } else {S.isAdmin=false;S.isOwner=false;S.role="viewer";}
   renderOwner();
 }
 function renderOwner(){
   const el=document.getElementById("ownerArea");
   if(S.session){
-    el.innerHTML=(S.isAdmin?'<span class="tag ok">Edit mode</span>':'<span class="tag bad">View only (not owner)</span>')+
+    el.innerHTML=(S.isOwner?'<span class="tag ok">Owner · edit mode</span> <button class="btn sm" id="teamBtn">People</button>':
+      S.isAdmin?'<span class="tag ok">Editor · edit mode</span>':'<span class="tag bad">View only — ask the owner to add your email</span>')+
       ' <button class="btn sm" id="signOut">Sign out</button>';
+    const tb=document.getElementById("teamBtn"); if(tb) tb.onclick=openTeam;
     document.getElementById("signOut").onclick=async()=>{await sb.auth.signOut();await refreshAuth();render();};
   } else {
-    el.innerHTML='<button class="btn sm" id="ownerBtn">Owner sign in</button>';
+    el.innerHTML='<button class="btn sm" id="ownerBtn">Sign in to edit</button>';
     document.getElementById("ownerBtn").onclick=openSignIn;
   }
 }
 function openSignIn(){
-  openModal("Owner sign in",`
+  openModal("Sign in to edit",`
     <div class="form">
-      <p style="margin:0 0 10px;color:var(--muted)">Only the owner can change meals and recipes. Everyone with the link can view, update stock and tick the shopping list.</p>
+      <p style="margin:0 0 10px;color:var(--muted)">Signed-in members (the owner and people the owner has added) can change meals and recipes. Everyone with the link can view, update stock and tick the shopping list.<br><b>First time?</b> Enter the email the owner added, choose a password (8+ characters) and press <b>Create account</b>.</p>
       ${GOOGLE_LOGIN?`<button class="btn primary" id="siGoogle" style="width:100%;padding:10px;font-weight:600">Sign in with Google</button>
       <div style="text-align:center;color:var(--muted);font-size:12px;margin:12px 0 2px">or with email</div>`:""}
       <label>Email</label><input id="siEmail" type="email" autocomplete="username">
       <label>Password</label><input id="siPw" type="password" autocomplete="current-password">
       <div class="msg" id="siMsg"></div>
     </div>`,
-    `<span>${S.hasAdmin?"":'<button class="btn" id="siUp">Create owner account</button>'}</span><button class="btn primary" id="siGo">Sign in</button>`);
+    `<span><button class="btn" id="siUp">${S.hasAdmin?"Create account":"Create owner account"}</button></span><button class="btn primary" id="siGo">Sign in</button>`);
   const msg=t=>document.getElementById("siMsg").innerHTML=t;
   if(GOOGLE_LOGIN) document.getElementById("siGoogle").onclick=async()=>{
     const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+location.pathname}});
@@ -419,11 +430,34 @@ function openSignIn(){
   if(up) up.onclick=async()=>{
     const email=document.getElementById("siEmail").value.trim(), password=document.getElementById("siPw").value;
     if(!email||password.length<8) return msg('<span class="tag bad">Email and a password of 8+ characters needed</span>');
-    const {data,error}=await sb.auth.signUp({email,password});
+    const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});
     if(error) return msg('<span class="tag bad">'+esc(error.message)+'</span>');
     if(data.session){ closeModal(); await refreshAuth(); render(); }
     else msg('<span class="tag warn">Check your email and click the confirm link</span> The page it opens may show an error — that is fine. Then come back and press <b>Sign in</b>.');
   };
+}
+
+async function openTeam(){
+  const {data,error}=await sb.from("meal_editors").select("*").order("added_at");
+  if(error) return toast(error.message);
+  const rows=(data||[]).map(e=>`<tr><td>${esc(e.label||"")}</td><td>${esc(e.email)}</td><td style="text-align:right"><button class="btn sm danger" data-rm="${esc(e.email)}">Remove</button></td></tr>`).join("")||'<tr><td colspan="3" style="color:var(--muted)">No one added yet.</td></tr>';
+  openModal("People who can edit",`
+    <div class="form">
+      <p style="margin:0 0 10px;color:var(--muted)">People added here can edit meals and recipes (same as you) after they create an account with this email and confirm it.</p>
+      <table class="tbl" style="width:100%;margin-bottom:12px"><thead><tr><th>Name</th><th>Email</th><th></th></tr></thead><tbody>${rows}</tbody></table>
+      <label>Name</label><input id="tmLabel" placeholder="e.g. Maid">
+      <label>Email</label><input id="tmEmail" type="email" placeholder="name@example.com">
+    </div>`,`<span></span><button class="btn primary" id="tmAdd">Add person</button>`);
+  document.getElementById("tmAdd").onclick=async()=>{
+    const email=document.getElementById("tmEmail").value.trim().toLowerCase(), label=document.getElementById("tmLabel").value.trim();
+    if(!/^\S+@\S+\.\S+$/.test(email)) return toast("Enter a valid email");
+    const {error}=await sb.from("meal_editors").upsert({email,label:label||null});
+    if(error) return toast(error.message); toast("Added"); openTeam();
+  };
+  document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{
+    const {error}=await sb.from("meal_editors").delete().eq("email",b.dataset.rm);
+    if(error) return toast(error.message); toast("Removed"); openTeam();
+  });
 }
 
 /* ---------- modal ---------- */
@@ -434,7 +468,7 @@ function openModal(title,body,foot,wide){
 }
 function closeModal(){document.getElementById("ov").classList.remove("on");}
 document.getElementById("ov").addEventListener("mousedown",e=>{if(e.target.id==="ov")closeModal();});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();if(S.pick){S.pick=null;render();}}});
 
 /* ---------- render ---------- */
 function render(){
@@ -465,9 +499,10 @@ function cellHtml(d,slot){
 function paletteWrap(h){
   const cats=["All",...CATS.filter(c=>S.recipes.some(r=>r.category===c))];
   const list=S.recipes.filter(r=>S.palCat==="All"||r.category===S.palCat);
-  return h+`<div class="secbar" style="margin-top:22px"><span>2. All dishes</span><span class="r">${S.isAdmin?"drag a dish onto a day · drag a planned dish to move it":"tap a dish to see the recipe"}</span></div>
+  const pr=S.pick&&S.rmap[S.pick];
+  return (pr?`<div class="pickbar"><span class="cth">${dishPic(pr)}</span><span><b>${esc(pr.name)}</b> selected — now tap a day &amp; meal in the plan above</span><button class="btn sm" onclick="S.pick=null;render()">Cancel</button></div>`:"")+h+`<div class="secbar" style="margin-top:22px"><span>2. All dishes</span><span class="r">${S.isAdmin?"tap a dish, then tap a day &amp; meal · or drag it":"sign in to plan meals from here · tap a dish to see the recipe"}</span></div>
   <div class="rfilter">${cats.map(c=>`<button class="pill pc ${c===S.palCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}</div>
-  <div class="pal">${list.map(r=>`<div class="palc" ${S.isAdmin?'draggable="true"':""} data-rid="${r.id}" onclick="openRecipe('${r.id}')" title="${esc(r.name)}"><span class="pkimg">${dishPic(r)}</span><span class="pkn">${nameHtml(r.name)}</span></div>`).join("")||'<p class="empty">No dishes yet.</p>'}</div>`;
+  <div class="pal">${list.map(r=>`<div class="palc ${S.pick===r.id?"on":""}" ${S.isAdmin?'draggable="true"':""} data-rid="${r.id}" onclick="${S.isAdmin?`S.pick=S.pick==='${r.id}'?null:'${r.id}';render();window.scrollTo({top:0,behavior:'smooth'})`:`openRecipe('${r.id}')`}" title="${esc(r.name)}"><span class="pkimg">${dishPic(r)}</span><span class="pkn">${nameHtml(r.name)}</span>${S.isAdmin?`<button class="palinfo" title="Recipe" onclick="event.stopPropagation();openRecipe('${r.id}')">Recipe</button>`:""}</div>`).join("")||'<p class="empty">No dishes yet.</p>'}</div>`;
 }
 function renderPlan(m){
   const days=weekDays(), today=ymd(new Date());
@@ -485,7 +520,7 @@ function renderPlan(m){
     const body=vis.length?vis.map(([k,lbl])=>`<div class="sl"><div class="lb">${lbl}</div><div data-d="${ds}" data-s="${k}">${cellHtml(d,k)}</div></div>`).join(""):'<div class="sl none">No meals planned</div>';
     return `<div class="dcard ${ds===today?"today":""} ${ds<today?"past":""}"><div class="dh"><span>${DAYS[i]} · ${fmtShort(d)}</span>${ds===today?"<span>Today</span>":""}</div>${body}</div>`;}).join("");
   const cnt=S.entries.length;
-  m.innerHTML=paletteWrap(noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish to see the recipe</span></div><div class="grid">${g}</div><div class="daycards">${cards}</div>`);
+  m.innerHTML=paletteWrap(noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish to see the recipe</span></div><div class="grid ${S.pick?"picking":""}">${g}</div><div class="daycards ${S.pick?"picking":""}">${cards}</div>`);
   m.querySelectorAll(".pill.pc").forEach(b=>b.onclick=()=>{S.palCat=b.dataset.c;renderPlan(m);});
 }
 
@@ -667,6 +702,16 @@ document.getElementById("main").addEventListener("click",e=>{
 });
 (function(){
   const M=document.getElementById("main");
+  M.addEventListener("click",async e=>{
+    if(!S.pick||!S.isAdmin)return;
+    const cell=e.target.closest("[data-d][data-s]");if(!cell||e.target.closest(".chip"))return;
+    if(e.target.closest("button")&&!e.target.closest(".addlink"))return;
+    e.preventDefault();e.stopPropagation();
+    const d=cell.dataset.d,sl=cell.dataset.s,rid=S.pick;S.pick=null;
+    const sort=S.entries.filter(x=>x.meal_date===d&&x.slot===sl).length;
+    const {error}=await sb.from("meal_entries").insert({meal_date:d,slot:sl,recipe_id:rid,sort});
+    if(error)return toast(error.message);toast("Added");await refreshWeek();
+  },true);
   M.addEventListener("dragstart",e=>{const c=e.target.closest("[data-eid],[data-rid]");if(!c||!S.isAdmin)return;
     S.drag=c.dataset.eid?{eid:c.dataset.eid}:{rid:c.dataset.rid};
     e.dataTransfer.effectAllowed=c.dataset.eid?"move":"copy";e.dataTransfer.setData("text/plain","dish");c.classList.add("dragging");});
