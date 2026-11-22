@@ -115,6 +115,10 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .grid .chip .n2,.grid .chip .nt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chip .x{border:0;background:none;color:var(--muted);cursor:pointer;padding:0 2px;font-size:14px;line-height:1}
 .chip .x:hover{color:var(--bad)}
+.tapadd{display:flex;align-items:center;justify-content:center;min-height:34px;color:#B8C4D3;font-size:20px;font-weight:300;border-radius:5px}
+[data-d][data-s]{cursor:pointer}
+[data-d][data-s]:hover .tapadd{color:var(--blue);background:#F3F8FF}
+.lb[data-add]{cursor:pointer}
 .addlink{border:1px dashed var(--box-line);background:none;color:var(--blue);border-radius:5px;width:100%;padding:3px;cursor:pointer;font-size:12.5px}
 .daycards{display:none}
 /* shopping */
@@ -306,27 +310,29 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .secbar{padding:6px 10px;font-size:13.5px}
   .secbar .r{display:none}
   .shopcols,.shopcols2,.two{grid-template-columns:1fr}
-  .urow{grid-template-columns:repeat(3,minmax(0,1fr)) minmax(36px,auto);grid-template-areas:"item item item chk" "have need buy buy";gap:6px 8px;padding:9px 10px}
-  .urow.uhd{display:none}
-  .urow{background-image:none}
-  .urow .sl{grid-area:item}.urow .uc{grid-area:chk;align-self:center}
-  .urow .uh{grid-area:have}.urow .c-need{grid-area:need}.urow .c-buy{grid-area:buy}
-  .urow .uh,.urow .c-need,.urow .c-buy{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;background:#F6F8FB;border:1px solid var(--line2);border-radius:6px;padding:4px 8px;min-height:50px}
-  .urow.tobuy .c-buy{background:#FFF1D6;border-color:#E9CC8E}
-  .urow .ml{display:block;font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);font-family:"Noto Sans",sans-serif;margin-bottom:2px}
-  .urow .mv{font-size:15px;font-weight:700;color:var(--ink)}
-  .urow .c-buy .mv{color:var(--blue)}
-  .urow .stkw{justify-content:flex-start}
-  .urow .stk{width:56px;font-size:15px;padding:2px 6px}
-  .urow.st{grid-template-areas:"item item item chk" "have have buy buy"}
+  .urow{grid-template-columns:minmax(0,1fr) 64px 52px 84px;grid-template-areas:"item have need buy";gap:0 6px;padding:7px 8px;align-items:center;background-image:none}
+  .urow.uhd{display:grid;position:sticky;top:0;z-index:2;font-size:10.5px;padding:5px 8px;text-transform:uppercase;letter-spacing:.3px}
+  .urow.uhd .uc{display:none}
+  .urow .sl{grid-area:item;gap:6px}
+  .urow .uh{grid-area:have}.urow .c-need{grid-area:need;text-align:right}.urow .c-buy{grid-area:buy;text-align:left;padding-right:30px}
+  .urow .uc{grid-area:buy;justify-self:end;align-self:center}
+  .urow .ml,.urow .keep,.urow .nm2 .f,.urow .iedit{display:none}
+  .urow .mv{font-size:13px;font-weight:600;color:var(--ink);font-family:"IBM Plex Mono",monospace}
+  .urow .c-buy .mv{color:var(--blue);font-weight:700}
+  .urow.tobuy{background-color:#FFF6E3}
+  .urow .stkw{justify-content:flex-start;gap:2px}
+  .urow .stkw .u{min-width:0;font-size:10.5px}
+  .urow .stk{width:40px;font-size:13px;padding:2px 3px}
+  .urow.st{grid-template-areas:"item have have buy"}
   .urow.st .c-need{display:none}
-  .urow .nm2 .n{font-weight:600;font-size:15px}
-  .urow .nm2 .dsh{display:none}
+  .urow .nm2{cursor:pointer}
+  .urow .nm2 .n{font-weight:600;font-size:13.5px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .urow .nm2 .ko{font-size:11.5px;white-space:nowrap}
   .bought{width:24px;height:24px}
-  .urow .undo{font-size:11px;padding:3px 6px}
-  .urow .uc{justify-self:end}
+  .urow .undo{font-size:10px;padding:2px 4px}
   .hint{display:none}
-  .urow .thumb{width:32px;height:32px;font-size:17px}
+  .urow .thumb{width:26px;height:26px;font-size:14px;border-radius:5px}
+  .urow .seg button{padding:4px 4px;font-size:10px}
   .seg button{padding:4px 5px;font-size:10.5px}
   .two .right{order:-1}
   .brow.r5{grid-template-columns:22px minmax(0,1fr) 58px 64px 58px}
@@ -349,7 +355,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.12</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.13</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -514,6 +520,7 @@ async function refreshAuth(){
       if(o.exists&&o.data().uid===u.uid) S.role="owner";
       else if(u.emailVerified&&u.email){ const ed=await C("editors").doc(u.email.toLowerCase()).get(); if(ed.exists) S.role="editor"; }
     }catch(e){ console.error(e); S.authErr=eMsg(e); }
+    if(S.role==="owner"&&/[?&]as=maid/.test(location.search)) S.role="editor"; // owner previewing the maid's screen
     S.isAdmin=S.role==="owner"||S.role==="editor"; S.isOwner=S.role==="owner";
   }
   renderOwner();
@@ -521,13 +528,18 @@ async function refreshAuth(){
 function renderOwner(){
   const el=document.getElementById("ownerArea");
   if(!S.session){ el.innerHTML=""; return; }
-  el.innerHTML=(S.isOwner?'<span class="tag ok">Owner · edit mode</span> <button class="btn sm" id="teamBtn">People</button>':
+  el.innerHTML=(S.isOwner?'<span class="tag ok">Owner · edit mode</span> <button class="btn sm" id="teamBtn">People</button> <button class="btn sm" id="maidBtn" title="See the app as the maid sees it on her phone">📱 Maid view</button>':
     S.isAdmin?'<span class="tag ok">Editor · edit mode</span>':'<span class="tag bad">No access</span>')+
     ' <button class="btn sm" id="signOut">Sign out</button>';
   const tb=document.getElementById("teamBtn"); if(tb) tb.onclick=openTeam;
+  const mb=document.getElementById("maidBtn"); if(mb) mb.onclick=openMaidView;
   document.getElementById("signOut").onclick=()=>auth.signOut();
 }
 
+function openMaidView(){
+  openModal("Maid's view (phone)",`<div style="display:flex;justify-content:center"><iframe src="${location.pathname}${location.search?location.search+"&":"?"}as=maid#${S.tab}" title="Maid view" style="width:390px;max-width:100%;height:760px;max-height:75vh;border:10px solid #1E2430;border-radius:26px;background:#fff"></iframe></div>
+    <p style="text-align:center;color:var(--muted);font-size:12.5px;margin:8px 0 0">Same data — changes made here are real. Owner-only buttons are hidden.</p>`,"",false);
+}
 async function openTeam(){
   let data;
   try{ data=docs(await C("editors").get()).sort((a,b)=>String(a.added_at||"").localeCompare(String(b.added_at||""))); }
@@ -540,13 +552,7 @@ async function openTeam(){
       <label>Name</label><input id="tmLabel" placeholder="e.g. Maid">
       <label>Email</label><input id="tmEmail" type="email" placeholder="name@example.com">
       <div style="margin-top:10px;text-align:right"><button class="btn primary" id="tmAdd">Add person</button></div>
-      <div class="subh">YouTube video search</div>
-      <p style="margin:0 0 6px;color:var(--muted);font-size:12.5px">${S.ytKey?"A YouTube key is saved — “Find video” in recipes shows videos to pick.":"No key yet — “Find video” opens YouTube in a new tab instead."}</p>
-      <div class="ytrow"><input id="tmYt" type="password" autocomplete="off" placeholder="YouTube Data API key"><button class="btn sm" id="tmYtSave">Save key</button>${S.ytKey?'<button class="btn sm danger" id="tmYtDel">Remove</button>':""}</div>
     </div>`,"");
-  const saveKey=async k=>{ const e=await tryDo(()=>C("config").doc("settings").set({ytKey:k,updated_at:nowIso()})); if(e) return toast(eMsg(e)); S.ytKey=k; toast(k?"Key saved":"Key removed"); openTeam(); };
-  document.getElementById("tmYtSave").onclick=()=>{ const k=document.getElementById("tmYt").value.trim(); if(!/^[A-Za-z0-9_-]{30,60}$/.test(k)) return toast("That does not look like an API key"); saveKey(k); };
-  const yd=document.getElementById("tmYtDel"); if(yd) yd.onclick=()=>saveKey("");
   document.getElementById("tmAdd").onclick=async()=>{
     const email=document.getElementById("tmEmail").value.trim().toLowerCase(), label=document.getElementById("tmLabel").value.trim();
     if(!/^[^\s/]+@[^\s/]+\.[^\s/]+$/.test(email)) return toast("Enter a valid email");
@@ -592,7 +598,7 @@ function chipHtml(e){
 function cellHtml(d,slot){
   const list=S.entries.filter(e=>e.meal_date===ymd(d)&&e.slot===slot);
   let h=list.map(chipHtml).join("");
-  if(S.isAdmin) h+=`<button class="addlink" onclick="openAddEntry('${ymd(d)}','${slot}')">+ Add</button>`;
+  if(S.isAdmin&&!list.length) h+='<span class="tapadd" aria-label="Add">+</span>';
   else if(!list.length) h+='<span class="empty">—</span>';
   return h;
 }
@@ -617,10 +623,10 @@ function renderPlan(m){
   }
   const cards=days.map((d,i)=>{const ds=ymd(d);
     const vis=S.isAdmin?slots:slots.filter(([k])=>S.entries.some(e=>e.meal_date===ds&&e.slot===k));
-    const body=vis.length?vis.map(([k,lbl])=>`<div class="sl"><div class="lb">${lbl}</div><div data-d="${ds}" data-s="${k}">${cellHtml(d,k)}</div></div>`).join(""):'<div class="sl none">No meals planned</div>';
+    const body=vis.length?vis.map(([k,lbl])=>`<div class="sl"><div class="lb" ${S.isAdmin?`data-add="${ds}|${k}"`:""}>${lbl}</div><div data-d="${ds}" data-s="${k}">${cellHtml(d,k)}</div></div>`).join(""):'<div class="sl none">No meals planned</div>';
     return `<div class="dcard ${ds===today?"today":""} ${ds<today?"past":""} ${wkc(d)}"><div class="dh"><span>${DAYS[i]} · ${fmtShort(d)}</span>${ds===today?"<span>Today</span>":""}</div>${body}</div>`;}).join("");
   const cnt=S.entries.length;
-  m.innerHTML=paletteWrap(noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish to see the recipe</span></div><div class="legend">${["Main","Side","Soup","Stew","Rice & Noodles","Breakfast"].map(c=>`<span><i style="background:${catColor(c)}"></i>${catLabel(c)}</span>`).join("")}</div><div class="grid ${S.pick?"picking":""}">${g}</div><div class="daycards ${S.pick?"picking":""}">${cards}</div>`);
+  m.innerHTML=paletteWrap(noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish for the recipe${S.isAdmin?" · tap an empty spot to add":""}</span></div><div class="legend">${["Main","Side","Soup","Stew","Rice & Noodles","Breakfast"].map(c=>`<span><i style="background:${catColor(c)}"></i>${catLabel(c)}</span>`).join("")}</div><div class="grid ${S.pick?"picking":""}">${g}</div><div class="daycards ${S.pick?"picking":""}">${cards}</div>`);
   m.querySelectorAll(".pill.pc").forEach(b=>b.onclick=()=>{S.palCat=b.dataset.c;renderPlan(m);});
 }
 
@@ -752,7 +758,7 @@ function renderShop(m){
     const lb=(S.inv[a.key]||{}).last_buy, recent=lb&&lb.at&&(Date.now()-new Date(lb.at))<3*864e5;
     const chk=a.buy?`<input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought">`:recent?`<button class="undo noprint" data-k="${esc(a.key)}" title="Cancel the last “Bought”">✓ Undo</button>`:(a.dishes.size?'<span class="okmark" title="Enough for this week">✓</span>':"");
     return `<div class="urow ${a.buy?"tobuy":""} ${a.staple?"st":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}${koName(a)?` <span class="ko">/ ${esc(koName(a))}</span>`:""}${S.isAdmin?` <button class="iedit noprint" data-ek="${esc(a.key)}" title="Edit item">Edit</button>`:""}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh"><span class="ml">Have</span>${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need"><span class="ml">Need</span><span class="mv">${esc(need)}</span>${a.staple?"":`<span class="keep">keep <input type="number" class="par" min="0" step="any" inputmode="decimal" data-k="${esc(a.key)}" value="${a.par||""}" placeholder="0"></span>`}</span><span class="c-buy"><span class="ml">Buy</span><span class="mv">${esc(buy)}</span></span><span class="uc">${chk}</span></div>`;};
-  const hdr='<div class="urow uhd"><span>Item</span><span class="h-have">What I have</span><span class="c-need h-need">Need</span><span class="c-buy h-need">To buy</span><span class="uc h-need">Bought</span></div>';
+  const hdr='<div class="urow uhd"><span>Item</span><span class="uh h-have">Have</span><span class="c-need h-need">Need</span><span class="c-buy h-need">Buy</span><span class="uc h-need">Bought</span></div>';
   const groups=SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c);if(!l.length&&!(S.isAdmin&&!q&&S.shopFilter==="all"))return "";return grp(c,l);}).join("");
   function grp(c,l0){const l=l0.sort((x,y)=>x.item.localeCompare(y.item));
     return `<div class="shopgrp" style="margin-bottom:12px"><div class="gt">${c}<span>${l.filter(a=>a.buy).length} to buy · ${l.length} items</span></div>${hdr}${l.map(row).join("")}${S.isAdmin?addRowHtml(c):""}</div>`;}
@@ -860,7 +866,8 @@ document.getElementById("main").addEventListener("click",async e=>{const u=e.tar
   u.disabled=true;
   if(await saveInv(a,{qty:lb.qty,status:lb.status,counted_at:lb.counted_at},false,{last_buy:null})) toast(a.item+" — Bought cancelled");
 });
-document.getElementById("main").addEventListener("click",e=>{const b=e.target.closest(".iedit");if(b){e.stopPropagation();openItemEdit(b.dataset.ek);}});
+document.getElementById("main").addEventListener("click",e=>{const b=e.target.closest(".iedit");if(b){e.stopPropagation();openItemEdit(b.dataset.ek);return;}
+  const n=e.target.closest(".urow .nm2");if(n&&S.isAdmin&&window.matchMedia("(max-width:760px)").matches){const ed=n.querySelector(".iedit");if(ed)openItemEdit(ed.dataset.ek);}});
 document.getElementById("main").addEventListener("change",async e=>{
   const t=e.target;
   if(t.classList.contains("par")){const a=S.rows[t.dataset.k];if(!a)return;const raw=t.value.trim();const v=raw===""?null:parseFloat(raw);if(v!==null&&(isNaN(v)||v<0))return toast("Enter a number");
@@ -886,13 +893,19 @@ document.getElementById("main").addEventListener("click",e=>{
   M.addEventListener("click",async e=>{
     if(!S.pick||!S.isAdmin)return;
     const cell=e.target.closest("[data-d][data-s]");if(!cell||e.target.closest(".chip"))return;
-    if(e.target.closest("button")&&!e.target.closest(".addlink"))return;
+    if(e.target.closest("button"))return;
     e.preventDefault();e.stopPropagation();
     const d=cell.dataset.d,sl=cell.dataset.s,rid=S.pick;S.pick=null;
     const sort=S.entries.filter(x=>x.meal_date===d&&x.slot===sl).length;
     const error=await tryDo(()=>C("entries").add({meal_date:d,slot:sl,recipe_id:rid,title:null,servings:null,note:null,sort,created_at:nowIso()}));
     if(error)return toast(eMsg(error));toast("Added");await refreshWeek();
   },true);
+  M.addEventListener("click",e=>{
+    if(S.pick||!S.isAdmin) return;
+    const lb=e.target.closest(".lb[data-add]"); if(lb){ const [d,sl]=lb.dataset.add.split("|"); return openAddEntry(d,sl); }
+    const cell=e.target.closest("[data-d][data-s]"); if(!cell||e.target.closest(".chip,button,a")) return;
+    openAddEntry(cell.dataset.d,cell.dataset.s);
+  });
   M.addEventListener("dragstart",e=>{const c=e.target.closest("[data-eid],[data-rid]");if(!c||!S.isAdmin)return;
     S.drag=c.dataset.eid?{eid:c.dataset.eid}:{rid:c.dataset.rid};
     e.dataTransfer.effectAllowed=c.dataset.eid?"move":"copy";e.dataTransfer.setData("text/plain","dish");c.classList.add("dragging");});
@@ -1063,6 +1076,7 @@ async function findVideos(manual){
 function finderHtml(){
   return `<div class="secbar"><span>1. Add a new dish</span><span class="r">search YouTube or paste a video link → + Add as recipe</span></div>
   <div class="finder"><div class="ytrow"><input id="fQ" placeholder="What do you want to cook? (e.g. Japchae) — or paste a YouTube link" value="${esc(S.fQ||"")}"><button class="btn primary" id="fGo">▶ Search YouTube</button></div>
+  ${S.isOwner&&!S.ytKey?`<div class="fnote">To see videos here, paste a YouTube Data API key: <span class="ytrow" style="margin-top:4px"><input id="fKey" type="password" autocomplete="off" placeholder="YouTube Data API key"><button class="btn sm" id="fKeySave">Save key</button></span></div>`:""}
   <div class="fres" id="fRes">${S.fRes||""}</div>
   <div class="fnote" id="fNote">${S.fNote||""}</div></div>`;
 }
@@ -1070,6 +1084,9 @@ function wireFinder(){
   const q=document.getElementById("fQ"), go=document.getElementById("fGo");
   q.onkeydown=e=>{if(e.key==="Enter")go.click();};
   go.onclick=()=>searchDishes(q.value.trim());
+  const ks=document.getElementById("fKeySave"); if(ks) ks.onclick=async()=>{ const k=document.getElementById("fKey").value.trim();
+    if(!/^[A-Za-z0-9_-]{30,60}$/.test(k)) return toast("That does not look like an API key");
+    const e=await tryDo(()=>C("config").doc("settings").set({ytKey:k,updated_at:nowIso()})); if(e) return toast(eMsg(e)); S.ytKey=k; toast("Key saved"); render(); };
   document.getElementById("fRes").onclick=e=>{const b=e.target.closest("[data-make]");if(b) makeFromVideo(b.dataset.make);};
 }
 function finderSet(res,note){ S.fRes=res; S.fNote=note; const r=document.getElementById("fRes"),n=document.getElementById("fNote"); if(r) r.innerHTML=res; if(n) n.innerHTML=note; }
@@ -1189,7 +1206,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.12</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.13</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
