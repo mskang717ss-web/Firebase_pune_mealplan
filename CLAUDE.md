@@ -67,8 +67,8 @@ Handoff from the claude.ai session on 2026-11-22. The current version is **v2.00
 
 ## 8. Open tasks (as of 2026-11-22)
 1. **Owner creates the Firebase project** (console.firebase.google.com): add a Web app, enable Auth → Google + Email/Password, create Firestore (production mode, `asia-south1`). Send the `firebaseConfig` → paste into `FB_CONFIG` and set the project id in `.firebaserc`.
-2. **Deploy key**: Project settings → Service accounts → Generate new private key → GitHub repo Settings → Secrets → Actions → `FIREBASE_SERVICE_ACCOUNT` (paste the whole JSON). Claude must never see or handle the key. If deploy fails with permission errors, give that service account the roles "Firebase Hosting Admin" and "Firebase Rules Admin".
-3. Merge to `main` → workflow deploys. Owner signs in first (becomes owner), imports the JSON on the Recipes tab, adds the maid in **People**, updates the maid's bookmark.
+2. **Deploy key**: Project settings → Service accounts → Generate new private key → GitHub repo Settings → Secrets → Actions → `FIREBASE_SERVICE_ACCOUNT` (paste the whole JSON). Claude must never see or handle the key. DONE 2026-11-22: the `firebase-adminsdk-fbsvc@meal-plan-e954d` account needed the extra IAM roles **Firebase Admin** and **Service Usage Consumer** (also has Hosting Admin) before deploys worked.
+3. DONE 2026-11-22: merged to `main`, first deploy succeeded (hosting + rules). Next: Owner signs in first (becomes owner), imports the JSON on the Recipes tab, adds the maid in **People**, updates the maid's bookmark.
 4. After it works: retire Cloudflare Pages / GitHub Pages / Supabase (pause or delete the project).
 5. Weekly Drive backup into "3. Mealplan_Firebase" (not set up yet; needs a way to read Firestore, e.g. an owner-only "Export" button or a scheduled job with credentials).
 
