@@ -40,7 +40,8 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .btn.danger{color:var(--bad);border-color:#E7B7B7}
 .ytbtn{display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;padding:8px 14px;background:#CC0000;color:#fff!important;border-radius:6px;font-weight:600;font-size:14px;text-decoration:none}
 .ytbtn:hover{background:#A80000}
-.aibtn{border-color:#C9B8F0;color:#5B3FC4;background:#F6F2FF}.aibtn:hover{border-color:#5B3FC4;color:#5B3FC4}
+.catb{display:inline-block;color:#fff;font-size:11px;font-weight:700;padding:1px 7px;border-radius:9px;vertical-align:1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);margin:-4px 0 10px}.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
 .finder{border:1px solid var(--box-line);background:var(--box);border-radius:6px;padding:10px 12px;margin-bottom:6px}
 .finder .ytrow input{font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:6px}
 .fres{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:10px}
@@ -50,7 +51,7 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .fcard .c{font-size:11px;color:var(--muted);padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fcard .a{display:flex;gap:6px;padding:7px 8px 8px;margin-top:auto}.fcard .a .btn{flex:1;text-align:center;text-decoration:none;font-size:12.5px;padding:5px 6px}
 .fnote{font-size:12.5px;color:var(--muted);margin-top:8px}.fnote a{color:var(--blue)}
-.aihint{margin:0 0 8px;padding:7px 10px;border-radius:6px;background:#F6F2FF;border:1px solid #DCD0FA;color:#4A3699;font-size:13px}
+.aihint{margin:0 0 8px;padding:7px 10px;border-radius:6px;background:var(--box);border:1px solid var(--box-line);color:var(--navy);font-size:13px}
 .ytrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.ytrow input{flex:1;min-width:220px}
 .ytres{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
 .ytres button{border:2px solid var(--line);border-radius:6px;background:#fff;padding:0;cursor:pointer;text-align:left;overflow:hidden;font:inherit}
@@ -345,7 +346,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.08</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.09</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -400,6 +401,9 @@ function eMsg(e){ const c=e&&e.code||""; return c==="permission-denied"?"No perm
 
 const SLOTS = [["breakfast","Breakfast"],["lunch","Lunch"],["dinner","Dinner"],["snack","Snack"]];
 const CATS = ["Breakfast","Main","Soup & Stew","Side","Rice & Noodles","Snack","Other"];
+const CAT_STYLE = {"Main":["Main dish","#D9822B"],"Side":["Side dish (banchan)","#2E8B57"],"Soup & Stew":["Soup & Stew","#2E6DB4"],"Rice & Noodles":["Rice & Noodles","#8A6D3B"],"Breakfast":["Breakfast","#C9A227"],"Snack":["Snack","#B5487A"],"Other":["Other","#7A8594"]};
+const catLabel = c => (CAT_STYLE[c]||[c])[0];
+const catColor = c => (CAT_STYLE[c]||[0,"#7A8594"])[1];
 const SHOP_CATS = ["Vegetables","Fruits","Meat & Eggs","Dairy & Bakery","Grains","Korean Pantry","Others"];
 const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -574,7 +578,7 @@ function nameHtml(n){const m=String(n).match(/^(.*?)\s*\((.+)\)\s*$/);return m?`
 function chipHtml(e){
   const r=e.recipe_id&&S.rmap[e.recipe_id];
   const sv=e.servings&&r&&e.servings!==r.servings?` <span class="nt" style="display:inline">×${e.servings}</span>`:"";
-  return `<div class="chip" ${S.isAdmin?`draggable="true" data-eid="${e.id}"`:""}><span class="cth">${r?dishPic(r):"<span>🍽️</span>"}</span><span class="nm ${r?"link":""}" title="${esc(entryName(e))}" ${r?`onclick="openRecipe('${r.id}')"`:""}>${nameHtml(entryName(e))}${sv}${e.note?`<span class="nt">${esc(e.note)}</span>`:""}</span>${S.isAdmin?`<button class="x" title="Remove" onclick="delEntry('${e.id}')">×</button>`:""}</div>`;
+  return `<div class="chip" style="border-left:4px solid ${r?catColor(r.category):"#C9D5E3"}" ${S.isAdmin?`draggable="true" data-eid="${e.id}"`:""}><span class="cth">${r?dishPic(r):"<span>🍽️</span>"}</span><span class="nm ${r?"link":""}" title="${esc(entryName(e))}" ${r?`onclick="openRecipe('${r.id}')"`:""}>${nameHtml(entryName(e))}${sv}${e.note?`<span class="nt">${esc(e.note)}</span>`:""}</span>${S.isAdmin?`<button class="x" title="Remove" onclick="delEntry('${e.id}')">×</button>`:""}</div>`;
 }
 function cellHtml(d,slot){
   const list=S.entries.filter(e=>e.meal_date===ymd(d)&&e.slot===slot);
@@ -588,8 +592,8 @@ function paletteWrap(h){
   const list=S.recipes.filter(r=>S.palCat==="All"||r.category===S.palCat);
   const pr=S.pick&&S.rmap[S.pick];
   return (pr?`<div class="pickbar"><span class="cth">${dishPic(pr)}</span><span><b>${esc(pr.name)}</b> selected — now tap a day &amp; meal in the plan above</span><button class="btn sm" onclick="S.pick=null;render()">Cancel</button></div>`:"")+h+`<div class="secbar" style="margin-top:22px"><span>2. All dishes</span><span class="r">${S.isAdmin?"tap a dish, then tap a day &amp; meal · or drag it":"sign in to plan meals from here · tap a dish to see the recipe"}</span></div>
-  <div class="rfilter">${cats.map(c=>`<button class="pill pc ${c===S.palCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}</div>
-  <div class="pal">${list.map(r=>`<div class="palc ${S.pick===r.id?"on":""}" ${S.isAdmin?'draggable="true"':""} data-rid="${r.id}" onclick="${S.isAdmin?`S.pick=S.pick==='${r.id}'?null:'${r.id}';render();window.scrollTo({top:0,behavior:'smooth'})`:`openRecipe('${r.id}')`}" title="${esc(r.name)}"><span class="pkimg">${dishPic(r)}</span><span class="pkn">${nameHtml(r.name)}</span>${S.isAdmin?`<button class="palinfo" title="Recipe" onclick="event.stopPropagation();openRecipe('${r.id}')">Recipe</button>`:""}</div>`).join("")||'<p class="empty">No dishes yet.</p>'}</div>`;
+  <div class="rfilter">${cats.map(c=>`<button class="pill pc ${c===S.palCat?"on":""}" data-c="${esc(c)}">${esc(catLabel(c))}</button>`).join("")}</div>
+  <div class="pal">${list.map(r=>`<div class="palc ${S.pick===r.id?"on":""}" style="border-top:4px solid ${catColor(r.category)}" ${S.isAdmin?'draggable="true"':""} data-rid="${r.id}" onclick="${S.isAdmin?`S.pick=S.pick==='${r.id}'?null:'${r.id}';render();window.scrollTo({top:0,behavior:'smooth'})`:`openRecipe('${r.id}')`}" title="${esc(r.name)}"><span class="pkimg">${dishPic(r)}</span><span class="pkn">${nameHtml(r.name)}</span>${S.isAdmin?`<button class="palinfo" title="Recipe" onclick="event.stopPropagation();openRecipe('${r.id}')">Recipe</button>`:""}</div>`).join("")||'<p class="empty">No dishes yet.</p>'}</div>`;
 }
 function renderPlan(m){
   const days=weekDays(), today=ymd(new Date());
@@ -607,7 +611,7 @@ function renderPlan(m){
     const body=vis.length?vis.map(([k,lbl])=>`<div class="sl"><div class="lb">${lbl}</div><div data-d="${ds}" data-s="${k}">${cellHtml(d,k)}</div></div>`).join(""):'<div class="sl none">No meals planned</div>';
     return `<div class="dcard ${ds===today?"today":""} ${ds<today?"past":""} ${wkc(d)}"><div class="dh"><span>${DAYS[i]} · ${fmtShort(d)}</span>${ds===today?"<span>Today</span>":""}</div>${body}</div>`;}).join("");
   const cnt=S.entries.length;
-  m.innerHTML=paletteWrap(noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish to see the recipe</span></div><div class="grid ${S.pick?"picking":""}">${g}</div><div class="daycards ${S.pick?"picking":""}">${cards}</div>`);
+  m.innerHTML=paletteWrap(noteHtml+`<div class="secbar"><span>1. Meal Plan</span><span class="r">${cnt} dish${cnt===1?"":"es"} · tap a dish to see the recipe</span></div><div class="legend">${["Main","Side","Soup & Stew","Rice & Noodles","Breakfast"].map(c=>`<span><i style="background:${catColor(c)}"></i>${catLabel(c)}</span>`).join("")}</div><div class="grid ${S.pick?"picking":""}">${g}</div><div class="daycards ${S.pick?"picking":""}">${cards}</div>`);
   m.querySelectorAll(".pill.pc").forEach(b=>b.onclick=()=>{S.palCat=b.dataset.c;renderPlan(m);});
 }
 
@@ -679,7 +683,7 @@ function ytThumb(r){const id=ytId(r.video_url);return id?`https://i.ytimg.com/vi
 function photoOf(r){return safeImg(r.photo_url)||ytThumb(r);}
 function videoLink(r){return ytId(r.video_url)?r.video_url:"https://www.youtube.com/results?search_query="+encodeURIComponent("how to make "+r.name.replace(/\(.*?\)/g,"")+" recipe english");}
 function dishPic(r){const p=photoOf(r);return p?`<img ${imgSrc(p)} alt="" loading="lazy">`:`<span>${dishEmoji(r)}</span>`;}
-const KO=[["salt & black pepper","소금·후추"],["sweet potato","고구마"],["spring onion","대파"],["green onion","대파"],["cooked rice","밥"],["rice cake","떡"],["glass noodle","당면"],["sesame oil","참기름"],["sesame seed","참깨"],["soy sauce","간장"],["fish sauce","액젓"],["oyster sauce","굴소스"],["black pepper","후추"],["chilli flakes","고춧가루"],["gochugaru","고춧가루"],["gochujang","고추장"],["doenjang","된장"],["chicken breast","닭가슴살"],["chicken thigh","닭다리살"],["pork belly","삼겹살"],["seaweed sheet","김"],["gim","김"],["dried seaweed","미역"],["miyeok","미역"],["bean sprout","콩나물"],["perilla","깻잎"],["rice wine","맛술"],["mirin","맛술"],["corn syrup","물엿"],["cooking oil","식용유"],["green chilli","풋고추"],["cheese","치즈"],["mayonnaise","마요네즈"],["kimchi","김치"],["tofu","두부"],["zucchini","애호박"],["potato","감자"],["onion","양파"],["garlic","마늘"],["ginger","생강"],["cabbage","양배추"],["carrot","당근"],["spinach","시금치"],["cucumber","오이"],["lettuce","상추"],["tomato","토마토"],["mushroom","버섯"],["radish","무"],["egg","계란"],["bacon","베이컨"],["ham","햄"],["pork","돼지고기"],["beef","소고기"],["chicken","닭고기"],["anchovy","멸치"],["fish","생선"],["bread","식빵"],["milk","우유"],["butter","버터"],["flour","밀가루"],["noodle","면"],["rice","쌀"],["sugar","설탕"],["salt","소금"],["vinegar","식초"],["honey","꿀"],["watermelon","수박"],["apple","사과"],["banana","바나나"],["orange","오렌지"],["papaya","파파야"],["pomegranate","석류"],["mango","망고"],["grape","포도"],["lemon","레몬"],["kiwi","키위"],["pear","배"],["strawberr","딸기"]];
+const KO=[["salt & black pepper","소금·후추"],["sweet potato","고구마"],["spring onion","대파"],["green onion","대파"],["cooked rice","밥"],["sushi rice","초밥용 쌀"],["rice cake","떡"],["glass noodle","당면"],["sesame oil","참기름"],["sesame seed","참깨"],["soy sauce","간장"],["fish sauce","액젓"],["oyster sauce","굴소스"],["black pepper","후추"],["chilli flakes","고춧가루"],["gochugaru","고춧가루"],["gochujang","고추장"],["doenjang","된장"],["chicken breast","닭가슴살"],["chicken thigh","닭다리살"],["pork belly","삼겹살"],["seaweed sheet","김"],["gim","김"],["dried seaweed","미역"],["miyeok","미역"],["bean sprout","콩나물"],["perilla","깻잎"],["rice wine","맛술"],["mirin","맛술"],["corn syrup","물엿"],["cooking oil","식용유"],["green chilli","풋고추"],["cheese","치즈"],["mayonnaise","마요네즈"],["kimchi","김치"],["tofu","두부"],["zucchini","애호박"],["potato","감자"],["onion","양파"],["garlic","마늘"],["ginger","생강"],["cabbage","양배추"],["carrot","당근"],["spinach","시금치"],["cucumber","오이"],["lettuce","상추"],["tomato","토마토"],["mushroom","버섯"],["radish","무"],["egg","계란"],["bacon","베이컨"],["ham","햄"],["pork","돼지고기"],["beef","소고기"],["chicken","닭고기"],["anchovy","멸치"],["fish","생선"],["bread","식빵"],["milk","우유"],["butter","버터"],["flour","밀가루"],["noodle","면"],["rice","쌀"],["sugar","설탕"],["salt","소금"],["vinegar","식초"],["honey","꿀"],["watermelon","수박"],["apple","사과"],["banana","바나나"],["orange","오렌지"],["papaya","파파야"],["pomegranate","석류"],["mango","망고"],["grape","포도"],["lemon","레몬"],["kiwi","키위"],["pear","배"],["strawberr","딸기"]];
 function koName(a){ const v=S.inv[a.key]; if(v&&v.ko) return v.ko; if(a.ko) return a.ko; return koLookup(a.item); }
 function koLookup(name){ // the match that ends last wins (English head noun is last: "sweet potato glass noodles" → 당면)
   const full=String(name||"").toLowerCase(), base=full.replace(/\(.*?\)/g," ");
@@ -928,10 +932,10 @@ function renderRecipes(m){
   const list=S.recipes.filter(r=>(S.rCat==="All"||r.category===S.rCat)&&(!q||r.name.toLowerCase().includes(q)||(r.ingredients||[]).some(i=>(i.item||"").toLowerCase().includes(q))));
   const used=["All",...CATS.filter(c=>S.recipes.some(r=>r.category===c))];
   m.innerHTML=(S.isAdmin?finderHtml():"")+`<div class="secbar"><span>${S.isAdmin?"2. ":"1. "}Recipes</span><span class="r">${S.recipes.length} recipes</span></div>
-    <div class="rfilter"><input id="rSearch" placeholder="Search dish or ingredient…" value="${esc(S.rSearch)}">${used.map(c=>`<button class="pill ${c===S.rCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}
+    <div class="rfilter"><input id="rSearch" placeholder="Search dish or ingredient…" value="${esc(S.rSearch)}">${used.map(c=>`<button class="pill ${c===S.rCat?"on":""}" data-c="${esc(c)}">${esc(catLabel(c))}</button>`).join("")}
     ${S.isAdmin?'<span style="flex:1"></span><button class="btn sm" onclick="openRecipeEdit()">+ Write a recipe myself</button>':""}</div>
     ${S.isOwner&&!S.recipes.length?`<div class="notebox"><div class="h">Import data from the old app</div>Choose the data file (.json) to copy recipes, meal plans and stock into this app. <input type="file" accept=".json,application/json" onchange="this.files[0]&&importData(this.files[0])" style="margin-top:6px;display:block"></div>`:""}
-    <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${photoOf(r)?`<img class="rph" ${imgSrc(photoOf(r))} loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
+    <div class="rgrid">${list.map(r=>`<div class="rcard" style="border-top-color:${catColor(r.category)}" onclick="openRecipe('${r.id}')">${photoOf(r)?`<img class="rph" ${imgSrc(photoOf(r))} loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m"><span class="catb" style="background:${catColor(r.category)}">${esc(catLabel(r.category))}</span> · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
   const s=document.getElementById("rSearch");
   s.oninput=()=>{S.rSearch=s.value;const p=s.selectionStart;renderRecipes(m);const n=document.getElementById("rSearch");n.focus();n.setSelectionRange(p,p);};
   m.querySelectorAll(".rfilter .pill").forEach(b=>b.onclick=()=>{S.rCat=b.dataset.c;renderRecipes(m);});
@@ -940,7 +944,7 @@ function renderRecipes(m){
 function openRecipe(id){
   const r=S.rmap[id]; if(!r) return;
   const ings=(r.ingredients||[]);
-  const body=`${photoOf(r)?`<img class="mphoto" ${imgSrc(photoOf(r))} alt="">`:""}<a class="ytbtn" href="${esc(videoLink(r))}" target="_blank" rel="noopener">▶ ${ytId(r.video_url)?"Watch the video on YouTube (English)":"Find an English video on YouTube"}</a><div class="meta"><span class="tag ok">${esc(r.category)}</span><span class="tag warn">Serves ${r.servings}</span>${r.prep_min?`<span class="tag warn">Prep ${r.prep_min} min</span>`:""}${r.cook_min?`<span class="tag warn">Cook ${r.cook_min} min</span>`:""}</div>
+  const body=`${photoOf(r)?`<img class="mphoto" ${imgSrc(photoOf(r))} alt="">`:""}<a class="ytbtn" href="${esc(videoLink(r))}" target="_blank" rel="noopener">▶ ${ytId(r.video_url)?"Watch the video on YouTube (English)":"Find an English video on YouTube"}</a><div class="meta"><span class="catb" style="background:${catColor(r.category)};font-size:12px;padding:2px 9px">${esc(catLabel(r.category))}</span><span class="tag warn">Serves ${r.servings}</span>${r.prep_min?`<span class="tag warn">Prep ${r.prep_min} min</span>`:""}${r.cook_min?`<span class="tag warn">Cook ${r.cook_min} min</span>`:""}</div>
     <div class="subh">Ingredients</div>
     <table class="t"><tr><th>Ingredient</th><th style="width:130px">Amount</th></tr>${ings.map(i=>`<tr><td>${esc(i.item)}${i.staple?' <span style="color:var(--muted);font-size:11.5px">(pantry)</span>':""}</td><td class="q">${esc((fmtQty(i.qty)+" "+(i.unit||"")).trim())}</td></tr>`).join("")}</table>
     <div class="subh">Steps</div><ol class="steps">${(r.steps||[]).map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
@@ -953,10 +957,10 @@ function ingRow(i={}){
 function openRecipeEdit(id,draft){
   const r=id?S.rmap[id]:(draft||{name:"",category:"Main",servings:1,prep_min:"",cook_min:"",ingredients:[],steps:[],notes:""});
   const body=`<div class="form">
-    ${draft?`<p class="aihint">✨ Made by Gemini${draft.video_url?" from the video":""} — check the amounts and steps, then press <b>Save recipe</b>.</p>`:""}
-    <label>Dish name</label><div class="ytrow"><input id="reName" value="${esc(r.name)}"><button type="button" class="btn sm aibtn" id="reAI" title="Fill ingredients and steps with Gemini">✨ Fill with Gemini</button></div>
+    ${draft?'<p class="aihint">▶ Video added. Type the ingredients and steps now or later, then press <b>Save recipe</b>.</p>':""}
+    <label>Dish name</label><input id="reName" value="${esc(r.name)}">
     <div class="row" style="grid-template-columns:2fr 1fr 1fr 1fr">
-      <div><label>Category</label><select id="reCat">${CATS.map(c=>`<option ${c===r.category?"selected":""}>${c}</option>`).join("")}</select></div>
+      <div><label>Category</label><select id="reCat">${CATS.map(c=>`<option value="${c}" ${c===r.category?"selected":""}>${catLabel(c)}</option>`).join("")}</select></div>
       <div><label>Serves</label><input id="reSv" type="number" min="1" value="${esc(r.servings)}"></div>
       <div><label>Prep (min)</label><input id="rePrep" type="number" min="0" value="${esc(r.prep_min??"")}"></div>
       <div><label>Cook (min)</label><input id="reCook" type="number" min="0" value="${esc(r.cook_min??"")}"></div>
@@ -971,19 +975,12 @@ function openRecipeEdit(id,draft){
     <div class="msg" id="reMsg"></div></div>`;
   openModal(id?"Edit recipe":"New recipe",body,`<button class="btn" onclick="${id?`openRecipe('${id}')`:"closeModal()"}">Cancel</button><button class="btn primary" onclick="saveRecipe(${id?`'${id}'`:"null"})">Save recipe</button>`);
   document.getElementById("reFind").onclick=()=>findVideos(true);
-  document.getElementById("reAI").onclick=()=>fillWithGemini(id);
   if(draft&&!r.video_url) findVideos(false);
   document.getElementById("reName").addEventListener("change",()=>{ if(!document.getElementById("reVideo").value.trim()) findVideos(false); });
   document.getElementById("rePhoto").onchange=e=>{const f=e.target.files[0];if(f){const p=document.getElementById("rePrev");p.src=URL.createObjectURL(f);p.style.display="block";}};
 }
 async function saveRecipe(id){
   const v=x=>document.getElementById(x).value;
-  const emptyRecipe=![...document.querySelectorAll("#ingList .ii")].some(i=>i.value.trim())&&!v("reSteps").trim();
-  if(emptyRecipe&&ytId(v("reVideo"))){ // only a video link → let Gemini watch it and fill everything, then save
-    document.getElementById("reMsg").innerHTML='<span class="tag warn">✨ Gemini is watching the video and filling the recipe… (10–30 s)</span>';
-    try{ fillForm(await aiRecipe(v("reName").trim(),v("reVideo")),true); }
-    catch(e){ document.getElementById("reMsg").innerHTML='<span class="tag bad">'+esc(e.message||String(e))+'</span>'; return; }
-  }
   const name=v("reName").trim(); if(!name){document.getElementById("reMsg").innerHTML='<span class="tag bad">Dish name needed</span>';return;}
   const ingredients=[...document.querySelectorAll("#ingList .ingrow")].map(row=>{
     const qRaw=row.querySelector(".iq").value.trim(), qn=Number(qRaw);
@@ -1045,85 +1042,9 @@ async function findVideos(manual){
   }catch(e){ box.innerHTML=`<p class="empty" style="grid-column:1/-1">Could not search YouTube: ${esc(e.message||String(e))}</p>`; }
 }
 
-/* Gemini (Firebase AI Logic, Gemini Developer API backend) — uses the public Firebase web config, no extra key */
-const AI_MODELS=["gemini-3.5-flash","gemini-3.5-flash-lite"];
-const RECIPE_SCHEMA={type:"OBJECT",properties:{
-  name:{type:"STRING",description:"Dish name. Korean dishes: romanized Korean name, then the English name in parentheses, e.g. 'Japchae (Glass Noodle Stir-fry)'. Other dishes: plain English name."},
-  category:{type:"STRING",enum:CATS},
-  servings:{type:"INTEGER"},prep_min:{type:"INTEGER"},cook_min:{type:"INTEGER"},
-  ingredients:{type:"ARRAY",items:{type:"OBJECT",properties:{
-    item:{type:"STRING"},ko:{type:"STRING",description:"Korean name in Hangul, e.g. 간장"},qty:{type:"NUMBER",nullable:true},unit:{type:"STRING"},cat:{type:"STRING",enum:SHOP_CATS},staple:{type:"BOOLEAN"}},
-    required:["item","unit","cat","staple"]}},
-  steps:{type:"ARRAY",items:{type:"STRING"}},
-  notes:{type:"STRING"}},
-  required:["name","category","servings","prep_min","cook_min","ingredients","steps"]};
-async function geminiJSON(prompt,system,extra){
-  if(EMU&&window.__aiMock) return window.__aiMock(prompt,extra);
-  let last;
-  for(const m of AI_MODELS){
-    const res=await fetch(`https://firebasevertexai.googleapis.com/v1beta/projects/${FB_CONFIG.projectId}/models/${m}:generateContent`,{method:"POST",
-      headers:{"Content-Type":"application/json","x-goog-api-key":FB_CONFIG.apiKey,"X-Firebase-Appid":FB_CONFIG.appId},
-      body:JSON.stringify({systemInstruction:{parts:[{text:system}]},contents:[{role:"user",parts:[...(extra||[]),{text:prompt}]}],
-        generationConfig:{responseMimeType:"application/json",responseSchema:RECIPE_SCHEMA,temperature:0.4,...(extra?{mediaResolution:"MEDIA_RESOLUTION_LOW"}:{})}})});
-    const j=await res.json().catch(()=>({}));
-    if(res.ok){ const t=(j.candidates?.[0]?.content?.parts||[]).filter(p=>!p.thought).map(p=>p.text||"").join(""); return JSON.parse(t); }
-    last=j.error||{message:"HTTP "+res.status};
-    if(!(res.status===404||(res.status===400&&/model/i.test(last.message||"")))) break; // only try the next model if this one is unknown
-  }
-  const msg=last&&last.message||"Gemini error";
-  throw new Error(/not been used|disabled|PERMISSION_DENIED|permission denied|API_KEY_SERVICE_BLOCKED|blocked/i.test(msg)?"Gemini is not turned on yet (owner: Firebase console → AI Logic → Get started).":msg);
-}
-function geminiSystem(){
-  const known=[...new Set(allStockItems().map(a=>a.staple?a.item+" (pantry)":a.item+" ["+a.unit+"]"))].slice(0,200).join("; ");
-  return `You write home-cooking recipes for a cook (a maid) in Pune, India, who reads simple English. The family is Korean.
-Rules:
-- Ingredients must be easy to buy in Pune (Indian markets, BigBasket, Korean/Asian stores). Suggest a local substitute in notes when needed.
-- Use simple units: pcs, g, kg, ml, cup, tbsp, tsp, bunch, stalk, slices, leaves, clove, pinch.
-- Mark sauces, oils, salt, sugar, spices and seasonings as staple=true (kept in the pantry). Fresh food is staple=false.
-- If an ingredient already exists in this list, reuse EXACTLY the same name and unit: ${known||"(none yet)"}.
-- Steps: short, clear sentences, one action each, include heat level and minutes. No numbering.
-- notes: one short tip for the cook.`;
-}
-function aiToDraft(d){
-  const cat=x=>SHOP_CATS.includes(x)?x:"Others";
-  return {name:String(d.name||"").trim(),category:CATS.includes(d.category)?d.category:"Main",servings:Math.max(1,parseInt(d.servings)||2),
-    prep_min:Number.isFinite(d.prep_min)?d.prep_min:"",cook_min:Number.isFinite(d.cook_min)?d.cook_min:"",
-    ingredients:(d.ingredients||[]).filter(g=>g&&g.item).map(g=>({item:String(g.item).trim(),...(g.ko?{ko:String(g.ko).trim().slice(0,30)}:{}),qty:(g.qty===null||g.qty===undefined)?"":g.qty,unit:String(g.unit||"").trim(),cat:cat(g.cat),...(g.staple?{staple:true}:{})})),
-    steps:(d.steps||[]).map(x=>String(x).trim()).filter(Boolean),notes:String(d.notes||"").trim(),video_url:""};
-}
-async function aiRecipe(name,videoUrl){
-  const vid=ytId(videoUrl||"");
-  if(!vid) return aiToDraft(await geminiJSON(`Write a recipe for: ${name}.`,geminiSystem()));
-  const v=await videoDetails(vid), url="https://www.youtube.com/watch?v="+vid;
-  const ask=`Turn this YouTube cooking video into a recipe${name?` for "${name}"`:""}. Follow what the video shows (ingredients, amounts, order, heat, minutes). Video title: ${v.title}\nChannel: ${v.channel}\nVideo description:\n${(v.desc||"").slice(0,4000)}`;
-  let d;
-  try{ d=await geminiJSON(ask,geminiSystem(),[{fileData:{mimeType:"video/*",fileUri:url}}]); }
-  catch(e){ if(/not turned on/i.test(e.message)) throw e;
-    d=await geminiJSON(ask+"\n(The video itself could not be opened — use the title and description, and fill gaps with a standard recipe.)",geminiSystem()); }
-  const draft=aiToDraft(d); draft.video_url=url; return draft;
-}
-function fillForm(d,keepName){ // put a Gemini draft into the open recipe form
-  const set=(id,val)=>{const el=document.getElementById(id); if(el&&val!==undefined&&val!==null) el.value=val;};
-  if(!keepName||!document.getElementById("reName").value.trim()) set("reName",d.name);
-  set("reCat",d.category); set("reSv",d.servings); set("rePrep",d.prep_min); set("reCook",d.cook_min);
-  document.getElementById("ingList").innerHTML=(d.ingredients.length?d.ingredients:[{}]).map(ingRow).join("");
-  set("reSteps",d.steps.join("\n")); set("reNotes",d.notes);
-  if(d.video_url&&!document.getElementById("reVideo").value.trim()) set("reVideo",d.video_url);
-}
-async function fillWithGemini(id){
-  const name=document.getElementById("reName").value.trim(), video=document.getElementById("reVideo").value.trim(), b=document.getElementById("reAI");
-  if(!name&&!ytId(video)) return toast("Type the dish name or choose a video first");
-  const hasData=[...document.querySelectorAll("#ingList .ii")].some(i=>i.value.trim())||document.getElementById("reSteps").value.trim();
-  if(hasData&&b.dataset.sure!=="1"){ b.dataset.sure="1"; b.textContent="Replace ingredients & steps? Tap again"; return; }
-  b.disabled=true; b.textContent=ytId(video)?"✨ Watching the video…":"✨ Writing…";
-  try{ fillForm(await aiRecipe(name,video),true); document.getElementById("reMsg").innerHTML='<span class="tag ok">✨ Filled by Gemini — check it, then press Save recipe</span>'; }
-  catch(e){ toast(e.message||String(e)); }
-  b.disabled=false; b.dataset.sure=""; b.textContent="✨ Fill with Gemini";
-}
-
-/* "Add a new dish": search YouTube → pick a video → Gemini turns it into a recipe draft */
+/* "Add a new dish": search YouTube or paste a link → new recipe with that video */
 function finderHtml(){
-  return `<div class="secbar"><span>1. Add a new dish</span><span class="r">search YouTube → pick a video → ✨ Gemini writes the recipe</span></div>
+  return `<div class="secbar"><span>1. Add a new dish</span><span class="r">search YouTube or paste a video link → + Add as recipe</span></div>
   <div class="finder"><div class="ytrow"><input id="fQ" placeholder="What do you want to cook? (e.g. Japchae) — or paste a YouTube link" value="${esc(S.fQ||"")}"><button class="btn primary" id="fGo">▶ Search YouTube</button></div>
   <div class="fres" id="fRes">${S.fRes||""}</div>
   <div class="fnote" id="fNote">${S.fNote||""}</div></div>`;
@@ -1132,18 +1053,17 @@ function wireFinder(){
   const q=document.getElementById("fQ"), go=document.getElementById("fGo");
   q.onkeydown=e=>{if(e.key==="Enter")go.click();};
   go.onclick=()=>searchDishes(q.value.trim());
-  document.getElementById("fRes").onclick=e=>{const b=e.target.closest("[data-make]");if(b) makeFromVideo(b.dataset.make,b);};
-  document.getElementById("fNote").onclick=e=>{const a=e.target.closest("[data-nov]");if(a){e.preventDefault();makeWithoutVideo(a.dataset.nov);}};
+  document.getElementById("fRes").onclick=e=>{const b=e.target.closest("[data-make]");if(b) makeFromVideo(b.dataset.make);};
 }
 function finderSet(res,note){ S.fRes=res; S.fNote=note; const r=document.getElementById("fRes"),n=document.getElementById("fNote"); if(r) r.innerHTML=res; if(n) n.innerHTML=note; }
 function fcard(v){ return `<div class="fcard"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" loading="lazy"><span class="t">${esc(v.title)}</span><span class="c">${esc(v.channel)}</span>
-  <div class="a"><a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Watch</a><button class="btn aibtn" data-make="${v.id}">✨ Make recipe</button></div></div>`; }
+  <div class="a"><a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Watch</a><button class="btn primary" data-make="${v.id}">+ Add as recipe</button></div></div>`; }
 async function searchDishes(q){
   S.fQ=q; S.fVids=S.fVids||{};
   if(!q) return toast("Type a dish or paste a YouTube link");
-  const noVid=`Or <a href="#" data-nov="${esc(q)}">✨ let Gemini write “${esc(q)}” without a video</a>.`;
+  const noVid=`Or <a href="#" onclick="event.preventDefault();openRecipeEdit()">write a recipe without a video</a>.`;
   const id=ytId(q);
-  if(id){ S.fVids[id]={id,title:"YouTube video",channel:"",desc:""}; return finderSet(fcard(S.fVids[id]),""); }
+  if(id){ finderSet('<p class="empty">Loading video…</p>',""); S.fVids[id]=await videoDetails(id); if(!S.fVids[id].title) S.fVids[id].title="YouTube video"; return finderSet(fcard(S.fVids[id]),noVid); }
   if(!S.ytKey){
     window.open("https://www.youtube.com/results?search_query="+encodeURIComponent("how to make "+q+" recipe english"),"_blank","noopener");
     return finderSet("",`YouTube opened in a new tab — copy the link of a video you like and paste it in the box above.${S.isOwner?" (Add a YouTube key in People to see videos here.)":""}<br>${noVid}`);
@@ -1164,16 +1084,11 @@ async function videoDetails(id){ // full title + description (often contains the
     const sn=j.items&&j.items[0]&&j.items[0].snippet; if(sn) return {...v,title:sn.title||v.title,channel:sn.channelTitle||v.channel,desc:sn.description||v.desc}; }catch(e){}
   return v;
 }
-async function makeFromVideo(id,btn){
-  const old=btn.textContent; btn.disabled=true; btn.textContent="✨ Watching the video…";
-  try{ const draft=await aiRecipe("", "https://www.youtube.com/watch?v="+id); if(!draft.name) draft.name=((S.fVids||{})[id]||{}).title||S.fQ||"New dish"; openRecipeEdit(null,draft); }
-  catch(e){ toast(e.message||String(e)); }
-  btn.disabled=false; btn.textContent=old;
-}
-async function makeWithoutVideo(name){
-  toast("✨ Gemini is writing the recipe…");
-  try{ const d=aiToDraft(await geminiJSON(`Write a recipe for: ${name}.`,geminiSystem())); if(!d.name) d.name=name; openRecipeEdit(null,d); }
-  catch(e){ toast(e.message||String(e)); }
+function cleanTitle(t){ return String(t||"").replace(/#\S+/g,"").replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,"").replace(/\s*[|｜].*$/,"").replace(/\s{2,}/g," ").trim(); }
+function makeFromVideo(id){ // new recipe with the video attached; ingredients and steps can be typed now or later
+  const v=(S.fVids||{})[id]||{}, q=S.fQ||"";
+  const name=(q&&!ytId(q))?q:cleanTitle(v.title)||"New dish";
+  openRecipeEdit(null,{name,category:"Main",servings:2,prep_min:"",cook_min:"",ingredients:[],steps:[],notes:"",video_url:"https://www.youtube.com/watch?v="+id});
 }
 
 /* plan edits */
@@ -1191,9 +1106,9 @@ function openAddEntry(date,slot){
     </div><div class="msg" id="aeMsg"></div>`,
     `<span id="pkCount" style="align-self:center;color:var(--muted)">Tap pictures to choose — you can pick several</span><button class="btn primary" id="aeGo">Add</button>`,true);
   const draw=()=>{
-    document.getElementById("pkCats").innerHTML=cats.map(c=>`<button class="pill ${c===cat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join(" ");
+    document.getElementById("pkCats").innerHTML=cats.map(c=>`<button class="pill ${c===cat?"on":""}" data-c="${esc(c)}">${esc(catLabel(c))}</button>`).join(" ");
     const list=S.recipes.filter(r=>(cat==="All"||r.category===cat)&&(!q||r.name.toLowerCase().includes(q)));
-    document.getElementById("pkGrid").innerHTML=list.map(r=>`<button type="button" class="pk ${pick.has(r.id)?"on":""}" data-id="${r.id}"><span class="pkimg">${dishPic(r)}</span><span class="pkn">${esc(r.name)}</span><span class="pkm">${esc(r.category)}${totalMin(r)?" · "+totalMin(r)+" min":""}</span></button>`).join("")||'<p class="empty">No dishes found.</p>';
+    document.getElementById("pkGrid").innerHTML=list.map(r=>`<button type="button" class="pk ${pick.has(r.id)?"on":""}" style="border-top:4px solid ${catColor(r.category)}" data-id="${r.id}"><span class="pkimg">${dishPic(r)}</span><span class="pkn">${esc(r.name)}</span><span class="pkm">${esc(r.category)}${totalMin(r)?" · "+totalMin(r)+" min":""}</span></button>`).join("")||'<p class="empty">No dishes found.</p>';
     const n=pick.size; document.getElementById("pkCount").textContent=n?`${n} dish${n>1?"es":""} selected`:"Tap pictures to choose — you can pick several";
     document.getElementById("aeGo").textContent=n?`Add ${n}`:"Add";
   };
@@ -1257,7 +1172,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.08</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.09</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
