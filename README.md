@@ -2,7 +2,7 @@
 
 Members-only weekly meal plan, stock & shopping list and recipes for a home kitchen (owner + maid).
 
-- Live: Firebase Hosting `https://<project-id>.web.app` (deploys from `main` via GitHub Actions)
+- Live: Firebase Hosting `https://meal-plan-e954d.web.app` (deploys from `main` via GitHub Actions)
 - Backend: Firebase (Auth: Google + email/password, Firestore; photos stored in Firestore)
 - Single file app: `index.html` (vanilla JS + Firebase JS SDK compat v13)
 - Old backend (Supabase, up to v1.14) kept read-only until the switch is confirmed.
