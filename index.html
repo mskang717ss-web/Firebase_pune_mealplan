@@ -146,6 +146,7 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .nm2{min-width:0;display:block}.nm2 .n{display:block}.nm2 .f{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nm2 .dsh{color:#8A93A0}
 .okmark{color:var(--ok);font-weight:700}
+.urow .ml{display:none}
 .urow.uhd .c-need,.urow.uhd .c-buy{font-family:inherit;font-size:11.5px}
 .hint{font-size:12px;color:var(--muted);margin:-4px 0 10px}
 .c-have{font-size:12.5px;text-align:right;font-family:"IBM Plex Mono",monospace;color:var(--muted)}
@@ -214,9 +215,23 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .secbar{padding:6px 10px;font-size:13.5px}
   .secbar .r{display:none}
   .shopcols,.shopcols2,.two{grid-template-columns:1fr}
-  .urow{grid-template-columns:minmax(0,1fr) 118px 62px 28px;gap:6px;padding:7px 8px}
-  .urow .c-need{display:none}
-  .urow.uhd .uc{font-size:0}.urow.uhd .uc::after{content:"✓";font-size:12px}
+  .urow{grid-template-columns:repeat(3,minmax(0,1fr)) 36px;grid-template-areas:"item item item chk" "have need buy buy";gap:6px 8px;padding:9px 10px}
+  .urow.uhd{display:none}
+  .urow .sl{grid-area:item}.urow .uc{grid-area:chk;align-self:center}
+  .urow .uh{grid-area:have}.urow .c-need{grid-area:need}.urow .c-buy{grid-area:buy}
+  .urow .uh,.urow .c-need,.urow .c-buy{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;background:#F6F8FB;border:1px solid var(--line2);border-radius:6px;padding:4px 8px;min-height:50px}
+  .urow.tobuy .c-buy{background:#FFF1D6;border-color:#E9CC8E}
+  .urow .ml{display:block;font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);font-family:"Noto Sans",sans-serif;margin-bottom:2px}
+  .urow .mv{font-size:15px;font-weight:700;color:var(--ink)}
+  .urow .c-buy .mv{color:var(--blue)}
+  .urow .stkw{justify-content:flex-start}
+  .urow .stk{width:56px;font-size:15px;padding:2px 6px}
+  .urow.st{grid-template-areas:"item item item chk" "have have buy buy"}
+  .urow.st .c-need{display:none}
+  .urow .nm2 .n{font-weight:600;font-size:15px}
+  .urow .nm2 .dsh{display:none}
+  .bought{width:24px;height:24px}
+  .hint{display:none}
   .urow .thumb{width:32px;height:32px;font-size:17px}
   .seg button{padding:4px 5px;font-size:10.5px}
   .two .right{order:-1}
@@ -239,7 +254,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 </head>
 <body>
 <div class="wrap">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.08</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.09</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -488,6 +503,7 @@ function attachInv(a){
   else {a.used=0;a.stock=a.raw;}
   return a;
 }
+const COUNT_UNITS=new Set(["pcs","pc","piece","pieces","bunch","bunches","stalk","stalks","leaves","leaf","slices","slice","strips","strip","bowl","bottle","pack","packet","can","clove","cloves","head","heads"]);
 function buildNeeds(){
   const agg={}, today=ymd(new Date()), ws=ymd(S.week), needFrom=ws>today?ws:today;
   for(const e of S.entries){
@@ -506,7 +522,7 @@ function buildNeeds(){
   return Object.values(agg).map(a=>{attachInv(a);
     a.have=a.stock==null?null:rnd(Math.max(0,a.stock-(before[a.key]||0)));
     if(a.staple) a.buy=(a.status==="low"||a.status==="out");
-    else if(a.num){a.buyQty=rnd(Math.max(0,a.need-(a.have||0)));a.buy=a.buyQty>0;}
+    else if(a.num){a.buyQty=rnd(Math.max(0,a.need-(a.have||0)));if(a.buyQty>0&&COUNT_UNITS.has(String(a.unit).toLowerCase()))a.buyQty=Math.ceil(a.buyQty-1e-9);a.buy=a.buyQty>0;}
     else a.buy=!(a.have>0);
     return a;});
 }
@@ -561,7 +577,7 @@ function renderShop(m){
     const need=a.staple?(a.dishes.size?"used":"—"):(a.need==null?"—":(a.num?(fmtQty(rnd(a.need))+" "+a.unit).trim():"as needed"));
     const buy=a.buy?(a.staple?"Buy":(a.num?(fmtQty(a.buyQty)+" "+a.unit).trim():"1")):"—";
     const chk=a.buy?`<input type="checkbox" class="bought" data-k="${esc(a.key)}" title="Tick when bought">`:(a.dishes.size?'<span class="okmark" title="Enough for this week">✓</span>':"");
-    return `<div class="urow ${a.buy?"tobuy":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh">${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need">${esc(need)}</span><span class="c-buy">${esc(buy)}</span><span class="uc">${chk}</span></div>`;};
+    return `<div class="urow ${a.buy?"tobuy":""} ${a.staple?"st":""}"><span class="sl">${thumb(a)}<span class="nm2"><span class="n">${esc(a.item)}</span><span class="f">${esc(sub)}</span>${dish?`<span class="f dsh" title="${esc(dish)}">For: ${esc(dish)}</span>`:""}</span></span><span class="uh"><span class="ml">Have</span>${a.staple?statusBtns(a):stockInput(a)}</span><span class="c-need"><span class="ml">Need</span><span class="mv">${esc(need)}</span></span><span class="c-buy"><span class="ml">Buy</span><span class="mv">${esc(buy)}</span></span><span class="uc">${chk}</span></div>`;};
   const hdr='<div class="urow uhd"><span>Item</span><span class="h-have">What I have</span><span class="c-need h-need">Need</span><span class="c-buy h-need">To buy</span><span class="uc h-need">Bought</span></div>';
   const groups=SHOP_CATS.map(c=>{const l=list.filter(a=>a.cat===c).sort((x,y)=>x.item.localeCompare(y.item));if(!l.length)return "";
     return `<div class="shopgrp" style="margin-bottom:12px"><div class="gt">${c}<span>${l.filter(a=>a.buy).length} to buy · ${l.length} items</span></div>${hdr}${l.map(row).join("")}</div>`;}).join("");
