@@ -151,7 +151,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 </head>
 <body>
 <div class="wrap">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.02</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.03</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -192,7 +192,7 @@ const sb = window.supabase.createClient(SB_URL, SB_KEY);
 const SLOTS = [["breakfast","Breakfast"],["lunch","Lunch"],["dinner","Dinner"],["snack","Snack"]];
 const CATS = ["Breakfast","Main","Soup & Stew","Side","Rice & Noodles","Snack","Other"];
 const SHOP_CATS = ["Vegetables","Meat & Eggs","Dairy & Bakery","Grains","Korean Pantry","Others"];
-const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
 const S = {
@@ -207,7 +207,7 @@ function pad(n){return String(n).padStart(2,"0");}
 function ymd(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
 function parseYmd(s){const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d);}
 function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
-function mondayOf(d){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());const w=(x.getDay()+6)%7;return addDays(x,-w);}
+function mondayOf(d){/* week starts on Sunday */const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());return addDays(x,-x.getDay());}
 function fmtShort(d){return d.getDate()+" "+MON[d.getMonth()];}
 function weekDays(){return [...Array(7)].map((_,i)=>addDays(S.week,i));}
 function rangeText(){const e=addDays(S.week,6);return fmtShort(S.week)+" – "+fmtShort(e)+" "+e.getFullYear();}
@@ -472,7 +472,7 @@ function delRecipe(id){
 function openAddEntry(date,slot){
   const d=parseYmd(date), lbl=SLOTS.find(s=>s[0]===slot)[1];
   const opts=CATS.map(c=>{const l=S.recipes.filter(r=>r.category===c);return l.length?`<optgroup label="${esc(c)}">${l.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")}</optgroup>`:"";}).join("");
-  openModal(`Add to ${DAYS[(d.getDay()+6)%7]} ${fmtShort(d)} · ${lbl}`,`<div class="form">
+  openModal(`Add to ${DAYS[d.getDay()]} ${fmtShort(d)} · ${lbl}`,`<div class="form">
     <label>Recipe</label><select id="aeR"><option value="">— no recipe (type a name below) —</option>${opts}</select>
     <label>Or dish name without recipe</label><input id="aeT" placeholder="e.g. Fruit, Leftovers, Eat out">
     <div class="row" style="grid-template-columns:1fr 3fr"><div><label>Servings (optional)</label><input id="aeS" type="number" min="1"></div><div><label>Note for cook (optional)</label><input id="aeN" placeholder="e.g. less spicy"></div></div>
