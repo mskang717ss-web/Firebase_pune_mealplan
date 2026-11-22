@@ -40,6 +40,8 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .btn.danger{color:var(--bad);border-color:#E7B7B7}
 .ytbtn{display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;padding:8px 14px;background:#CC0000;color:#fff!important;border-radius:6px;font-weight:600;font-size:14px;text-decoration:none}
 .ytbtn:hover{background:#A80000}
+.aibtn{border-color:#C9B8F0;color:#5B3FC4;background:#F6F2FF}.aibtn:hover{border-color:#5B3FC4;color:#5B3FC4}
+.aihint{margin:0 0 8px;padding:7px 10px;border-radius:6px;background:#F6F2FF;border:1px solid #DCD0FA;color:#4A3699;font-size:13px}
 .ytrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.ytrow input{flex:1;min-width:220px}
 .ytres{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
 .ytres button{border:2px solid var(--line);border-radius:6px;background:#fff;padding:0;cursor:pointer;text-align:left;overflow:hidden;font:inherit}
@@ -329,7 +331,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.04</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.05</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -901,7 +903,7 @@ function renderRecipes(m){
   const used=["All",...CATS.filter(c=>S.recipes.some(r=>r.category===c))];
   m.innerHTML=`<div class="secbar"><span>1. Recipes</span><span class="r">${S.recipes.length} recipes</span></div>
     <div class="rfilter"><input id="rSearch" placeholder="Search dish or ingredient…" value="${esc(S.rSearch)}">${used.map(c=>`<button class="pill ${c===S.rCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}
-    ${S.isAdmin?'<span style="flex:1"></span><button class="btn primary sm" onclick="openRecipeEdit()">+ New recipe</button>':""}</div>
+    ${S.isAdmin?'<span style="flex:1"></span><button class="btn sm aibtn" onclick="openGemini()">✨ Gemini recipe</button><button class="btn primary sm" onclick="openRecipeEdit()">+ New recipe</button>':""}</div>
     ${S.isOwner&&!S.recipes.length?`<div class="notebox"><div class="h">Import data from the old app</div>Choose the data file (.json) to copy recipes, meal plans and stock into this app. <input type="file" accept=".json,application/json" onchange="this.files[0]&&importData(this.files[0])" style="margin-top:6px;display:block"></div>`:""}
     <div class="rgrid">${list.map(r=>`<div class="rcard" onclick="openRecipe('${r.id}')">${photoOf(r)?`<img class="rph" ${imgSrc(photoOf(r))} loading="lazy" alt="">`:`<div class="rph none"><span style="font-size:54px">${dishEmoji(r)}</span></div>`}<div class="rb"><span class="n">${esc(r.name)}</span><span class="m">${esc(r.category)} · Serves ${r.servings}${totalMin(r)?" · "+totalMin(r)+" min":""}</span><span class="m">${(r.ingredients||[]).filter(i=>!i.staple).slice(0,4).map(i=>esc(i.item)).join(", ")}</span></div></div>`).join("")||'<p class="empty">No recipes found.</p>'}</div>`;
   const s=document.getElementById("rSearch");
@@ -921,10 +923,11 @@ function openRecipe(id){
 function ingRow(i={}){
   return `<div class="ingrow"><input class="ii" placeholder="Ingredient" value="${esc(i.item||"")}"><input class="iq" placeholder="Qty" value="${esc(i.qty??"")}"><input class="iu" placeholder="Unit" value="${esc(i.unit||"")}"><select class="ic">${SHOP_CATS.map(c=>`<option ${c===(i.cat||"Others")?"selected":""}>${c}</option>`).join("")}</select><label class="pc"><input type="checkbox" class="is" ${i.staple?"checked":""}>Pantry</label><button class="btn sm" onclick="this.parentNode.remove()" title="Remove">×</button></div>`;
 }
-function openRecipeEdit(id){
-  const r=id?S.rmap[id]:{name:"",category:"Main",servings:1,prep_min:"",cook_min:"",ingredients:[],steps:[],notes:""};
+function openRecipeEdit(id,draft){
+  const r=id?S.rmap[id]:(draft||{name:"",category:"Main",servings:1,prep_min:"",cook_min:"",ingredients:[],steps:[],notes:""});
   const body=`<div class="form">
-    <label>Dish name</label><input id="reName" value="${esc(r.name)}">
+    ${draft?'<p class="aihint">✨ Made by Gemini — check the amounts and steps, then press <b>Save recipe</b>.</p>':""}
+    <label>Dish name</label><div class="ytrow"><input id="reName" value="${esc(r.name)}"><button type="button" class="btn sm aibtn" id="reAI" title="Fill ingredients and steps with Gemini">✨ Fill with Gemini</button></div>
     <div class="row" style="grid-template-columns:2fr 1fr 1fr 1fr">
       <div><label>Category</label><select id="reCat">${CATS.map(c=>`<option ${c===r.category?"selected":""}>${c}</option>`).join("")}</select></div>
       <div><label>Serves</label><input id="reSv" type="number" min="1" value="${esc(r.servings)}"></div>
@@ -941,6 +944,8 @@ function openRecipeEdit(id){
     <div class="msg" id="reMsg"></div></div>`;
   openModal(id?"Edit recipe":"New recipe",body,`<button class="btn" onclick="${id?`openRecipe('${id}')`:"closeModal()"}">Cancel</button><button class="btn primary" onclick="saveRecipe(${id?`'${id}'`:"null"})">Save recipe</button>`);
   document.getElementById("reFind").onclick=()=>findVideos(true);
+  document.getElementById("reAI").onclick=()=>fillWithGemini(id);
+  if(draft&&!r.video_url) findVideos(false);
   document.getElementById("reName").addEventListener("change",()=>{ if(!document.getElementById("reVideo").value.trim()) findVideos(false); });
   document.getElementById("rePhoto").onchange=e=>{const f=e.target.files[0];if(f){const p=document.getElementById("rePrev");p.src=URL.createObjectURL(f);p.style.display="block";}};
 }
@@ -1005,6 +1010,85 @@ async function findVideos(manual){
       toast("Video selected");
     });
   }catch(e){ box.innerHTML=`<p class="empty" style="grid-column:1/-1">Could not search YouTube: ${esc(e.message||String(e))}</p>`; }
+}
+
+/* Gemini (Firebase AI Logic, Gemini Developer API backend) — uses the public Firebase web config, no extra key */
+const AI_MODELS=["gemini-3.5-flash","gemini-3.5-flash-lite"];
+const RECIPE_SCHEMA={type:"OBJECT",properties:{
+  name:{type:"STRING",description:"Dish name. Korean dishes: romanized Korean name, then the English name in parentheses, e.g. 'Japchae (Glass Noodle Stir-fry)'. Other dishes: plain English name."},
+  category:{type:"STRING",enum:CATS},
+  servings:{type:"INTEGER"},prep_min:{type:"INTEGER"},cook_min:{type:"INTEGER"},
+  ingredients:{type:"ARRAY",items:{type:"OBJECT",properties:{
+    item:{type:"STRING"},qty:{type:"NUMBER",nullable:true},unit:{type:"STRING"},cat:{type:"STRING",enum:SHOP_CATS},staple:{type:"BOOLEAN"}},
+    required:["item","unit","cat","staple"]}},
+  steps:{type:"ARRAY",items:{type:"STRING"}},
+  notes:{type:"STRING"}},
+  required:["name","category","servings","prep_min","cook_min","ingredients","steps"]};
+async function geminiJSON(prompt,system){
+  if(EMU&&window.__aiMock) return window.__aiMock(prompt);
+  let last;
+  for(const m of AI_MODELS){
+    const res=await fetch(`https://firebasevertexai.googleapis.com/v1beta/projects/${FB_CONFIG.projectId}/models/${m}:generateContent`,{method:"POST",
+      headers:{"Content-Type":"application/json","x-goog-api-key":FB_CONFIG.apiKey,"X-Firebase-Appid":FB_CONFIG.appId},
+      body:JSON.stringify({systemInstruction:{parts:[{text:system}]},contents:[{role:"user",parts:[{text:prompt}]}],
+        generationConfig:{responseMimeType:"application/json",responseSchema:RECIPE_SCHEMA,temperature:0.4}})});
+    const j=await res.json().catch(()=>({}));
+    if(res.ok){ const t=(j.candidates?.[0]?.content?.parts||[]).map(p=>p.text||"").join(""); return JSON.parse(t); }
+    last=j.error||{message:"HTTP "+res.status};
+    if(!(res.status===404||(res.status===400&&/model/i.test(last.message||"")))) break; // only try the next model if this one is unknown
+  }
+  const msg=last&&last.message||"Gemini error";
+  throw new Error(/not been used|disabled|PERMISSION_DENIED/i.test(msg)?"Gemini is not turned on yet (owner: Firebase console → AI Logic → Get started).":msg);
+}
+function geminiSystem(){
+  const known=[...new Set(allStockItems().map(a=>a.staple?a.item+" (pantry)":a.item+" ["+a.unit+"]"))].slice(0,200).join("; ");
+  return `You write home-cooking recipes for a cook (a maid) in Pune, India, who reads simple English. The family is Korean.
+Rules:
+- Ingredients must be easy to buy in Pune (Indian markets, BigBasket, Korean/Asian stores). Suggest a local substitute in notes when needed.
+- Use simple units: pcs, g, kg, ml, cup, tbsp, tsp, bunch, stalk, slices, leaves, clove, pinch.
+- Mark sauces, oils, salt, sugar, spices and seasonings as staple=true (kept in the pantry). Fresh food is staple=false.
+- If an ingredient already exists in this list, reuse EXACTLY the same name and unit: ${known||"(none yet)"}.
+- Steps: short, clear sentences, one action each, include heat level and minutes. No numbering.
+- notes: one short tip for the cook.`;
+}
+function aiToDraft(d){
+  const cat=x=>SHOP_CATS.includes(x)?x:"Others";
+  return {name:String(d.name||"").trim(),category:CATS.includes(d.category)?d.category:"Main",servings:Math.max(1,parseInt(d.servings)||2),
+    prep_min:Number.isFinite(d.prep_min)?d.prep_min:"",cook_min:Number.isFinite(d.cook_min)?d.cook_min:"",
+    ingredients:(d.ingredients||[]).filter(g=>g&&g.item).map(g=>({item:String(g.item).trim(),qty:(g.qty===null||g.qty===undefined)?"":g.qty,unit:String(g.unit||"").trim(),cat:cat(g.cat),...(g.staple?{staple:true}:{})})),
+    steps:(d.steps||[]).map(x=>String(x).trim()).filter(Boolean),notes:String(d.notes||"").trim(),video_url:""};
+}
+function openGemini(){
+  openModal("✨ Gemini recipe",`<div class="form">
+    <p style="margin:0 0 8px;color:var(--muted);font-size:13px">Type a dish. Gemini writes the ingredients and steps; you check them before saving.</p>
+    <label>Dish</label><input id="aiDish" placeholder="e.g. Japchae, Tteokbokki, Chicken curry">
+    <label>Wishes (optional)</label><input id="aiWish" placeholder="e.g. for 3 people, not spicy, no pork">
+    <div class="msg" id="aiMsg"></div></div>`,`<span></span><button class="btn primary" id="aiGo">✨ Create recipe</button>`);
+  const go=document.getElementById("aiGo"), dish=document.getElementById("aiDish");
+  dish.focus(); dish.onkeydown=e=>{if(e.key==="Enter")go.click();};
+  go.onclick=async()=>{
+    const name=dish.value.trim(), wish=document.getElementById("aiWish").value.trim();
+    if(!name) return document.getElementById("aiMsg").innerHTML='<span class="tag bad">Type a dish</span>';
+    go.disabled=true; document.getElementById("aiMsg").innerHTML='<span class="tag warn">Gemini is writing the recipe… (about 10 s)</span>';
+    try{ const d=aiToDraft(await geminiJSON(`Write a recipe for: ${name}.${wish?" Wishes: "+wish+".":""}`,geminiSystem())); if(!d.name) d.name=name; openRecipeEdit(null,d); }
+    catch(e){ go.disabled=false; document.getElementById("aiMsg").innerHTML='<span class="tag bad">'+esc(e.message||String(e))+'</span>'; }
+  };
+}
+async function fillWithGemini(id){
+  const nameEl=document.getElementById("reName"), name=nameEl.value.trim(), b=document.getElementById("reAI");
+  if(!name) return toast("Type the dish name first");
+  const hasData=[...document.querySelectorAll("#ingList .ii")].some(i=>i.value.trim())||document.getElementById("reSteps").value.trim();
+  if(hasData&&b.dataset.sure!=="1"){ b.dataset.sure="1"; b.textContent="Replace ingredients & steps? Tap again"; return; }
+  b.disabled=true; b.textContent="✨ Writing…";
+  try{
+    const d=aiToDraft(await geminiJSON(`Write a recipe for: ${name}.`,geminiSystem()));
+    const keep={video_url:document.getElementById("reVideo").value.trim(),photo_url:id?(S.rmap[id]||{}).photo_url:null};
+    if(id){ const r=S.rmap[id]; openRecipeEditWith(id,{...r,...d,name:d.name||name,...keep}); } else openRecipeEdit(null,{...d,name:d.name||name,...keep});
+  }catch(e){ b.disabled=false; b.dataset.sure=""; b.textContent="✨ Fill with Gemini"; toast(e.message||String(e)); }
+}
+function openRecipeEditWith(id,draft){ // edit an existing recipe but show Gemini's draft in the form
+  const orig=S.rmap[id]; S.rmap[id]=draft; try{ openRecipeEdit(id); }finally{ S.rmap[id]=orig; }
+  document.querySelector("#modal .form").insertAdjacentHTML("afterbegin",'<p class="aihint">✨ Filled by Gemini — check it, then press <b>Save recipe</b> (Cancel keeps the old recipe).</p>');
 }
 
 /* plan edits */
@@ -1088,7 +1172,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.04</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.05</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
