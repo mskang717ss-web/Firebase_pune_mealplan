@@ -345,7 +345,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.06</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.07</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -1071,7 +1071,7 @@ async function geminiJSON(prompt,system,extra){
     if(!(res.status===404||(res.status===400&&/model/i.test(last.message||"")))) break; // only try the next model if this one is unknown
   }
   const msg=last&&last.message||"Gemini error";
-  throw new Error(/not been used|disabled|PERMISSION_DENIED/i.test(msg)?"Gemini is not turned on yet (owner: Firebase console → AI Logic → Get started).":msg);
+  throw new Error(/not been used|disabled|PERMISSION_DENIED|permission denied|API_KEY_SERVICE_BLOCKED|blocked/i.test(msg)?"Gemini is not turned on yet (owner: Firebase console → AI Logic → Get started).":msg);
 }
 function geminiSystem(){
   const known=[...new Set(allStockItems().map(a=>a.staple?a.item+" (pantry)":a.item+" ["+a.unit+"]"))].slice(0,200).join("; ");
@@ -1257,7 +1257,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.06</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.07</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
