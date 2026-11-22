@@ -49,6 +49,9 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .gcard label{display:block;font-size:12.5px;font-weight:600;margin:10px 0 4px}
 .gcard input{width:100%;box-sizing:border-box;padding:10px;font-size:15px;border:1px solid var(--line);border-radius:6px}
 .gcard .btn{width:100%;padding:10px;margin-top:12px;font-size:14.5px}.gcard .msg{margin-top:10px;font-size:13px;line-height:1.5}
+.gcard .gbtn{display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;border:1px solid #C9CED6;font-weight:600;margin-top:4px}
+.gcard .gbtn:hover{background:#F6F8FA}
+.gcard .gor{text-align:center;color:var(--muted);font-size:12px;margin:14px 0 0}
 .gcard .gv{text-align:right;font-size:11px;color:var(--muted);margin:-12px -10px 10px 0}
 .tbl{border-collapse:collapse;font-size:13px}.tbl th,.tbl td{border-bottom:1px solid var(--box-line);padding:6px 4px;text-align:left}
 .btn.sm{padding:3px 9px;font-size:12.5px}
@@ -298,7 +301,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.13</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v1.14</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -999,7 +1002,7 @@ async function boot(){
 }
 function renderGate(){
   const g=document.getElementById("gate"); g.style.display="flex";
-  const ver='<div class="gv">Weekly Meal Plan | <b>v1.13</b> | Updated 2026-11-22</div>';
+  const ver='<div class="gv">Weekly Meal Plan | <b>v1.14</b> | Updated 2026-11-22</div>';
   if(S.session){
     const em=esc(S.session.user&&S.session.user.email||"");
     g.innerHTML=`<div class="gcard">${ver}<h1>No access yet</h1><div class="gs">Signed in as <b>${em}</b>.</div>
@@ -1010,11 +1013,18 @@ function renderGate(){
     return;
   }
   g.innerHTML=`<div class="gcard">${ver}<h1>Weekly Meal Plan</h1><div class="gs">Members only. Sign in once — this device stays signed in.</div>
+    <div id="gGoogleWrap" style="display:none"><button class="btn gbtn" id="gGoogle"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-2.9-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.9l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg><span>Continue with Google</span></button>
+    <div class="gor">or with email</div></div>
     <label>Email</label><input id="gEmail" type="email" autocomplete="username">
     <label>Password</label><input id="gPw" type="password" autocomplete="current-password">
     <button class="btn primary" id="gGo">Sign in</button>
     <button class="btn" id="gUp">${S.hasAdmin?"First time? Create account":"Create owner account"}</button>
     <div class="msg" id="gMsg"></div></div>`;
+  fetch(SB_URL+"/auth/v1/settings",{headers:{apikey:SB_KEY}}).then(r=>r.json()).then(j=>{if(j&&j.external&&j.external.google){const w=document.getElementById("gGoogleWrap");if(w)w.style.display="";}}).catch(()=>{});
+  document.getElementById("gGoogle").onclick=async()=>{
+    const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+location.pathname,queryParams:{prompt:"select_account"}}});
+    if(error) document.getElementById("gMsg").innerHTML='<span class="tag bad">'+esc(error.message)+'</span>';
+  };
   const msg=t=>document.getElementById("gMsg").innerHTML=t, val=()=>[document.getElementById("gEmail").value.trim(),document.getElementById("gPw").value];
   document.getElementById("gPw").onkeydown=e=>{if(e.key==="Enter")document.getElementById("gGo").click();};
   document.getElementById("gGo").onclick=async()=>{
