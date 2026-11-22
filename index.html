@@ -84,7 +84,7 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .cell.sun{background:#FFF8F8}.cell.sat{background:#F5F8FE}
 .gh.today.sun,.gh.today.sat{background:var(--today)}.cell.today.sun,.cell.today.sat{background:#FFFBF0}
 .chip{display:flex;align-items:center;gap:6px;border:1px solid var(--box-line);background:#fff;border-radius:5px;padding:4px 7px;margin-bottom:5px;font-size:13px;line-height:1.3}
-.chip .nm{flex:1;cursor:pointer;color:var(--ink)}
+.chip .nm{flex:1;min-width:0;cursor:pointer;color:var(--ink);overflow-wrap:break-word;hyphens:auto}
 .chip .nm.link:hover{color:var(--blue);text-decoration:underline}
 .chip .n1{display:block;font-weight:600;color:var(--ink)}.chip .n2{display:block;font-size:11.5px;color:var(--muted);font-weight:400}
 .chip .nt{display:block;font-size:11.5px;color:var(--muted);font-style:italic}
@@ -225,6 +225,17 @@ ol.steps{margin:0;padding-left:22px} ol.steps li{margin-bottom:6px}
 .loading{padding:30px;text-align:center;color:var(--muted)}
 footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between}
 @media (max-width:1100px){.rgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.shopcols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* medium widths (laptop / half-screen): give dish names the whole chip width */
+@media (min-width:761px) and (max-width:1250px){
+  .grid{grid-template-columns:74px repeat(7,minmax(0,1fr))}
+  .grid > div{padding:5px}
+  .grid .gl{font-size:12.5px}
+  .grid .chip{flex-wrap:wrap;gap:4px;padding:4px 5px;font-size:12.5px;position:relative}
+  .grid .chip .cth{width:100%;height:46px;border-radius:4px;font-size:22px}
+  .grid .chip .nm{flex-basis:100%}
+  .grid .chip .x{position:absolute;top:2px;right:2px;background:rgba(255,255,255,.85);border-radius:3px}
+  .grid .chip .n2{font-size:11px}
+}
 @media (max-width:760px){
   .wrap{padding:10px 12px 40px}
   h1{font-size:21px}
@@ -303,7 +314,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.00</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.01</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -1009,7 +1020,7 @@ async function boot(){
   if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.00</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.01</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",
