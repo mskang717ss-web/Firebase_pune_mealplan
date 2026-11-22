@@ -40,6 +40,13 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .btn.danger{color:var(--bad);border-color:#E7B7B7}
 .ytbtn{display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;padding:8px 14px;background:#CC0000;color:#fff!important;border-radius:6px;font-weight:600;font-size:14px;text-decoration:none}
 .ytbtn:hover{background:#A80000}
+.ytrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.ytrow input{flex:1;min-width:220px}
+.ytres{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
+.ytres button{border:2px solid var(--line);border-radius:6px;background:#fff;padding:0;cursor:pointer;text-align:left;overflow:hidden;font:inherit}
+.ytres button:hover{border-color:var(--blue)}.ytres button.on{border-color:#CC0000;box-shadow:0 0 0 3px #F6D6D6}
+.ytres img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--box)}
+.ytres .t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:12px;font-weight:600;padding:4px 6px 0;line-height:1.3}
+.ytres .c{display:block;font-size:11px;color:var(--muted);padding:0 6px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .iedit{border:1px solid var(--box-line);background:#fff;border-radius:4px;font-size:11px;padding:0 6px;margin-left:6px;color:var(--blue);cursor:pointer;vertical-align:1px}
 .addrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 12px;background:#FAFBFC;border-top:1px dashed var(--line)}
 .addrow .ar-l{font-size:12.5px;font-weight:600;color:var(--blue);margin-right:4px}
@@ -88,6 +95,9 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .chip .nm.link:hover{color:var(--blue);text-decoration:underline}
 .chip .n1{display:block;font-weight:600;color:var(--ink)}.chip .n2{display:block;font-size:11.5px;color:var(--muted);font-weight:400}
 .chip .nt{display:block;font-size:11.5px;color:var(--muted);font-style:italic}
+.grid .chip .nm{min-height:50px}
+.grid .chip .n1{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.grid .chip .n2,.grid .chip .nt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chip .x{border:0;background:none;color:var(--muted);cursor:pointer;padding:0 2px;font-size:14px;line-height:1}
 .chip .x:hover{color:var(--bad)}
 .addlink{border:1px dashed var(--box-line);background:none;color:var(--blue);border-radius:5px;width:100%;padding:3px;cursor:pointer;font-size:12.5px}
@@ -176,15 +186,19 @@ h1{margin:2px 0 2px;font-size:26px;color:var(--navy);font-weight:700;letter-spac
 .pkm{padding:2px 8px 8px;font-size:11px;color:var(--muted)}
 .cth{width:28px;height:28px;border-radius:5px;background:var(--box);display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:1;overflow:hidden;flex:none}
 .cth img{width:100%;height:100%;object-fit:cover}
-.urow{display:grid;grid-template-columns:minmax(0,1fr) 210px 110px 110px 64px;gap:10px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--line2)}
+.urow{display:grid;grid-template-columns:minmax(0,1fr) 170px 170px 110px 64px;gap:10px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--line2)}
 .urow:last-child{border-bottom:0}
-.urow{background-image:linear-gradient(var(--line2),var(--line2)),linear-gradient(var(--line2),var(--line2)),linear-gradient(var(--line2),var(--line2)),linear-gradient(var(--line2),var(--line2));background-repeat:no-repeat;background-size:1px 100%;background-position:right 81px top,right 201px top,right 321px top,right 541px top}
+.urow{background-image:linear-gradient(var(--line2),var(--line2)),linear-gradient(var(--line2),var(--line2)),linear-gradient(var(--line2),var(--line2)),linear-gradient(var(--line2),var(--line2));background-repeat:no-repeat;background-size:1px 100%;background-position:right 81px top,right 201px top,right 381px top,right 561px top}
 .urow.uhd{background-color:#FAFBFC;font-size:11.5px;font-weight:700;padding:6px 12px;color:var(--muted)}
 .urow .h-have{text-align:right;color:var(--blue)}.urow .h-need{color:var(--warn)}
 .urow .uh{display:flex;justify-content:flex-end}
 .urow .c-need,.urow .c-buy{text-align:right}
 .urow .uc{text-align:center}
 .urow.tobuy{background-color:#FFFBF0}
+@media (min-width:761px){
+  .urow .c-need{display:flex;justify-content:flex-end;align-items:center;gap:10px;white-space:nowrap}
+  .urow .keep{display:inline-flex;align-items:center;gap:4px;margin-top:0}
+}
 .nm2{min-width:0;display:block}.nm2 .n{display:block}.nm2 .f{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nm2 .dsh{color:#8A93A0}
 .okmark{color:var(--ok);font-weight:700}
@@ -235,6 +249,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
   .grid .chip .nm{flex-basis:100%}
   .grid .chip .x{position:absolute;top:2px;right:2px;background:rgba(255,255,255,.85);border-radius:3px}
   .grid .chip .n2{font-size:11px}
+  .grid .chip .nm{min-height:46px}
 }
 @media (max-width:760px){
   .wrap{padding:10px 12px 40px}
@@ -314,7 +329,7 @@ footer{margin-top:28px;border-top:1px solid var(--line2);padding-top:8px;font-si
 <body>
 <div id="gate" class="gate" style="display:none"></div>
 <div class="wrap" id="app" style="display:none">
-  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.02</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
+  <div class="verline">Weekly Meal Plan&nbsp;|&nbsp;<b>v2.04</b>&nbsp;|&nbsp;Updated 2026-11-22</div>
   <header class="top">
     <div>
       <div class="kicker">Home kitchen · Meal plan, shopping &amp; recipes</div>
@@ -495,7 +510,14 @@ async function openTeam(){
       <table class="tbl" style="width:100%;margin-bottom:12px"><thead><tr><th>Name</th><th>Email</th><th></th></tr></thead><tbody>${rows}</tbody></table>
       <label>Name</label><input id="tmLabel" placeholder="e.g. Maid">
       <label>Email</label><input id="tmEmail" type="email" placeholder="name@example.com">
-    </div>`,`<span></span><button class="btn primary" id="tmAdd">Add person</button>`);
+      <div style="margin-top:10px;text-align:right"><button class="btn primary" id="tmAdd">Add person</button></div>
+      <div class="subh">YouTube video search</div>
+      <p style="margin:0 0 6px;color:var(--muted);font-size:12.5px">${S.ytKey?"A YouTube key is saved — “Find video” in recipes shows videos to pick.":"No key yet — “Find video” opens YouTube in a new tab instead."}</p>
+      <div class="ytrow"><input id="tmYt" type="password" autocomplete="off" placeholder="YouTube Data API key"><button class="btn sm" id="tmYtSave">Save key</button>${S.ytKey?'<button class="btn sm danger" id="tmYtDel">Remove</button>':""}</div>
+    </div>`,"");
+  const saveKey=async k=>{ const e=await tryDo(()=>C("config").doc("settings").set({ytKey:k,updated_at:nowIso()})); if(e) return toast(eMsg(e)); S.ytKey=k; toast(k?"Key saved":"Key removed"); openTeam(); };
+  document.getElementById("tmYtSave").onclick=()=>{ const k=document.getElementById("tmYt").value.trim(); if(!/^[A-Za-z0-9_-]{30,60}$/.test(k)) return toast("That does not look like an API key"); saveKey(k); };
+  const yd=document.getElementById("tmYtDel"); if(yd) yd.onclick=()=>saveKey("");
   document.getElementById("tmAdd").onclick=async()=>{
     const email=document.getElementById("tmEmail").value.trim().toLowerCase(), label=document.getElementById("tmLabel").value.trim();
     if(!/^[^\s/]+@[^\s/]+\.[^\s/]+$/.test(email)) return toast("Enter a valid email");
@@ -536,7 +558,7 @@ function nameHtml(n){const m=String(n).match(/^(.*?)\s*\((.+)\)\s*$/);return m?`
 function chipHtml(e){
   const r=e.recipe_id&&S.rmap[e.recipe_id];
   const sv=e.servings&&r&&e.servings!==r.servings?` <span class="nt" style="display:inline">×${e.servings}</span>`:"";
-  return `<div class="chip" ${S.isAdmin?`draggable="true" data-eid="${e.id}"`:""}><span class="cth">${r?dishPic(r):"<span>🍽️</span>"}</span><span class="nm ${r?"link":""}" ${r?`onclick="openRecipe('${r.id}')"`:""}>${nameHtml(entryName(e))}${sv}${e.note?`<span class="nt">${esc(e.note)}</span>`:""}</span>${S.isAdmin?`<button class="x" title="Remove" onclick="delEntry('${e.id}')">×</button>`:""}</div>`;
+  return `<div class="chip" ${S.isAdmin?`draggable="true" data-eid="${e.id}"`:""}><span class="cth">${r?dishPic(r):"<span>🍽️</span>"}</span><span class="nm ${r?"link":""}" title="${esc(entryName(e))}" ${r?`onclick="openRecipe('${r.id}')"`:""}>${nameHtml(entryName(e))}${sv}${e.note?`<span class="nt">${esc(e.note)}</span>`:""}</span>${S.isAdmin?`<button class="x" title="Remove" onclick="delEntry('${e.id}')">×</button>`:""}</div>`;
 }
 function cellHtml(d,slot){
   const list=S.entries.filter(e=>e.meal_date===ymd(d)&&e.slot===slot);
@@ -914,10 +936,12 @@ function openRecipeEdit(id){
     <button class="btn sm" onclick="document.getElementById('ingList').insertAdjacentHTML('beforeend',ingRow())">+ Add ingredient</button>
     <label>Steps (one step per line)</label><textarea id="reSteps">${esc((r.steps||[]).join("\n"))}</textarea>
     <label>Tip / notes</label><input id="reNotes" value="${esc(r.notes||"")}">
-    <label>YouTube video link (English)</label><input id="reVideo" placeholder="https://www.youtube.com/watch?v=..." value="${esc(r.video_url||"")}">
+    <label>YouTube video link (English)</label><div class="ytrow"><input id="reVideo" placeholder="https://www.youtube.com/watch?v=..." value="${esc(r.video_url||"")}"><button type="button" class="btn sm" id="reFind">▶ Find video</button></div><div class="ytres" id="ytRes"></div>
     <label>Photo</label><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><img class="pprev" id="rePrev" ${safeImg(r.photo_url)?imgSrc(r.photo_url):'style="display:none"'} alt=""><div style="flex:1;min-width:200px"><input type="file" id="rePhoto" accept="image/*">${safeImg(r.photo_url)?'<label style="display:flex;gap:6px;align-items:center;margin-top:6px;color:var(--ink)"><input type="checkbox" id="reNoPhoto" style="width:auto"> Remove photo</label>':""}</div></div>
     <div class="msg" id="reMsg"></div></div>`;
   openModal(id?"Edit recipe":"New recipe",body,`<button class="btn" onclick="${id?`openRecipe('${id}')`:"closeModal()"}">Cancel</button><button class="btn primary" onclick="saveRecipe(${id?`'${id}'`:"null"})">Save recipe</button>`);
+  document.getElementById("reFind").onclick=()=>findVideos(true);
+  document.getElementById("reName").addEventListener("change",()=>{ if(!document.getElementById("reVideo").value.trim()) findVideos(false); });
   document.getElementById("rePhoto").onchange=e=>{const f=e.target.files[0];if(f){const p=document.getElementById("rePrev");p.src=URL.createObjectURL(f);p.style.display="block";}};
 }
 async function saveRecipe(id){
@@ -949,6 +973,38 @@ function delRecipe(id){
     if(error) return toast(eMsg(error)); dropPhoto(r.photo_url);
     closeModal(); await loadAll(); toast("Recipe deleted");
   };
+}
+
+/* YouTube video finder (YouTube Data API key is stored by the owner in config/settings) */
+async function loadSettings(){ try{ const d=await C("config").doc("settings").get(); S.ytKey=d.exists?(d.data().ytKey||""):""; }catch(e){ S.ytKey=""; } }
+function decodeHtml(t){const x=document.createElement("textarea");x.innerHTML=t;return x.value;}
+async function findVideos(manual){
+  const name=document.getElementById("reName").value.trim(), box=document.getElementById("ytRes");
+  if(!name){ if(manual) toast("Type the dish name first"); return; }
+  const q="how to make "+name.replace(/\(.*?\)/g,"").trim()+" recipe";
+  if(!S.ytKey){
+    if(manual) window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(q+" english"),"_blank","noopener");
+    box.innerHTML=manual?`<p class="empty" style="grid-column:1/-1">Opened YouTube in a new tab — copy the video link and paste it above.${S.isOwner?" (Add a YouTube key in People to pick videos here.)":""}</p>`:"";
+    return;
+  }
+  box.innerHTML='<p class="empty" style="grid-column:1/-1">Searching YouTube…</p>';
+  try{
+    const u="https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=6&relevanceLanguage=en&safeSearch=strict&videoEmbeddable=true&q="+encodeURIComponent(q)+"&key="+encodeURIComponent(S.ytKey);
+    const j=await (await fetch(u)).json();
+    if(j.error) throw new Error(j.error.message||"YouTube error");
+    const items=(j.items||[]).filter(it=>it.id&&/^[A-Za-z0-9_-]{11}$/.test(it.id.videoId||""));
+    if(!items.length){ box.innerHTML='<p class="empty" style="grid-column:1/-1">No videos found.</p>'; return; }
+    const cur=ytId(document.getElementById("reVideo").value);
+    box.innerHTML=items.map(it=>{const id=it.id.videoId,sn=it.snippet||{};
+      return `<button type="button" data-v="${id}" class="${id===cur?"on":""}"><img src="https://i.ytimg.com/vi/${id}/mqdefault.jpg" alt="" loading="lazy"><span class="t">${esc(decodeHtml(sn.title||""))}</span><span class="c">${esc(decodeHtml(sn.channelTitle||""))}</span></button>`;}).join("");
+    box.querySelectorAll("button[data-v]").forEach(b=>b.onclick=()=>{
+      document.getElementById("reVideo").value="https://www.youtube.com/watch?v="+b.dataset.v;
+      box.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+      const pv=document.getElementById("rePrev"); if(pv&&pv.style.display==="none"){ pv.src="https://i.ytimg.com/vi/"+b.dataset.v+"/hqdefault.jpg"; pv.style.display="block"; pv.dataset.yt="1"; }
+      else if(pv&&pv.dataset.yt){ pv.src="https://i.ytimg.com/vi/"+b.dataset.v+"/hqdefault.jpg"; }
+      toast("Video selected");
+    });
+  }catch(e){ box.innerHTML=`<p class="empty" style="grid-column:1/-1">Could not search YouTube: ${esc(e.message||String(e))}</p>`; }
 }
 
 /* plan edits */
@@ -1029,10 +1085,10 @@ let bootN=0;
 async function boot(){
   const n=++bootN;
   await refreshAuth(); if(n!==bootN) return;
-  if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; await loadAll(); }
+  if(S.isAdmin){ document.getElementById("gate").style.display="none"; document.getElementById("app").style.display=""; loadSettings(); await loadAll(); }
   else { document.getElementById("app").style.display="none"; document.getElementById("main").innerHTML=""; renderGate(); }
 }
-const VER='<div class="gv">Weekly Meal Plan | <b>v2.02</b> | Updated 2026-11-22</div>';
+const VER='<div class="gv">Weekly Meal Plan | <b>v2.04</b> | Updated 2026-11-22</div>';
 function authErr(e){
   const c=e&&e.code||"";
   const m={"auth/invalid-credential":"Wrong email or password","auth/wrong-password":"Wrong email or password","auth/user-not-found":"No account with this email — press Create account",

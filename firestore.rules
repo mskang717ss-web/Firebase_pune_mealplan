@@ -21,6 +21,12 @@ service cloud.firestore {
       // no update/delete from the app (change it in the Firebase console if ever needed)
     }
 
+    match /config/settings {
+      allow get: if isMember();
+      allow write: if isOwner() && request.resource.data.keys().hasOnly(['ytKey', 'updated_at'])
+        && request.resource.data.ytKey is string && request.resource.data.ytKey.size() < 100;
+    }
+
     match /editors/{em} {
       allow get: if isOwner() || (signedIn() && em == myEmail());
       allow list, delete: if isOwner();
