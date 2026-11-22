@@ -15,20 +15,34 @@ const LIMIT = Number(process.env.LIMIT || 90); // each search costs 100 of the 1
   const key = set.exists && set.get("ytKey");
   if (!key) throw new Error("No YouTube key saved in the app (People → YouTube video search).");
   const all = await db.collection("recipes").get();
-  const todo = all.docs.filter(d => !d.get("video_url") && !d.get("photo_url")).slice(0, LIMIT);
+  // FIX: re-search these recipes with a better query (first automatic pick was the wrong dish or language)
+  const FIX = {
+    "Saeu-mu-guk (Prawn Radish Soup)": "korean radish soup muguk recipe",
+    "Hobak-guk (Zucchini Soup)": "aehobak guk korean zucchini soup recipe",
+    "Tomato Gyeran-guk (Tomato Egg Soup)": "tomato egg drop soup recipe",
+    "Ganjang-saeu-bokkeum (Garlic Soy Prawns)": "garlic butter soy sauce shrimp recipe",
+    "Yangbaechu-muchim (Cabbage Salad)": "korean cabbage salad mayo recipe",
+    "Miyeok-naengguk (Cold Seaweed Soup)": "miyeok naengguk cold seaweed soup recipe",
+    "Dak-jangjorim (Soy Braised Chicken)": "dak jangjorim soy braised chicken breast korean",
+    "Cheese Tomato Toast": "cheese tomato toast recipe",
+    "Peanut Butter Banana Toast": "peanut butter banana toast recipe",
+    "Beurokolli-muchim (Broccoli with Sesame)": "korean broccoli side dish recipe",
+  };
+  const fixMode = process.env.FIX === "1";
+  const todo = all.docs.filter(d => fixMode ? FIX[d.get("name")] : (!d.get("video_url") && !d.get("photo_url"))).slice(0, LIMIT);
   console.log(`Recipes: ${all.size}. Without video or photo: ${todo.length}.`);
   let done = 0;
   for (const d of todo) {
     const name = String(d.get("name") || "");
     const m = name.match(/^(.*?)\s*\((.+)\)\s*$/);           // "Gyeran-guk (Egg Drop Soup)"
-    const q = m ? `${m[1]} ${m[2]} recipe` : `${name} recipe`;
+    const q = (fixMode && FIX[name]) || (m ? `${m[1]} ${m[2]} recipe` : `${name} recipe`);
     const korean = !/toast|pancake|oats|curd|avocado|peanut|sweet potato and|omelette with toast/i.test(name);
     const url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&relevanceLanguage=en"
-      + "&safeSearch=strict&videoEmbeddable=true&videoDuration=medium&q=" + encodeURIComponent((korean ? "korean " : "") + q) + "&key=" + encodeURIComponent(key);
+      + "&safeSearch=strict&videoEmbeddable=true&videoDuration=medium&q=" + encodeURIComponent((korean && !fixMode ? "korean " : "") + q) + "&key=" + encodeURIComponent(key);
     const res = await fetch(url, { headers: { Referer: REFERER } });
     const j = await res.json();
     if (j.error) { console.log(`STOP (${j.error.code}): ${j.error.message}`); break; }
-    const it = (j.items || []).find(x => /^[A-Za-z0-9_-]{11}$/.test(x.id && x.id.videoId || ""));
+    const it = (j.items || []).find(x => /^[A-Za-z0-9_-]{11}$/.test(x.id && x.id.videoId || "") && !/[\u0400-\u04FF]/.test(x.snippet.title || "")); // skip Cyrillic titles
     if (!it) { console.log(`-  ${name}: no video found`); continue; }
     await d.ref.update({ video_url: "https://www.youtube.com/watch?v=" + it.id.videoId, updated_at: new Date().toISOString() });
     done++;

@@ -3,6 +3,10 @@ name: Add recipe videos
 # Run by hand: gives every recipe without a video/photo a YouTube video (thumbnail = card photo).
 on:
   workflow_dispatch:
+    inputs:
+      fix:
+        description: "1 = re-search only the recipes listed in FIX (seed/add-videos.js)"
+        default: "0"
 
 permissions:
   contents: read
@@ -22,7 +26,7 @@ jobs:
           FIREBASE_SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
           printf '%s' "$FIREBASE_SA" > "$RUNNER_TEMP/sa.json"
-          GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json" node seed/add-videos.js
+          FIX="${{ inputs.fix }}" GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json" node seed/add-videos.js
       - name: Clean up
         if: always()
         run: rm -f "$RUNNER_TEMP/sa.json"
