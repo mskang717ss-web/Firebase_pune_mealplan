@@ -5247,6 +5247,47 @@
    "notes": "Korean street food. Rice cakes from the Korean store.",
    "video_url": null,
    "photo_url": null
+  },
+  {
+   "id": "5b15a1a6-f1c0-43f7-8ae5-b4838f821e49",
+   "name": "Nurungji (Crispy Scorched Rice)",
+   "category": "Breakfast",
+   "servings": 2,
+   "prep_min": 5,
+   "cook_min": 25,
+   "ingredients": [
+    {
+     "item": "Cooked rice",
+     "qty": 2,
+     "unit": "bowl",
+     "cat": "Grains"
+    },
+    {
+     "item": "Cooking oil",
+     "qty": 0.5,
+     "unit": "tsp",
+     "cat": "Korean Pantry",
+     "staple": true
+    },
+    {
+     "item": "Sugar",
+     "qty": "",
+     "unit": "pinch",
+     "cat": "Korean Pantry",
+     "staple": true
+    }
+   ],
+   "steps": [
+    "Spread a very thin layer of oil in a non-stick pan (or use no oil).",
+    "Put the cooked rice in the pan. Press it flat and thin (about 3 mm) with a wet spoon.",
+    "Cook on LOW heat for 15–20 min without moving it, until the bottom is golden and crispy.",
+    "Turn it over and cook 5 more min. Let it cool on a plate — it becomes hard and crispy.",
+    "To eat as a snack: break into pieces (sprinkle a little sugar if you like).",
+    "For breakfast (nurungji-tang): boil 1 piece with 2 cups of water for 8–10 min until soft. Serve hot with kimchi and side dishes."
+   ],
+   "notes": "Use leftover rice. Keeps 2 weeks in a dry airtight box.",
+   "video_url": null,
+   "photo_url": null
   }
  ]
 }
