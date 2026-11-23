@@ -17,13 +17,10 @@ const LIMIT = Number(process.env.LIMIT || 90); // each search costs 100 of the 1
   const all = await db.collection("recipes").get();
   // FIX: re-search these recipes with a better query (first automatic pick was the wrong dish or language)
   const FIX = {
-    "Tomato Gyeran-guk (Tomato Egg Soup)": "tomato egg drop soup recipe",
-    "Ganjang-saeu-bokkeum (Garlic Soy Prawns)": "garlic butter soy sauce shrimp recipe",
-    "Yangbaechu-muchim (Cabbage Salad)": "korean cabbage salad mayo recipe",
-    "Miyeok-naengguk (Cold Seaweed Soup)": "miyeok naengguk cold seaweed soup recipe",
-    "Dak-jangjorim (Soy Braised Chicken)": "dak jangjorim soy braised chicken breast korean",
-    "Cheese Tomato Toast": "cheese tomato toast recipe",
-    "Beurokolli-muchim (Broccoli with Sesame)": "korean broccoli side dish recipe",
+    "Dak-jangjorim (Soy Braised Chicken)": "chicken breast jangjorim korean soy braised",
+    "Miyeok-naengguk (Cold Seaweed Soup)": "cold seaweed soup korean miyeok naengguk",
+    "Cheese Tomato Toast": "tomato cheese toast pan easy",
+    "Nurungji (Crispy Scorched Rice)": "how to make nurungji scorched rice",
   };
   const fixMode = process.env.FIX === "1";
   const todo = all.docs.filter(d => fixMode ? FIX[d.get("name")] : (!d.get("video_url") && !d.get("photo_url"))).slice(0, LIMIT);
