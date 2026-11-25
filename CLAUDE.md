@@ -23,7 +23,7 @@ Handoff from the claude.ai session on 2026-11-22. The current version is **v2.14
   - Hosting: **`https://pune-mealplan.web.app`** (main address) and `https://meal-plan-e954d.web.app`; both get the same `index.html` (targets `pune` / `main` in `.firebaserc`). The workflow creates the `pune-mealplan` site and adds it to Auth authorized domains if missing.
   - Auth providers: Google, Email/Password. Add any extra domain (e.g. a custom domain) to Auth → Settings → Authorized domains.
   - The web config (apiKey etc.) is public by design; security comes from `firestore.rules`.
-- **Repo**: `mskang717ss-web/meal-plan` (Public). Never commit secrets or data exports.
+- **Repo**: `mskang717ss-web/Firebase_pune_mealplan` (Public; renamed from `meal-plan` on 2026-11-25 — GitHub redirects the old name). Never commit secrets or data exports.
 - **Old stack (v1.x, retire after the switch)**: Cloudflare Pages `zgdi-mealplan.pages.dev` (also auto-builds `main`), GitHub Pages, Supabase project `weekly-meal-plan` (ref `sqnuivviqajivhjtsaxn`). Data was exported 2026-11-22 to `(C)_Weekly_Meal_Plan_data_2026-11-22.json` (14 recipes, 31 entries, 8 stock items, 0 photos).
 - **Google Drive**: old folder "02. 주간식단표" (id `1dL8BCN1cH4fI-IfE9CPabDs0XS6A3Z8p`); new folder "3. Mealplan_Firebase" (id `19IHQvjj8oRZYT-4PPUx4HyBuc3rw6mek`) holds the v2.00 HTML and the data export.
 
